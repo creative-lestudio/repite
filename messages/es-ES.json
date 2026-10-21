@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "description": "Repite convierte cada visita a tu local en una relación: tarjeta de sellos por QR, memoria de cada cliente y mensajes listos para que vuelvan."
+  },
+  "common": {
+    "appName": "Repite",
+    "loading": "Cargando…",
+    "save": "Guardar cambios",
+    "cancel": "Cancelar",
+    "back": "Volver",
+    "continue": "Continuar",
+    "close": "Cerrar",
+    "retry": "Intentar de nuevo",
+    "optional": "opcional",
+    "stampsLeft": "{count, plural, =0 {¡tarjeta completa!} one {te falta # sello} other {te faltan # sellos}}",
+    "stampsOf": "{count} de {total} sellos"
+  },
+  "errors": {
+    "generic": "Algo no ha salido bien. Inténtalo de nuevo en unos segundos.",
+    "network": "No hay conexión. Revisa tu internet e inténtalo otra vez.",
+    "rateLimited": "Demasiados intentos seguidos. Espera un minuto y vuelve a probar.",
+    "cooldown": "Este cliente ya sumó un sello hace poco. Podrá sumar otro a partir de las {time}.",
+    "location_not_found": "No encontramos este local. Revisa el enlace o el QR.",
+    "customer_not_found": "No encontramos a este cliente.",
+    "no_active_program": "Este local todavía no tiene un programa de sellos activo.",
+    "already_undone": "Esta visita ya se había deshecho.",
+    "undo_window_passed": "Ya pasaron más de {minutes} minutos: esta visita no se puede deshacer.",
+    "reward_already_redeemed": "Este premio ya se canjeó.",
+    "reward_not_available": "Este premio ya no está disponible.",
+    "reward_not_found": "No encontramos este premio.",
+    "bonus_already_pending": "Ya tienes una solicitud pendiente de este tipo. El equipo la revisará pronto.",
+    "bonus_review_already_given": "Ya recibiste el sello por tu reseña. ¡Gracias!",
+    "bonus_disabled": "Este local no ofrece este sello extra ahora mismo.",
+    "already_validated": "Esta solicitud ya estaba revisada.",
+    "event_not_found": "No encontramos ese movimiento.",
+    "invalid_pin": "El PIN debe tener entre 4 y 6 números."
+  },
+  "stampCard": {
+    "label": "Tarjeta de sellos: {count} de {total}",
+    "stamp": "Sello {n}",
+    "stampFilled": "Sello {n}, conseguido",
+    "nextReward": "Tu próximo premio",
+    "newStamp": "¡Nuevo sello!"
+  },
+  "design": {
+    "title": "Sistema de diseño",
+    "intro": "Componentes base de Repite. Todo lo que ves aquí sale de los mismos tokens.",
+    "addStamp": "Sumar un sello",
+    "reset": "Vaciar tarjeta"
+  }
+}

@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Repite
 
-## Getting Started
+Fidelización y relación con clientes para cafeterías y pequeños locales: tarjeta de sellos por QR sin apps, memoria de cada cliente y mensajes listos para que vuelvan. El dueño aprueba cada mensaje.
 
-First, run the development server:
+## Puesta en marcha (≈ 10 minutos)
+
+Requisitos: Node 20+, pnpm 9 (`corepack enable`), Docker en marcha.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+pnpm db:start            # levanta Supabase local y aplica migraciones + seed
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Copia en `.env.local` los valores que imprime `pnpm exec supabase status`:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- `API URL` → `NEXT_PUBLIC_SUPABASE_URL`
+- `anon key` → `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `service_role key` → `SUPABASE_SERVICE_ROLE_KEY`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Genera los secretos con `openssl rand -hex 32` (`SESSION_SECRET`) y `openssl rand -hex 16` (`CRON_SECRET`). Después:
 
-## Learn More
+```bash
+pnpm dev                 # http://localhost:3000
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Datos de demostración
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Qué                 | Dónde            | Acceso                            |
+| ------------------- | ---------------- | --------------------------------- |
+| Tarjeta del cliente | `/c/cafe-aurora` | regístrate con cualquier móvil    |
+| Panel del equipo    | `/equipo`        | Lucía · PIN `1234`                |
+| Panel del dueño     | `/app`           | `demo@repite.app` / `repite-demo` |
+| Sistema de diseño   | `/design`        | —                                 |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Hay una segunda cuenta (`sol@repite.app` / `repite-demo`) para comprobar que una cuenta no ve los datos de otra.
 
-## Deploy on Vercel
+## Pruebas
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+pnpm test        # lógica de negocio (Vitest)
+pnpm test:db     # seguridad RLS y libro de sellos (pgTAP)
+pnpm test:e2e    # flujos completos en móvil de 360 px (Playwright)
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Despliegue
+
+1. Crea un proyecto en Supabase y aplica las migraciones: `pnpm exec supabase link --project-ref <ref>` y después `pnpm exec supabase db push`.
+2. Importa el repositorio en Vercel y define las variables de `.env.example` con los valores del proyecto.
+3. Vercel Cron llama a `/api/cron/tick` cada hora (definido en `vercel.json`).
+
+Más detalles de arquitectura y convenciones en [`CLAUDE.md`](./CLAUDE.md).
