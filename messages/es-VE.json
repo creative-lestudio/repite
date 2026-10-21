@@ -1,5 +1,17 @@
 {
   "errors": {
     "network": "No hay conexión. Revisa tu internet y vuelve a intentarlo."
+  },
+  "customer": {
+    "card": {
+      "welcome": "¡Tu tarjeta está lista! Muéstrale tu código al equipo en cada visita para sumar sellos.",
+      "codeHint": "Muéstrale este código al equipo para sumar tu sello."
+    },
+    "rewards": {
+      "redeemBody": "Muéstrale esta pantalla al equipo. Escanearán tu código y validarán el canje."
+    },
+    "signup": {
+      "namePlaceholder": "Andreína"
+    }
   }
 }

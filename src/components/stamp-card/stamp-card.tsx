@@ -36,14 +36,14 @@ export function StampCard({ total, filled, newStamp, rewardName, locationName, c
         className,
       )}
     >
-      <header className="mb-5 flex items-start justify-between gap-3">
+      <header className="mb-5 flex flex-wrap items-end justify-between gap-x-3 gap-y-2">
         <div>
           {locationName && <p className="text-muted text-sm font-medium">{locationName}</p>}
-          <p className="font-display text-foreground text-2xl font-extrabold">
+          <p className="font-display text-foreground text-2xl font-extrabold whitespace-nowrap">
             {t("common.stampsOf", { count: safeFilled, total })}
           </p>
         </div>
-        <span className="bg-primary-soft rounded-full px-3 py-1 text-sm font-semibold text-blue-800">
+        <span className="bg-primary-soft rounded-full px-3 py-1 text-sm font-semibold whitespace-nowrap text-blue-800">
           {t("common.stampsLeft", { count: left })}
         </span>
       </header>

@@ -3,12 +3,13 @@ import { createServerClient } from "@supabase/ssr";
 import { createClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 import { env } from "@/lib/env";
+import type { Database } from "./database.types";
 
 /** Cliente con la sesión del dueño/manager: todas las consultas pasan por RLS. */
 export async function createUserClient() {
   const store = await cookies();
   const e = env();
-  return createServerClient(e.NEXT_PUBLIC_SUPABASE_URL, e.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
+  return createServerClient<Database>(e.NEXT_PUBLIC_SUPABASE_URL, e.NEXT_PUBLIC_SUPABASE_ANON_KEY, {
     cookies: {
       getAll: () => store.getAll(),
       setAll: (list) => {
@@ -22,7 +23,7 @@ export async function createUserClient() {
   });
 }
 
-let admin: ReturnType<typeof createClient> | undefined;
+let admin: ReturnType<typeof createClient<Database>> | undefined;
 /**
  * Cliente con service_role. Salta RLS: úsalo SOLO desde src/server/repositories,
  * siempre filtrando por organization_id de una sesión ya validada.
@@ -30,7 +31,7 @@ let admin: ReturnType<typeof createClient> | undefined;
 export function createServiceClient() {
   if (!admin) {
     const e = env();
-    admin = createClient(e.NEXT_PUBLIC_SUPABASE_URL, e.SUPABASE_SERVICE_ROLE_KEY, {
+    admin = createClient<Database>(e.NEXT_PUBLIC_SUPABASE_URL, e.SUPABASE_SERVICE_ROLE_KEY, {
       auth: { persistSession: false, autoRefreshToken: false },
     });
   }

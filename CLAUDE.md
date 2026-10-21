@@ -15,6 +15,8 @@ SaaS de fidelización para cafeterías (España y Venezuela). Tres interfaces: C
 | E2E (Playwright, 360 px)          | `pnpm test:e2e`                                |
 | Tipos de la BD                    | `pnpm db:types`                                |
 
+`messages/es-ES.d.json.ts` lo genera next-intl al arrancar `next dev`/`next build` para tipar las claves y argumentos; se versiona para que `tsc` funcione en CI. Si `tsc` da errores raros de claves, borra `tsconfig.tsbuildinfo`.
+
 En el contenedor de Claude Code: `dockerd` puede no estar arrancado; lánzalo antes de `pnpm db:start`. Playwright está fijado a 1.56.1 para usar el Chromium preinstalado.
 
 ## Stack
@@ -36,7 +38,11 @@ Next.js 15 (App Router, Server Actions) · TypeScript estricto · Supabase (Post
 9. **i18n sin prefijo en la URL** (los QR deben ser cortos y estables). Idioma: cookie `repite_locale` → idioma del local → `Accept-Language` → `es-ES`. `messages/es-VE.json` contiene solo las diferencias respecto a `es-ES.json`.
 10. **Tareas programadas**: un único endpoint `/api/cron/tick` (Vercel Cron, cada hora) que procesa los locales cuya hora local ya pasó `settings.opportunity_hour`; `job_runs` (único por job+local+día) garantiza idempotencia.
 11. **Rate limiting** en Postgres (`rate_limit_hit`), sin Redis en fase 1.
-12. Enumeraciones como `text` + `check` (más fáciles de evolucionar que los `enum` de Postgres).
+12. **Cliente final**: cookie `rc_<org>` httpOnly de 400 días por organización. Si alguien se registra con un teléfono que ya existe, **no** se inicia sesión: se envía un enlace mágico (30 min, un solo uso) a ese WhatsApp. Recuperación en `/c/[slug]/recuperar`, consumo en `/c/[slug]/acceso`.
+13. **Tarjeta en vivo**: la PWA consulta el estado cada 5 s mientras está visible (Server Action `getCardStateAction`) y guarda en `localStorage` el último saldo visto para animar los sellos sumados mientras estaba cerrada. Sin Realtime: el cliente no es usuario de Supabase Auth.
+14. **Cumpleaños** sin año real: se guarda como `2000-MM-DD` (año bisiesto convencional); el motor compara mes y día.
+15. QR personal del cliente: `${APP_URL}/equipo/q/<qr_token>`; al escanearlo con la cámara normal abre la ficha en el panel del equipo.
+16. Enumeraciones como `text` + `check` (más fáciles de evolucionar que los `enum` de Postgres).
 
 ## Estructura
 
@@ -70,7 +76,7 @@ tests/unit, tests/e2e
 ## Estado
 
 - [x] Corte 0: base y diseño
-- [ ] Corte 1: registro y tarjeta del cliente
+- [x] Corte 1: registro y tarjeta del cliente
 - [ ] Corte 2: panel del equipo
 - [ ] Corte 3: panel del dueño
 - [ ] Corte 4: motor de oportunidades
