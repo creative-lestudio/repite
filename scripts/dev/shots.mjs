@@ -15,14 +15,12 @@ const page = await browser.newPage({ viewport: { width: 360, height: 780 }, devi
 await page.goto("http://localhost:3000/c/cafe-aurora");
 await page.screenshot({ path: `${out}/signup.png`, fullPage: true });
 const token = randomBytes(24).toString("base64url");
-await admin
-  .from("magic_links")
-  .insert({
-    organization_id: "a0000000-0000-4000-8000-000000000001",
-    customer_id: "a0000000-0000-4000-8000-0000000000e4",
-    token_hash: createHash("sha256").update(token).digest("hex"),
-    expires_at: new Date(Date.now() + 600000).toISOString(),
-  });
+await admin.from("magic_links").insert({
+  organization_id: "a0000000-0000-4000-8000-000000000001",
+  customer_id: "a0000000-0000-4000-8000-0000000000e4",
+  token_hash: createHash("sha256").update(token).digest("hex"),
+  expires_at: new Date(Date.now() + 600000).toISOString(),
+});
 await page.goto(`http://localhost:3000/c/cafe-aurora/acceso?t=${token}`);
 await page.waitForTimeout(800);
 await page.screenshot({ path: `${out}/card.png`, fullPage: true });
