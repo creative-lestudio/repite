@@ -17,6 +17,8 @@ SaaS de fidelización para cafeterías (España y Venezuela). Tres interfaces: C
 
 Guía de publicación para no programadores: `docs/PUBLICAR.md`.
 
+**Producción (Supabase)**: proyecto `Repite`, ID `keaabqhptkgduynvbhtt` (eu-west-1). Las migraciones se aplican por la API de gestión de Supabase con un secreto de red (`Authorization: Bearer …` hacia `api.supabase.com`); el historial se registra en `supabase_migrations.schema_migrations` con las mismas versiones que los archivos. **Nunca aplicar `seed.sql` en producción** (tiene cuentas demo con contraseña conocida). Las plantillas globales de mensajes viven en la migración `…000008`, no en el seed.
+
 `messages/es-ES.d.json.ts` tipa claves y argumentos de los textos; lo regenera `pnpm i18n:types` (incluido en `pnpm typecheck`) y también next-intl al arrancar. Se versiona. Los argumentos numéricos de ICU se escriben `{n, number}`; los `{x}` sin formato son `string`.
 
 En el contenedor de Claude Code: `dockerd` puede no estar arrancado; lánzalo antes de `pnpm db:start`. Playwright está fijado a 1.56.1 para usar el Chromium preinstalado.

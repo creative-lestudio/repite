@@ -21,11 +21,13 @@ Tiempo estimado: 30–45 minutos la primera vez. Nunca copies contraseñas o cla
 
 ## Paso 2 · Crear las tablas (lo hace Claude)
 
-Claude Code aplica las migraciones del proyecto a tu base de datos. Para eso necesita dos valores guardados **como variables del entorno**, nunca en el chat:
+Claude Code aplica las migraciones del proyecto a tu base de datos usando un token de Supabase guardado **como secreto de red**, nunca en el chat y nunca en «Variables de entorno» (esas son visibles para cualquiera que use el entorno).
 
-1. En Claude Code, abre el menú del entorno en la barra del título → **Edit** → **Environment variables** (o _Network secrets_).
-2. Añade `SUPABASE_ACCESS_TOKEN` (créalo en Supabase → tu avatar → **Account → Access Tokens**) y `SUPABASE_DB_PASSWORD` (la contraseña del paso 1).
-3. Abre una sesión nueva y pide: «Aplica las migraciones a mi proyecto de Supabase con ID …».
+1. En Supabase → avatar → **Account preferences → Access Tokens → Generate new token**. Limítalo al proyecto `repite`, con escritura solo en **Database** y **Migrations**, sin acceso a claves de API ni a copias de seguridad, y con caducidad corta.
+2. En Claude Code, menú del entorno → **Editar** → **Secretos de red** → **Añadir secreto**: tipo **Bearer**, sitio permitido `api.supabase.com`, encabezado **`Authorization`** con prefijo `Bearer` y el token como valor.
+3. Abre una sesión nueva y pide: «Aplica las migraciones a mi proyecto de Supabase».
+
+La contraseña de la base de datos **no hace falta** en ningún sitio: guárdala solo en tu gestor de contraseñas.
 
 ## Paso 3 · Vercel (la web)
 
@@ -59,6 +61,7 @@ En Vercel → tu proyecto → **Settings → Domains** → añade `repite.app` y
 
 ## Antes de abrirlo al público
 
+- Configurar un **servicio de correo propio** en Supabase (Authentication → SMTP Settings, por ejemplo Resend o Brevo): el correo integrado solo envía unos pocos mensajes por hora y únicamente a miembros de tu organización, así que los dueños nuevos no recibirían el correo de confirmación.
 - Revisar con un profesional las páginas de **Privacidad** y **Términos** (ahora son un borrador).
 - Decidir el **precio** final (está en `src/config/plan.ts`).
 - Probar el recorrido completo con tu propio móvil: crear cuenta, descargar el QR, escanearlo, sumar un sello.
