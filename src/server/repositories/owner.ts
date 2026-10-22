@@ -3,6 +3,7 @@ import type { EffectivePlan } from "@/domain/plan";
 import { createUserClient } from "@/lib/supabase/server";
 import type { OwnerContext } from "../auth/owner";
 import { startOfDayInZone } from "@/domain/time";
+import { parseMetrics, type Metrics } from "@/domain/metrics";
 
 // Consultas del panel del dueño. Usan el JWT del usuario: RLS es la que aísla por organización.
 
@@ -284,4 +285,18 @@ export async function getPlanUsage(organizationId: string): Promise<PlanUsage> {
     staff: staff.count ?? 0,
     devices: devices.count ?? 0,
   };
+}
+
+// ───────────── Resultados ─────────────
+
+export async function getMetrics(ctx: OwnerContext, days: number): Promise<Metrics> {
+  const supabase = await createUserClient();
+  const { data, error } = await supabase.rpc("owner_metrics", {
+    p_org: ctx.organization.id,
+    p_location: ctx.location.id,
+    p_days: days,
+    p_tz: ctx.location.timezone,
+  });
+  if (error) throw error;
+  return parseMetrics(data as Record<string, unknown>);
 }

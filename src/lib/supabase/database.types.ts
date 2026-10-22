@@ -728,6 +728,9 @@ isOneToOne: false
 "owner_customer_card":
 { Args: { "p_customer": string,"p_location": string }; Returns: Json
                            },
+"owner_metrics":
+{ Args: { "p_days": number,"p_location": string,"p_org": string,"p_tz": string }; Returns: Json
+                           },
 "plan_usage":
 { Args: { "p_org": string }; Returns: Json
                            },

@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ChartColumn,
   Gift,
   House,
   Palette,
@@ -42,6 +43,7 @@ export function OwnerNav({
   const items = [
     { href: "/app", label: t("home"), Icon: House, exact: true },
     { href: "/app/clientes", label: t("customers"), Icon: Users },
+    { href: "/app/resultados", label: t("results"), Icon: ChartColumn },
     { href: "/app/programa", label: t("program"), Icon: Gift },
     { href: "/app/marca", label: t("brand"), Icon: Palette },
     { href: "/app/equipo", label: t("team"), Icon: UserRoundCog },

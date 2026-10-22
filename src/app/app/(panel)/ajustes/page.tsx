@@ -18,6 +18,7 @@ export default async function SettingsPage() {
           timezone: ctx.location.timezone,
           cooldownHours: Number(s.stamp_cooldown_hours ?? 4),
           messageGapDays: Number(s.message_min_days ?? 7),
+          averageTicket: s.average_ticket ? String(s.average_ticket) : "",
           whatsapp: String(s.contact_whatsapp ?? ""),
           instagram: String(s.instagram_handle ?? ""),
           reviewUrl: String(s.google_review_url ?? ""),

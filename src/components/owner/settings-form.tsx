@@ -19,6 +19,7 @@ export interface SettingsValues {
   timezone: string;
   cooldownHours: number;
   messageGapDays: number;
+  averageTicket: string;
   whatsapp: string;
   instagram: string;
   reviewUrl: string;
@@ -104,6 +105,16 @@ export function SettingsForm({ v }: { v: SettingsValues }) {
             max={72}
             step="0.5"
             defaultValue={v.cooldownHours}
+          />
+        </Field>
+        <Field id="averageTicket" label={t("averageTicket")} hint={t("averageTicketHint")} error={err("averageTicket")}>
+          <Input
+            name="averageTicket"
+            type="text"
+            inputMode="decimal"
+            defaultValue={v.averageTicket}
+            maxLength={8}
+            placeholder="7"
           />
         </Field>
         <Field id="messageGapDays" label={t("messageGap")} hint={t("messageGapHint")} error={err("messageGapDays")}>

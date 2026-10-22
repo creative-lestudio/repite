@@ -118,7 +118,7 @@ export const MATRIX: MatrixGroup[] = [
       { key: "wallet", starter: false, basic: true, plus: true },
       { key: "bonuses", starter: false, basic: true, plus: true },
       { key: "opportunities", starter: false, basic: "basic", plus: "full", soon: true },
-      { key: "metrics", starter: "summary", basic: "summary", plus: "full", soon: true },
+      { key: "metrics", starter: "summary", basic: "summary", plus: "full" },
     ],
   },
   {

@@ -86,6 +86,37 @@ test.describe("dueño: cuenta demo", () => {
     }
   });
 
+  test("resultados: Plus ve el detalle con ingresos estimados y Starter ve la invitación a mejorar", async ({
+    page,
+  }) => {
+    const { data: loc } = await admin.from("locations").select("settings").eq("slug", "cafe-aurora").single();
+    const settings = (loc!.settings ?? {}) as Record<string, unknown>;
+    await admin
+      .from("locations")
+      .update({ settings: { ...settings, average_ticket: 7 } })
+      .eq("slug", "cafe-aurora");
+    try {
+      await login(page, "demo@repite.app", "repite-demo");
+      await go(page, "Resultados");
+      await expect(page.getByRole("heading", { name: "Resultados", level: 1 })).toBeVisible();
+      await expect(page.getByText("Clientes que repiten")).toBeVisible();
+      await expect(page.getByRole("heading", { name: "Visitas por día" })).toBeVisible();
+      await expect(page.getByText("Ingresos estimados de las visitas que repiten")).toBeVisible();
+      await expect(page.getByText(/ticket medio de/)).toBeVisible();
+      await page.getByRole("link", { name: "90 días" }).click();
+      await expect(page).toHaveURL(/dias=90/);
+    } finally {
+      await admin.from("locations").update({ settings }).eq("slug", "cafe-aurora");
+    }
+
+    // Panadería Sol es Starter
+    await page.context().clearCookies();
+    await login(page, "sol@repite.app", "repite-demo");
+    await go(page, "Resultados");
+    await expect(page.getByText("Más resultados con Plus")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Visitas por día" })).toHaveCount(0);
+  });
+
   test("las rutas del panel piden entrar", async ({ page }) => {
     await page.goto("/app/clientes");
     await expect(page).toHaveURL(/\/entrar\?siguiente=/);

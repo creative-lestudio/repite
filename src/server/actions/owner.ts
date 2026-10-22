@@ -140,6 +140,7 @@ export async function saveSettingsAction(_prev: FormState, formData: FormData): 
     instagram_handle: v.instagram,
     google_review_url: v.reviewUrl,
     opening_hours: v.openingHours,
+    average_ticket: v.averageTicket,
   };
   const supabase = await createUserClient();
   const { error } = await supabase
