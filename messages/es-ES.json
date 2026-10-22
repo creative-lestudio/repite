@@ -327,7 +327,7 @@
       "magicSent": "Te hemos enviado un enlace a tu correo. Ábrelo desde este dispositivo para entrar.",
       "noAccount": "¿Aún no tienes cuenta?",
       "create": "Crea tu cuenta gratis",
-      "linkError": "Ese enlace ya se usó o ha caducado. Pide uno nuevo.",
+      "linkError": "No pudimos abrir tu sesión con ese enlace. Si acabas de confirmar tu correo, entra con tu contraseña. Si no, pide un enlace nuevo.",
       "forgot": "¿Sin contraseña? Usa el enlace al correo."
     },
     "signup": {
