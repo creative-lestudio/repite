@@ -1,21 +1,36 @@
 "use client";
 
-import { Gift, House, Menu, QrCode, Settings, Sparkles, Users, UserRoundCog, CreditCard, X } from "lucide-react";
+import {
+  Gift,
+  House,
+  Palette,
+  Menu,
+  QrCode,
+  Settings,
+  Sparkles,
+  Users,
+  UserRoundCog,
+  CreditCard,
+  X,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Logo } from "@/components/brand/logo";
+import { BrandLogo } from "@/components/brand-logo";
 import { cn } from "@/lib/utils";
 
 export function OwnerNav({
   locationName,
   slug,
+  logoUrl,
   email,
   signOut,
 }: {
   locationName: string;
   slug: string;
+  logoUrl: string | null;
   email: string;
   signOut: React.ReactNode;
 }) {
@@ -28,6 +43,7 @@ export function OwnerNav({
     { href: "/app", label: t("home"), Icon: House, exact: true },
     { href: "/app/clientes", label: t("customers"), Icon: Users },
     { href: "/app/programa", label: t("program"), Icon: Gift },
+    { href: "/app/marca", label: t("brand"), Icon: Palette },
     { href: "/app/equipo", label: t("team"), Icon: UserRoundCog },
     { href: "/app/qr", label: t("qr"), Icon: QrCode },
     { href: "/app/extras", label: t("bonuses"), Icon: Sparkles },
@@ -46,7 +62,7 @@ export function OwnerNav({
               aria-current={active ? "page" : undefined}
               className={cn(
                 "flex min-h-11 items-center gap-3 rounded-lg px-3 font-semibold",
-                active ? "bg-primary-soft text-wine-800" : "text-muted hover:bg-cream-50 hover:text-wine-800",
+                active ? "bg-primary-soft text-primary" : "text-muted hover:bg-cream-50 hover:text-primary",
               )}
             >
               <Icon className="size-5 shrink-0" aria-hidden />
@@ -76,8 +92,8 @@ export function OwnerNav({
     <>
       {/* Escritorio: barra lateral fija */}
       <aside className="bg-surface border-cream-100 hidden w-64 shrink-0 flex-col gap-6 border-r p-4 md:flex">
-        <div>
-          <Logo className="h-6" />
+        <div className="flex items-center gap-3">
+          {logoUrl ? <BrandLogo url={logoUrl} name={locationName} className="size-10" /> : <Logo className="h-6" />}
           <p className="text-muted truncate text-sm">{locationName}</p>
         </div>
         <nav aria-label={t("label")} className="flex-1">
@@ -88,8 +104,8 @@ export function OwnerNav({
 
       {/* Móvil: barra superior con menú */}
       <header className="bg-surface border-cream-100 sticky top-0 z-20 flex items-center justify-between border-b px-4 py-2 md:hidden">
-        <div className="min-w-0">
-          <Logo className="h-5" />
+        <div className="flex min-w-0 items-center gap-2">
+          {logoUrl ? <BrandLogo url={logoUrl} name={locationName} className="size-8" /> : <Logo className="h-5" />}
           <p className="text-muted truncate text-xs">{locationName}</p>
         </div>
         <button

@@ -2,6 +2,7 @@ import "server-only";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import { asBusinessType, type BusinessType } from "@/domain/business-types";
+import { parseBrand, type Brand } from "@/domain/brand";
 import { createUserClient } from "@/lib/supabase/server";
 
 export interface OwnerContext {
@@ -25,6 +26,7 @@ export interface OwnerContext {
     locale: "es-ES" | "es-VE";
     address: string | null;
     brandColor: string | null;
+    brand: Brand;
     businessType: BusinessType;
     settings: Record<string, unknown>;
   };
@@ -42,7 +44,7 @@ export const getOwnerContext = cache(async (): Promise<OwnerContext | null> => {
   const { data: membership } = await supabase
     .from("memberships")
     .select(
-      "role, organization_id, location_id, organizations!inner(id, name, country, currency, plan, trial_ends_at, onboarding, locations(id, name, slug, timezone, locale, address, brand_color, business_type, settings, created_at, deleted_at))",
+      "role, organization_id, location_id, organizations!inner(id, name, country, currency, plan, trial_ends_at, onboarding, locations(id, name, slug, timezone, locale, address, brand_color, logo_path, brand, business_type, settings, created_at, deleted_at))",
     )
     .eq("user_id", claims.sub)
     .is("deleted_at", null)
@@ -77,6 +79,7 @@ export const getOwnerContext = cache(async (): Promise<OwnerContext | null> => {
       locale: location.locale as "es-ES" | "es-VE",
       address: location.address,
       brandColor: location.brand_color,
+      brand: parseBrand(location.brand, location.brand_color, location.logo_path),
       businessType: asBusinessType(location.business_type),
       settings: (location.settings ?? {}) as Record<string, unknown>,
     },

@@ -27,6 +27,8 @@ export interface PassContent {
   qrUrl: string;
   /** Color de marca del local en #RRGGBB (por defecto el de Repite). */
   brandColor: string;
+  /** URL del logotipo del local (null: el de Repite). */
+  logoUrl?: string | null;
 }
 
 export function passSerial(locationId: string, customerId: string): string {

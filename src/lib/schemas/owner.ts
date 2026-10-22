@@ -65,9 +65,4 @@ export const settingsSchema = z.object({
     .max(60)
     .transform((v) => (v ? (v.startsWith("@") ? v : `@${v}`) : null)),
   reviewUrl: optionalUrl,
-  brandColor: z
-    .string()
-    .trim()
-    .transform((v) => v || null)
-    .refine((v) => v === null || /^#[0-9a-fA-F]{6}$/.test(v), "colorInvalid"),
 });

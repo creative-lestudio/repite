@@ -1,5 +1,6 @@
 import "server-only";
 import { createSign } from "node:crypto";
+import { actionColor } from "@/domain/brand";
 import { stampRow, statusLine, WALLET_TEXT, type PassContent } from "@/domain/wallet";
 import { env } from "@/lib/env";
 import { googleConfig, type GoogleConfig } from "./config";
@@ -24,10 +25,10 @@ export function googleLoyaltyClass(c: PassContent, cfg: GoogleConfig, locationId
     issuerName: c.locationName,
     programName: c.locationName,
     programLogo: {
-      sourceUri: { uri: `${env().NEXT_PUBLIC_APP_URL}/icons/icon-512.png` },
+      sourceUri: { uri: c.logoUrl ?? `${env().NEXT_PUBLIC_APP_URL}/icons/icon-512.png` },
       contentDescription: { defaultValue: { language: "es", value: c.locationName } },
     },
-    hexBackgroundColor: c.brandColor,
+    hexBackgroundColor: actionColor(c.brandColor),
     reviewStatus: "UNDER_REVIEW",
     countryCode: "ES",
   };

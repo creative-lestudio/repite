@@ -1,7 +1,9 @@
 import "server-only";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { connect } from "node:http2";
+import sharp from "sharp";
 import { PKPass } from "passkit-generator";
+import { onColor } from "@/domain/brand";
 import { env } from "@/lib/env";
 import { hexToRgb, stampRow, statusLine, WALLET_TEXT, type PassContent } from "@/domain/wallet";
 import { createServiceClient } from "@/lib/supabase/server";
@@ -23,9 +25,35 @@ export function appleWebServiceUrl(): string {
   return `${env().NEXT_PUBLIC_APP_URL}/api/wallet/apple`;
 }
 
+/** Logotipo propio del local en los tamaños que pide Apple (caja máxima 160×50 pt). */
+async function customLogo(url: string | null | undefined): Promise<Record<string, Buffer>> {
+  if (!url) return {};
+  try {
+    const res = await fetch(url);
+    if (!res.ok) return {};
+    const src = Buffer.from(await res.arrayBuffer());
+    const out: Record<string, Buffer> = {};
+    for (const [name, k] of [
+      ["logo.png", 1],
+      ["logo@2x.png", 2],
+      ["logo@3x.png", 3],
+    ] as const) {
+      out[name] = await sharp(src)
+        .resize(160 * k, 50 * k, { fit: "inside", background: { r: 0, g: 0, b: 0, alpha: 0 } })
+        .png()
+        .toBuffer();
+    }
+    return out;
+  } catch {
+    return {};
+  }
+}
+
 /** Genera el archivo .pkpass con el estado actual de la tarjeta. */
 export async function buildApplePass(content: PassContent, cfg: AppleConfig = appleConfig()!): Promise<Buffer> {
   const images = Object.fromEntries(Object.entries(WALLET_IMAGES).map(([n, b64]) => [n, Buffer.from(b64, "base64")]));
+  Object.assign(images, await customLogo(content.logoUrl));
+  const fg = onColor(content.brandColor) === "#ffffff" ? "rgb(255, 255, 255)" : "rgb(17, 17, 17)";
   const pass = new PKPass(
     images,
     { wwdr: cfg.wwdr, signerCert: cfg.cert, signerKey: cfg.key, signerKeyPassphrase: cfg.passphrase },
@@ -39,8 +67,8 @@ export async function buildApplePass(content: PassContent, cfg: AppleConfig = ap
       authenticationToken: appleAuthToken(content.serial),
       webServiceURL: appleWebServiceUrl(),
       backgroundColor: hexToRgb(content.brandColor),
-      foregroundColor: "rgb(255, 255, 255)",
-      labelColor: "rgb(255, 255, 255)",
+      foregroundColor: fg,
+      labelColor: fg,
       logoText: content.locationName,
     },
   );

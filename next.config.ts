@@ -9,6 +9,8 @@ const withNextIntl = createNextIntlPlugin({
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   typedRoutes: false,
+  // Subida de logotipo e imágenes de tarjeta (Vercel admite hasta 4,5 MB por petición)
+  experimental: { serverActions: { bodySizeLimit: "5mb" } },
   async headers() {
     return [
       {

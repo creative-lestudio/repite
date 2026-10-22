@@ -1,6 +1,8 @@
 import { Tablet } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { EmptyState } from "@/components/ui";
+import { BrandTheme } from "@/components/brand-theme";
+import { brandAssets } from "@/server/brand-assets";
 import { StaffHeader } from "@/components/staff/staff-header";
 import { StaffNav } from "@/components/staff/staff-nav";
 import { StaffSignIn } from "@/components/staff/staff-sign-in";
@@ -12,6 +14,12 @@ export const dynamic = "force-dynamic";
 export const metadata = { title: "Equipo", robots: { index: false } };
 
 export default async function StaffLayout({ children }: { children: React.ReactNode }) {
+  const device = await getDevice();
+  const content = await StaffShell({ children });
+  return device ? <BrandTheme brand={device.location.brand}>{content}</BrandTheme> : content;
+}
+
+async function StaffShell({ children }: { children: React.ReactNode }) {
   const t = await getTranslations("staff");
   const device = await getDevice();
 
@@ -46,7 +54,11 @@ export default async function StaffLayout({ children }: { children: React.ReactN
   return (
     <Toaster>
       <div className="mx-auto flex min-h-dvh max-w-3xl flex-col">
-        <StaffHeader locationName={device.location.name} staffName={session.staffName} />
+        <StaffHeader
+          locationName={device.location.name}
+          staffName={session.staffName}
+          logoUrl={brandAssets(device.location.brand).logoUrl}
+        />
         <main className="flex-1 px-4 pt-4 pb-28">{children}</main>
         <StaffNav pendingCount={pending.length} />
       </div>

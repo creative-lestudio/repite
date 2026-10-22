@@ -7,6 +7,7 @@ import { getCustomerFromSession } from "@/server/auth/customer-session";
 import { getCardState } from "@/server/repositories/customers";
 import { getActiveProgram, getLocationBySlug } from "@/server/repositories/locations";
 import { qrSvg } from "@/server/qr";
+import { brandAssets } from "@/server/brand-assets";
 import { walletAvailability } from "@/server/wallet/config";
 import { appUrl } from "@/server/app-url";
 
@@ -53,6 +54,13 @@ export default async function CustomerHome({
       initial={state}
       welcome={bienvenida === "1"}
       wallet={walletAvailability()}
+      cardTone={location.brand.cardStyle}
+      cardBrand={{
+        stampShape: location.brand.stampShape,
+        stampMode: location.brand.stampMode,
+        stampImageUrl: brandAssets(location.brand).stampImageUrl,
+        cardBgUrl: brandAssets(location.brand).cardBgUrl,
+      }}
     />
   );
 }

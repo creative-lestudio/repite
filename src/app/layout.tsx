@@ -1,5 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Plus_Jakarta_Sans } from "next/font/google";
+import {
+  DM_Serif_Display,
+  Inter,
+  Lora,
+  Nunito,
+  Plus_Jakarta_Sans,
+  Playfair_Display,
+  Poppins,
+  Space_Grotesk,
+} from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import "./globals.css";
@@ -11,6 +20,52 @@ const jakarta = Plus_Jakarta_Sans({
   weight: ["600", "700", "800"],
   display: "swap",
 });
+
+// Tipografías opcionales de la marca de cada local: solo se descargan si una página las usa.
+// next/font exige argumentos literales (sin spread).
+const poppins = Poppins({
+  subsets: ["latin"],
+  variable: "--font-poppins",
+  weight: ["400", "600", "700", "800"],
+  display: "swap",
+  preload: false,
+});
+const nunito = Nunito({
+  subsets: ["latin"],
+  variable: "--font-nunito",
+  weight: ["400", "600", "700", "800"],
+  display: "swap",
+  preload: false,
+});
+const space = Space_Grotesk({
+  subsets: ["latin"],
+  variable: "--font-space",
+  weight: ["400", "600", "700"],
+  display: "swap",
+  preload: false,
+});
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  weight: ["400", "600", "700", "800"],
+  display: "swap",
+  preload: false,
+});
+const lora = Lora({
+  subsets: ["latin"],
+  variable: "--font-lora",
+  weight: ["400", "600", "700"],
+  display: "swap",
+  preload: false,
+});
+const dmserif = DM_Serif_Display({
+  subsets: ["latin"],
+  variable: "--font-dmserif",
+  weight: ["400"],
+  display: "swap",
+  preload: false,
+});
+const fontVars = [poppins, nunito, space, playfair, lora, dmserif].map((f) => f.variable).join(" ");
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("meta");
@@ -32,7 +87,7 @@ export const viewport: Viewport = {
 export default async function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   const locale = await getLocale();
   return (
-    <html lang={locale} className={`${inter.variable} ${jakarta.variable}`}>
+    <html lang={locale} className={`${inter.variable} ${jakarta.variable} ${fontVars}`}>
       <body className="min-h-dvh">
         <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>

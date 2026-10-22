@@ -48,6 +48,41 @@ test.describe("dueño: cuenta demo", () => {
     expect(csv).not.toContain("Cliente de Sol"); // aislamiento entre cuentas
   });
 
+  test("personaliza su marca y se ve en la tarjeta del cliente y en el panel", async ({ page }) => {
+    // PNG de 64×64 naranja, generado en el momento
+    const sharp = (await import("sharp")).default;
+    const logo = await sharp({ create: { width: 64, height: 64, channels: 4, background: "#F28C28" } })
+      .png()
+      .toBuffer();
+    try {
+      await login(page, "demo@repite.app", "repite-demo");
+      await go(page, "Mi marca");
+      await expect(page.getByRole("heading", { name: "Mi marca", level: 1 })).toBeVisible();
+
+      await page.getByLabel("Logotipo").setInputFiles({ name: "logo.png", mimeType: "image/png", buffer: logo });
+      await expect(page.getByRole("button", { name: "Cambiar" }).first()).toBeVisible({ timeout: 20_000 });
+
+      await page.getByRole("button", { name: "#F28C28" }).click();
+      await page.getByRole("button", { name: /Estrella/ }).click();
+      await page.getByRole("button", { name: /Elegante/ }).click();
+      await page.getByRole("button", { name: "Oscura" }).click();
+      await page.getByRole("button", { name: "Guardar mi marca" }).click();
+      await expect(page.getByText("Marca guardada")).toBeVisible();
+
+      // El panel adopta el color y la tipografía del local
+      const themed = page.locator("[style*='--brand']").first();
+      await expect(themed).toHaveAttribute("style", /#F28C28/i);
+      await expect(themed).toHaveAttribute("style", /font-playfair/);
+
+      // La tarjeta del cliente también (página pública del local)
+      await page.goto("/c/cafe-aurora");
+      await expect(page.locator("[style*='--brand']").first()).toHaveAttribute("style", /#F28C28/i);
+      await expect(page.locator("header img").first()).toBeVisible();
+    } finally {
+      await admin.from("locations").update({ brand: {}, brand_color: null, logo_path: null }).eq("slug", "cafe-aurora");
+    }
+  });
+
   test("las rutas del panel piden entrar", async ({ page }) => {
     await page.goto("/app/clientes");
     await expect(page).toHaveURL(/\/entrar\?siguiente=/);

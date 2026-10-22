@@ -1,4 +1,6 @@
+import { BrandTheme } from "@/components/brand-theme";
 import { Button } from "@/components/ui";
+import { brandAssets } from "@/server/brand-assets";
 import { OwnerNav } from "@/components/owner/owner-nav";
 import { Toaster } from "@/components/staff/toaster";
 import { signOutOwnerAction } from "@/server/actions/auth";
@@ -13,10 +15,11 @@ export default async function PanelLayout({ children }: { children: React.ReactN
   const t = await getTranslations("auth");
   return (
     <Toaster>
-      <div className="flex min-h-dvh flex-col md:flex-row">
+      <BrandTheme brand={ctx.location.brand} className="flex min-h-dvh flex-col md:flex-row">
         <OwnerNav
           locationName={ctx.location.name}
           slug={ctx.location.slug}
+          logoUrl={brandAssets(ctx.location.brand).logoUrl}
           email={ctx.email}
           signOut={
             <form action={signOutOwnerAction}>
@@ -27,7 +30,7 @@ export default async function PanelLayout({ children }: { children: React.ReactN
           }
         />
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-6 md:px-8 md:py-8">{children}</main>
-      </div>
+      </BrandTheme>
     </Toaster>
   );
 }

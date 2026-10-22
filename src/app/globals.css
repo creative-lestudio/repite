@@ -31,6 +31,8 @@
   --ring: var(--red-600);
   /* Color de marca del local (sellos y detalles); por defecto el rojo de Repite */
   --brand: var(--red-500);
+  /* Texto que se lee sobre el color de marca */
+  --on-brand: #ffffff;
 
   --radius: 0.875rem;
 }
@@ -61,6 +63,7 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-brand: var(--brand);
+  --color-on-brand: var(--on-brand);
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-jakarta), var(--font-inter), ui-sans-serif, sans-serif;

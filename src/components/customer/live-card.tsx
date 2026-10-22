@@ -4,7 +4,7 @@ import { Gift, QrCode } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { StampCard } from "@/components/stamp-card/stamp-card";
+import { StampCard, type StampCardBrand } from "@/components/stamp-card/stamp-card";
 import { Alert, Button } from "@/components/ui";
 import { WalletButtons } from "./wallet-buttons";
 import { getCardStateAction } from "@/server/actions/customer";
@@ -20,6 +20,8 @@ interface Props {
   initial: CardState;
   welcome: boolean;
   wallet: { apple: boolean; google: boolean };
+  cardTone: "light" | "dark" | "brand";
+  cardBrand: StampCardBrand;
 }
 
 type Snapshot = { balance: number; rewards: number };
@@ -42,7 +44,7 @@ function writeSnapshot(key: string, s: Snapshot) {
 }
 
 /** Tarjeta que se refresca sola: cuando el equipo suma un sello, aparece estampado al momento. */
-export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome, wallet }: Props) {
+export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome, wallet, cardTone, cardBrand }: Props) {
   const t = useTranslations("customer.card");
   const [state, setState] = useState(initial);
   const [newStamp, setNewStamp] = useState<number | null>(null);
@@ -111,6 +113,8 @@ export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome, 
         filled={state.balance}
         newStamp={newStamp}
         sector={sector}
+        tone={cardTone}
+        brand={cardBrand}
         rewardName={state.program.reward_name}
       />
 

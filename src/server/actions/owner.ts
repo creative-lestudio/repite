@@ -147,7 +147,6 @@ export async function saveSettingsAction(_prev: FormState, formData: FormData): 
       address: v.address,
       locale: v.locale,
       timezone: v.timezone,
-      brand_color: v.brandColor,
       business_type: v.businessType,
       settings,
     })

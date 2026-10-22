@@ -22,7 +22,6 @@ export interface SettingsValues {
   whatsapp: string;
   instagram: string;
   reviewUrl: string;
-  brandColor: string;
   country: string;
   currency: string;
   businessType: BusinessType;
@@ -141,19 +140,6 @@ export function SettingsForm({ v }: { v: SettingsValues }) {
             defaultValue={v.reviewUrl}
             maxLength={300}
             placeholder="https://"
-          />
-        </Field>
-      </Card>
-
-      <Card className="flex flex-col gap-4">
-        <h2 className="text-lg font-bold">{t("brandTitle")}</h2>
-        <Field id="brandColor" label={t("brandColor")} hint={t("brandHint")} error={err("brandColor")}>
-          <Input
-            name="brandColor"
-            defaultValue={v.brandColor}
-            placeholder="#FF3B2E"
-            maxLength={7}
-            autoCapitalize="none"
           />
         </Field>
       </Card>

@@ -21,7 +21,6 @@ export default async function SettingsPage() {
           whatsapp: String(s.contact_whatsapp ?? ""),
           instagram: String(s.instagram_handle ?? ""),
           reviewUrl: String(s.google_review_url ?? ""),
-          brandColor: ctx.location.brandColor ?? "",
           country: ctx.organization.country,
           currency: ctx.organization.currency,
           businessType: ctx.location.businessType,

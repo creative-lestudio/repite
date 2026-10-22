@@ -4,6 +4,7 @@ import { createServiceClient } from "@/lib/supabase/server";
 import type { Locale } from "@/i18n/config";
 import { asBusinessType, type BusinessType } from "@/domain/business-types";
 import type { Country } from "@/domain/phone";
+import { parseBrand, type Brand } from "@/domain/brand";
 
 export interface LocationSettings {
   stamp_cooldown_hours?: number;
@@ -26,6 +27,8 @@ export interface PublicLocation {
   locale: Locale;
   logoPath: string | null;
   brandColor: string | null;
+  /** Marca completa (color, tipografía, sellos, imágenes). */
+  brand: Brand;
   businessType: BusinessType;
   settings: LocationSettings;
   country: Country;
@@ -34,7 +37,7 @@ export interface PublicLocation {
 }
 
 const LOCATION_COLUMNS =
-  "id, organization_id, name, slug, address, timezone, locale, logo_path, brand_color, business_type, settings, organizations!inner(country, currency, status, deleted_at)";
+  "id, organization_id, name, slug, address, timezone, locale, logo_path, brand_color, brand, business_type, settings, organizations!inner(country, currency, status, deleted_at)";
 
 type LocationRow = {
   id: string;
@@ -46,6 +49,7 @@ type LocationRow = {
   locale: string;
   logo_path: string | null;
   brand_color: string | null;
+  brand: unknown;
   business_type: string;
   settings: unknown;
   organizations: { country: string; currency: string; status: string; deleted_at: string | null };
@@ -65,6 +69,7 @@ function toLocation(data: LocationRow | null): PublicLocation | null {
     locale: data.locale as Locale,
     logoPath: data.logo_path,
     brandColor: data.brand_color,
+    brand: parseBrand(data.brand, data.brand_color, data.logo_path),
     businessType: asBusinessType(data.business_type),
     settings: (data.settings ?? {}) as LocationSettings,
     country: org.country as Country,
