@@ -998,6 +998,12 @@
         },
         "i4": { "title": "Con tu marca", "body": "Tu color, tu nombre y tu logotipo en cada tarjeta." }
       },
+      "availableOn": "Disponible en",
+      "passStamps": "Sellos 5/8",
+      "passUpdated": "Última actualización",
+      "passUpdatedValue": "Ahora",
+      "passNearby": "Aviso al estar cerca",
+      "passNearbyValue": "Activado",
       "lockScreen": "Pantalla de bloqueo",
       "nearTitle": "Estás cerca de Café Aurora",
       "nearBody": "Te falta 1 sello para tu café gratis.",

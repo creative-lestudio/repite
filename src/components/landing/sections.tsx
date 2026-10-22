@@ -4,6 +4,8 @@ import { getMessages, getTranslations } from "next-intl/server";
 import { SectorIcon } from "@/components/sector-icon";
 import { StampRow } from "@/components/landing/stamp-row";
 import { BrandDemo } from "./brand-demo";
+import { AppleWalletIcon, GoogleWalletIcon } from "./wallet-logos";
+import { WalletPhone } from "./wallet-phone";
 import { Pricing } from "./pricing";
 import { StampCard } from "@/components/stamp-card/stamp-card";
 import { Reveal } from "@/components/landing/reveal";
@@ -302,6 +304,17 @@ export async function WalletSection() {
             {t("title")}
           </h2>
           <p className="text-cream-200 mt-4 text-lg">{t("subtitle")}</p>
+          <div className="mt-6 flex flex-wrap items-center gap-4">
+            <span className="text-cream-200 text-sm font-semibold">{t("availableOn")}</span>
+            <span className="flex items-center gap-2 rounded-xl bg-white/10 px-3 py-2">
+              <AppleWalletIcon className="size-8" />
+              <span className="font-display font-bold">Apple Wallet</span>
+            </span>
+            <span className="flex items-center gap-2 rounded-xl bg-white/10 px-3 py-2">
+              <GoogleWalletIcon className="size-8" />
+              <span className="font-display font-bold">Google Wallet</span>
+            </span>
+          </div>
           <ul className="mt-8 flex flex-col gap-4">
             {points.map((p) => (
               <li key={p.title} className="flex items-start gap-3">
@@ -318,40 +331,22 @@ export async function WalletSection() {
           </Button>
         </div>
 
-        <div aria-hidden className="relative mx-auto flex w-full max-w-md flex-col gap-4">
-          <div className="rounded-3xl bg-white/5 p-3 ring-1 ring-white/10">
-            <p className="text-cream-200 px-2 pb-2 text-xs font-semibold">{t("lockScreen")}</p>
-            <div className="text-ink-950 flex items-start gap-3 rounded-2xl bg-white/95 p-3">
-              <span className="bg-brand flex size-10 shrink-0 items-center justify-center rounded-xl font-bold text-white">
-                C
-              </span>
-              <span className="text-left text-sm leading-snug">
-                <strong className="block">{t("nearTitle")}</strong>
-                {t("nearBody")}
-              </span>
-            </div>
-          </div>
-          <div className="bg-brand flex flex-col gap-4 rounded-3xl p-5 text-white shadow-2xl">
-            <div className="flex items-center justify-between">
-              <span className="font-display text-lg font-extrabold">Café Aurora</span>
-              <span className="rounded-full bg-black/20 px-3 py-1 text-xs font-semibold">{t("passLevel")}</span>
-            </div>
-            <div className="flex gap-1.5 text-2xl tracking-widest">
-              <span>●●●●●</span>
-              <span className="opacity-50">○○○</span>
-            </div>
-            <div className="flex items-end justify-between gap-3">
-              <div>
-                <p className="text-xs font-semibold uppercase opacity-80">{t("passReward")}</p>
-                <p className="font-bold">{t("passRewardValue")}</p>
-                <p className="mt-2 text-xs font-semibold uppercase opacity-80">{t("passCoupon")}</p>
-                <p className="font-bold">{t("passCouponValue")}</p>
-              </div>
-              <span className="flex size-16 items-center justify-center rounded-lg bg-white text-black">
-                <QrCode className="size-12" />
-              </span>
-            </div>
-          </div>
+        <div className="relative mx-auto flex w-full max-w-md justify-center pb-6">
+          <WalletPhone
+            business="Café Aurora"
+            level={t("passLevel")}
+            rewardLabel={t("passReward")}
+            reward={t("passRewardValue")}
+            couponLabel={t("passCoupon")}
+            coupon={t("passCouponValue")}
+            stampsLabel={t("passStamps")}
+            updatedLabel={t("passUpdated")}
+            updated={t("passUpdatedValue")}
+            nearbyLabel={t("passNearby")}
+            nearby={t("passNearbyValue")}
+            noticeTitle={t("nearTitle")}
+            noticeBody={t("nearBody")}
+          />
         </div>
       </div>
     </section>

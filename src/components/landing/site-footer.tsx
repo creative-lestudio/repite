@@ -76,9 +76,11 @@ export async function SiteFooter() {
             href="https://lestudio-crea.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="font-display text-cream-50 inline-flex min-h-11 items-center font-extrabold tracking-wide hover:text-white hover:underline"
+            aria-label="LE STUDIO"
+            className="inline-flex min-h-11 items-center opacity-80 transition-opacity hover:opacity-100"
           >
-            LE STUDIO
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/brand/lestudio-white.png" alt="LE STUDIO" width={360} height={151} className="h-7 w-auto" />
           </a>
         </p>
       </div>

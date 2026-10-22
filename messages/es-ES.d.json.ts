@@ -386,7 +386,12 @@ declare const messages: {
     "signOut": "Cerrar sesión"
   },
   "plans": {
-    "names": { "starter": "Starter", "basic": "Basic", "plus": "Plus", "trial": "Prueba gratuita" },
+    "names": {
+      "starter": "Starter",
+      "basic": "Basic",
+      "plus": "Plus",
+      "trial": "Prueba gratuita"
+    },
     "taglines": {
       "starter": "Para probar con tu primer local",
       "basic": "Para locales con clientela fija",
@@ -542,13 +547,26 @@ declare const messages: {
       "fontTitle": "Tipografía",
       "stampsTitle": "Sellos",
       "shape": "Forma",
-      "shapes": { "circle": "Círculo", "square": "Cuadrado", "hex": "Hexágono", "star": "Estrella" },
+      "shapes": {
+        "circle": "Círculo",
+        "square": "Cuadrado",
+        "hex": "Hexágono",
+        "star": "Estrella"
+      },
       "content": "Dentro del sello",
-      "modes": { "icon": "Icono", "number": "Número", "image": "Tu imagen" },
+      "modes": {
+        "icon": "Icono",
+        "number": "Número",
+        "image": "Tu imagen"
+      },
       "stampImage": "Imagen del sello",
       "stampImageHint": "Se recorta en cuadrado. Mejor una imagen sencilla.",
       "cardTitle": "Tarjeta",
-      "cardStyles": { "light": "Clara", "dark": "Oscura", "brand": "Color de marca" },
+      "cardStyles": {
+        "light": "Clara",
+        "dark": "Oscura",
+        "brand": "Color de marca"
+      },
       "cardBg": "Tu propio diseño de tarjeta",
       "cardBgHint": "Una imagen apaisada (por ejemplo 1200×750). Se oscurece un poco para que se lean los sellos.",
       "save": "Guardar mi marca",
@@ -999,8 +1017,17 @@ declare const messages: {
           "title": "Te recuerda cuando está cerca",
           "body": "Con Plus, la tarjeta aparece en la pantalla de bloqueo al pasar cerca de tu local."
         },
-        "i4": { "title": "Con tu marca", "body": "Tu color, tu nombre y tu logotipo en cada tarjeta." }
+        "i4": {
+          "title": "Con tu marca",
+          "body": "Tu color, tu nombre y tu logotipo en cada tarjeta."
+        }
       },
+      "availableOn": "Disponible en",
+      "passStamps": "Sellos 5/8",
+      "passUpdated": "Última actualización",
+      "passUpdatedValue": "Ahora",
+      "passNearby": "Aviso al estar cerca",
+      "passNearbyValue": "Activado",
       "lockScreen": "Pantalla de bloqueo",
       "nearTitle": "Estás cerca de Café Aurora",
       "nearBody": "Te falta 1 sello para tu café gratis.",
