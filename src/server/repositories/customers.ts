@@ -71,10 +71,11 @@ export async function createCustomer(input: {
     .single();
   if (error) {
     if (error.code === "23505") return { duplicate: true as const };
+    if (toBusinessError(error)?.code === "customer_limit_reached") return { limitReached: true as const };
     throw error;
   }
   await audit(input.organizationId, data.id, "customer.signup", { consent: input.consent });
-  return { duplicate: false as const, customer: data as CustomerRow };
+  return { duplicate: false as const, limitReached: false as const, customer: data as CustomerRow };
 }
 
 export async function updateCustomerPreferences(

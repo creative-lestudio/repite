@@ -7,8 +7,9 @@ test.describe("web pública", () => {
     for (const id of ["como-funciona", "ventajas", "precio", "preguntas"]) {
       await expect(page.locator(`#${id}`)).toBeAttached();
     }
-    await expect(page.getByText("30 días gratis").first()).toBeVisible();
-    await page.getByRole("link", { name: "Empezar mi prueba gratuita" }).click();
+    await expect(page.getByRole("heading", { name: "Gratis", exact: true })).toBeVisible();
+    await expect(page.getByText("Hasta 50 clientes").first()).toBeVisible();
+    await page.locator("#precio").getByRole("link", { name: "Empezar gratis" }).click();
     await expect(page).toHaveURL(/\/registro$/);
     await expect(page.getByRole("heading", { name: "Crea tu cuenta" })).toBeVisible();
   });

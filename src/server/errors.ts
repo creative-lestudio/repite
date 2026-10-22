@@ -20,6 +20,7 @@ export const BUSINESS_ERRORS = [
   "slug_taken",
   "already_has_organization",
   "not_authenticated",
+  "customer_limit_reached",
 ] as const;
 export type BusinessErrorCode = (typeof BUSINESS_ERRORS)[number];
 

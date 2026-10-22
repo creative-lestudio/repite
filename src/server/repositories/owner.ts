@@ -247,3 +247,19 @@ export async function listBonuses() {
     customerName: e.customers?.name ?? "—",
   }));
 }
+
+// ───────────── Plan ─────────────
+
+export interface PlanUsage {
+  plan: "trial" | "free" | "pro";
+  customerLimit: number | null;
+  customers: number;
+}
+
+export async function getPlanUsage(organizationId: string): Promise<PlanUsage> {
+  const supabase = await createUserClient();
+  const { data, error } = await supabase.rpc("plan_usage", { p_org: organizationId });
+  if (error) throw error;
+  const d = data as { plan: PlanUsage["plan"]; customer_limit: number | null; customers: number };
+  return { plan: d.plan, customerLimit: d.customer_limit, customers: d.customers };
+}

@@ -3,11 +3,18 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Badge, Button, Card, EmptyState } from "@/components/ui";
 import { requireOwner } from "@/server/auth/owner";
-import { getDashboardStats } from "@/server/repositories/owner";
+import { getDashboardStats, getPlanUsage } from "@/server/repositories/owner";
+import { usageLevel } from "@/domain/plan";
+import { Alert } from "@/components/ui";
 
 export default async function OwnerHome() {
   const ctx = await requireOwner();
-  const [t, stats] = await Promise.all([getTranslations("owner.home"), getDashboardStats(ctx)]);
+  const [t, stats, usage] = await Promise.all([
+    getTranslations("owner.home"),
+    getDashboardStats(ctx),
+    getPlanUsage(ctx.organization.id),
+  ]);
+  const level = usageLevel(usage.customers, usage.customerLimit);
 
   const steps = [
     { key: "account" as const, done: true as boolean, href: null as string | null },
@@ -18,7 +25,7 @@ export default async function OwnerHome() {
   const done = steps.filter((s) => s.done).length;
 
   const trialDays =
-    ctx.organization.plan === "trial" && ctx.organization.trialEndsAt
+    usage.plan === "trial" && ctx.organization.trialEndsAt
       ? Math.max(0, Math.ceil((new Date(ctx.organization.trialEndsAt).getTime() - Date.now()) / 86_400_000))
       : null;
 
@@ -40,7 +47,29 @@ export default async function OwnerHome() {
             </Badge>
           </Link>
         )}
+        {usage.plan === "free" && (
+          <Link href="/app/plan">
+            <Badge tone="blue" className="px-3 py-1.5 text-sm">
+              {t("planFree")}
+            </Badge>
+          </Link>
+        )}
       </header>
+
+      {usage.customerLimit !== null && level !== "ok" && (
+        <Alert tone={level === "full" ? "danger" : "warning"}>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <span>
+              {level === "full"
+                ? t("planFull", { limit: usage.customerLimit })
+                : t("planNear", { count: usage.customers, limit: usage.customerLimit })}
+            </span>
+            <Button asChild size="sm" variant={level === "full" ? "primary" : "secondary"}>
+              <Link href="/app/plan">{t("planAction")}</Link>
+            </Button>
+          </div>
+        </Alert>
+      )}
 
       {done < steps.length ? (
         <section

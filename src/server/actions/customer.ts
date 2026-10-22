@@ -86,6 +86,7 @@ export async function signUpAction(slug: string, _prev: SignupState, formData: F
     locale,
     consent: input.consent,
   });
+  if ("limitReached" in result && result.limitReached) return { ok: false, error: "customer_limit_reached" };
   if (result.duplicate) return { ok: false, error: "phoneExists" };
 
   await startCustomerSession(location.organizationId, result.customer.id);

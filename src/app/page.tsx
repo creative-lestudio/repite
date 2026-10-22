@@ -54,7 +54,8 @@ export default async function LandingPage() {
   const steps: Item[] = Object.values(landing.how.steps);
   const features: Item[] = Object.values(landing.features.items);
   const who = Object.values(landing.who.items);
-  const planFeatures = Object.values(landing.pricing.features);
+  const freeFeatures = Object.values(landing.pricing.free.features);
+  const proFeatures = Object.values(landing.pricing.pro.features);
   const faq = Object.values(landing.faq.items);
   const whoIcons = [Users, Stamp, Notebook];
 
@@ -243,39 +244,69 @@ export default async function LandingPage() {
 
         {/* Precio */}
         <section id="precio" aria-labelledby="pricing-title" className="scroll-mt-16 px-4 py-20">
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-4xl">
             <div className="text-center">
               <h2 id="pricing-title" className="text-3xl font-extrabold sm:text-4xl">
                 {tp("title")}
               </h2>
               <p className="text-muted mt-3 text-lg">{tp("subtitle")}</p>
             </div>
-            <div className="bg-surface shadow-card mx-auto mt-10 flex max-w-md flex-col gap-5 rounded-xl p-8 ring-2 ring-blue-600">
-              <div className="flex items-start justify-between gap-2">
-                <h3 className="font-display text-2xl font-extrabold">{tp("name")}</h3>
-                <span className="bg-primary rounded-full px-3 py-1 text-sm font-bold text-white">{tp("badge")}</span>
-              </div>
-              <div>
+            <div className="mt-10 grid gap-6 md:grid-cols-2">
+              <div className="bg-surface shadow-card flex flex-col gap-5 rounded-xl p-8 ring-1 ring-blue-100">
+                <div>
+                  <h3 className="font-display text-2xl font-extrabold">{tp("free.name")}</h3>
+                  <p className="text-muted mt-1 text-sm">{tp("free.tagline")}</p>
+                </div>
                 <p className="font-display text-5xl font-extrabold">
-                  {formatPrice("EUR")} <span className="text-muted text-lg font-semibold">{tp("perMonth")}</span>
+                  {tp("free.price")} <span className="text-muted text-lg font-semibold">{tp("forever")}</span>
                 </p>
-                <p className="text-muted mt-1 text-sm">
-                  {tp("priceNote", { eur: formatPrice("EUR"), usd: formatPrice("USD") })}
-                </p>
+                <ul className="flex flex-1 flex-col gap-3">
+                  {freeFeatures.map((f) => (
+                    <li key={f} className="flex items-start gap-2">
+                      <Check className="text-success mt-0.5 size-5 shrink-0" aria-hidden />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <Button asChild size="lg" variant="secondary" block>
+                  <Link href="/registro">{tp("free.cta")}</Link>
+                </Button>
               </div>
-              <ul className="flex flex-col gap-3">
-                {planFeatures.map((f) => (
-                  <li key={f} className="flex items-start gap-2">
-                    <Check className="text-success mt-0.5 size-5 shrink-0" aria-hidden />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <Button asChild size="lg" block>
-                <Link href="/registro">{tp("cta")}</Link>
-              </Button>
-              <p className="text-muted text-center text-sm">{tp("note")}</p>
+
+              <div className="bg-surface shadow-card flex flex-col gap-5 rounded-xl p-8 ring-2 ring-blue-600">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <h3 className="font-display text-2xl font-extrabold">{tp("pro.name")}</h3>
+                    <p className="text-muted mt-1 text-sm">{tp("pro.tagline")}</p>
+                  </div>
+                  <span className="bg-primary rounded-full px-3 py-1 text-xs font-bold whitespace-nowrap text-white">
+                    {tp("pro.popular")}
+                  </span>
+                </div>
+                <div>
+                  <p className="font-display text-5xl font-extrabold">
+                    {formatPrice("EUR")} <span className="text-muted text-lg font-semibold">{tp("perMonth")}</span>
+                  </p>
+                  <p className="text-muted mt-1 text-sm">
+                    {tp("pro.priceNote", { eur: formatPrice("EUR"), usd: formatPrice("USD") })}
+                  </p>
+                </div>
+                <ul className="flex flex-1 flex-col gap-3">
+                  {proFeatures.map((f) => (
+                    <li key={f} className="flex items-start gap-2">
+                      <Check className="text-success mt-0.5 size-5 shrink-0" aria-hidden />
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+                <Button asChild size="lg" block>
+                  <Link href="/registro">{tp("pro.cta")}</Link>
+                </Button>
+              </div>
             </div>
+            <p className="text-muted mx-auto mt-6 max-w-xl text-center text-sm">
+              <span className="text-primary font-semibold">{tp("badge")}.</span> {tp("trialNote")}
+            </p>
           </div>
         </section>
 

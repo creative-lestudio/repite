@@ -690,6 +690,9 @@ isOneToOne: false
 "owner_customer_card":
 { Args: { "p_customer": string,"p_location": string }; Returns: Json
                            },
+"plan_usage":
+{ Args: { "p_org": string }; Returns: Json
+                           },
 "rate_limit_hit":
 { Args: { "p_key": string,"p_max": number,"p_window_seconds": number }; Returns: boolean
                            },

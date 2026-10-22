@@ -46,6 +46,8 @@ pnpm test:e2e    # flujos completos en móvil de 360 px (Playwright)
 
 ## Despliegue
 
+Guía paso a paso para no programadores: [`docs/PUBLICAR.md`](./docs/PUBLICAR.md).
+
 1. Crea un proyecto en Supabase y aplica las migraciones: `pnpm exec supabase link --project-ref <ref>` y después `pnpm exec supabase db push`.
 2. Importa el repositorio en Vercel y define las variables de `.env.example` con los valores del proyecto.
 3. Vercel Cron llama a `/api/cron/tick` cada hora (definido en `vercel.json`).

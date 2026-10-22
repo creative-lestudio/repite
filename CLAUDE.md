@@ -15,6 +15,8 @@ SaaS de fidelización para cafeterías (España y Venezuela). Tres interfaces: C
 | E2E (Playwright, 360 px)          | `pnpm test:e2e`                                |
 | Tipos de la BD                    | `pnpm db:types`                                |
 
+Guía de publicación para no programadores: `docs/PUBLICAR.md`.
+
 `messages/es-ES.d.json.ts` tipa claves y argumentos de los textos; lo regenera `pnpm i18n:types` (incluido en `pnpm typecheck`) y también next-intl al arrancar. Se versiona. Los argumentos numéricos de ICU se escriben `{n, number}`; los `{x}` sin formato son `string`.
 
 En el contenedor de Claude Code: `dockerd` puede no estar arrancado; lánzalo antes de `pnpm db:start`. Playwright está fijado a 1.56.1 para usar el Chromium preinstalado.
@@ -49,7 +51,7 @@ Next.js 15 (App Router, Server Actions) · TypeScript estricto · Supabase (Post
 20. **Equipo desde el panel**: los PIN y los tokens de tablet no se pueden escribir con el JWT; `src/server/repositories/team.ts` usa `service_role` tras `requireManager()` y comprueba siempre `organization_id`. El enlace de vinculación de una tablet se muestra una sola vez (solo se guarda el hash).
 21. **Material imprimible**: `/app/qr/pdf?formato=a4|a6` (pdf-lib, fuentes estándar → se filtran emojis) y `/app/qr/svg`. Descargar un PDF marca el paso «QR» del asistente.
 22. **CSV de clientes**: separador `;`, BOM UTF-8 y protección contra fórmulas de Excel (`src/domain/csv.ts`). Cada exportación queda en `audit_log`. El dueño puede insertar en `audit_log` solo como sí mismo (política `audit_log_insert`).
-23. **Plan**: `src/config/plan.ts` (30 días de prueba, precio 19 €/19 USD **provisional**). La web pública y el panel leen de ahí. No hay cobro real: la pantalla de plan solo informa.
+23. **Planes**: todas las cuentas empiezan en `trial` (30 días con todo incluido) y al caducar pasan solas a **Gratis** (hasta 50 clientes, para siempre); `pro` = clientes sin límite (precio 19 €/19 USD **provisional** en `src/config/plan.ts`). El plan efectivo se calcula en la BD (`app.effective_plan`) y en `src/domain/plan.ts`. El límite lo impone un trigger en `customers` (`customer_limit_reached`): los clientes existentes nunca se borran, solo se bloquean altas nuevas. Si cambias 50, cámbialo en `app.customer_limit` y en `PLAN.freeCustomerLimit`. No hay cobro real: la pantalla de plan solo informa. Pendiente de decidir: qué funciones del motor de oportunidades son de pago.
 24. **Web pública** (`/`): portada, cómo funciona, ventajas, vista previa con capturas reales (`public/landing/*.webp`, se regeneran con `scripts/dev/landing-shots.mjs`), precio, preguntas, `/legal/*` (borradores sin revisión legal), `robots`, `sitemap`, imagen Open Graph y JSON-LD. Los textos con listas se guardan como objetos `i1, i2…` (las listas rompen el tipado de next-intl) y se leen con `getMessages()`.
 25. Enumeraciones como `text` + `check` (más fáciles de evolucionar que los `enum` de Postgres).
 
