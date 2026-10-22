@@ -57,6 +57,19 @@ export async function magicLinkAction(next: string, _prev: AuthState, formData: 
   return { ok: true, sent: true };
 }
 
+export async function googleSignInAction(next: string) {
+  if (!(await rateLimit("google-owner", 600, 20))) redirect("/entrar?error=enlace");
+  const supabase = await createUserClient();
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${env().NEXT_PUBLIC_APP_URL}/auth/callback?siguiente=${encodeURIComponent(safeNext(next))}`,
+    },
+  });
+  if (error || !data.url) redirect("/entrar?error=enlace");
+  redirect(data.url);
+}
+
 export async function signOutOwnerAction() {
   const supabase = await createUserClient();
   await supabase.auth.signOut();

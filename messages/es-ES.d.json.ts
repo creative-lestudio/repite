@@ -326,6 +326,8 @@ declare const messages: {
       "password": "Contraseña",
       "submit": "Entrar",
       "or": "o",
+      "google": "Continuar con Google",
+      "orEmail": "o con tu correo",
       "magic": "Enviarme un enlace al correo",
       "magicSent": "Te hemos enviado un enlace a tu correo. Ábrelo desde este dispositivo para entrar.",
       "noAccount": "¿Aún no tienes cuenta?",
@@ -336,6 +338,8 @@ declare const messages: {
     "signup": {
       "title": "Crea tu cuenta",
       "subtitle": "Gratis hasta 50 clientes. Te lleva menos de 5 minutos.",
+      "google": "Registrarme con Google",
+      "orEmail": "o con tu correo",
       "email": "Tu correo",
       "password": "Elige una contraseña",
       "passwordHint": "Al menos 8 caracteres.",
