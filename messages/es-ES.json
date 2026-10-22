@@ -877,6 +877,19 @@
       "alt": "Panel de Repite con la lista de clientes",
       "altPhone": "Tarjeta de sellos de Repite en el móvil"
     },
+    "brandDemo": {
+      "title": "Que tu tarjeta se vea como tu local",
+      "subtitle": "Pruébalo ahora: elige tu color, tu icono y tu estilo. Tus clientes verán tu marca, no la nuestra.",
+      "nameLabel": "Nombre de tu local",
+      "placeholder": "Tu local",
+      "color": "Color",
+      "icon": "Icono del sello",
+      "shape": "Forma del sello",
+      "style": "Estilo de tarjeta",
+      "font": "Tipografía",
+      "reward": "Tu premio",
+      "note": "Con Plus también subes tu propio diseño de tarjeta."
+    },
     "pricing": {
       "title": "Un plan para cada momento de tu local",
       "subtitle": "Empieza gratis. Paga solo cuando tu tarjeta te dé más de lo que cuesta.",

@@ -10,6 +10,7 @@ import {
   FinalCta,
   HowSection,
   PreviewSection,
+  BrandSection,
   PricingSection,
   PromiseStrip,
   SectorsSection,
@@ -76,6 +77,7 @@ export default async function LandingPage() {
         <FeaturesSection />
         <WhoSection />
         <PreviewSection />
+        <BrandSection />
         <PricingSection />
         <FaqSection />
         <FinalCta />

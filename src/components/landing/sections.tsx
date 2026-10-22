@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getMessages, getTranslations } from "next-intl/server";
 import { SectorIcon } from "@/components/sector-icon";
 import { StampRow } from "@/components/landing/stamp-row";
+import { BrandDemo } from "./brand-demo";
 import { Pricing } from "./pricing";
 import { StampCard } from "@/components/stamp-card/stamp-card";
 import { Reveal } from "@/components/landing/reveal";
@@ -282,6 +283,10 @@ export async function PreviewSection() {
       </div>
     </section>
   );
+}
+
+export function BrandSection() {
+  return <BrandDemo />;
 }
 
 export function PricingSection() {
