@@ -113,6 +113,7 @@ declare const messages: {
       "phone": "Tu WhatsApp",
       "phoneHint": "Lo usamos para identificar tu tarjeta y recuperarla si cambias de móvil.",
       "birthday": "Tu cumpleaños",
+      "birthdayToggle": "+ Añade tu cumpleaños y recibe una sorpresa",
       "birthdayHint": "Solo el día y el mes, para darte una sorpresa.",
       "day": "Día",
       "month": "Mes",
@@ -360,7 +361,12 @@ declare const messages: {
     "signOut": "Cerrar sesión"
   },
   "plans": {
-    "names": { "starter": "Starter", "basic": "Basic", "plus": "Plus", "trial": "Prueba gratuita" },
+    "names": {
+      "starter": "Starter",
+      "basic": "Basic",
+      "plus": "Plus",
+      "trial": "Prueba gratuita"
+    },
     "taglines": {
       "starter": "Para probar con tu primer local",
       "basic": "Para locales con clientela fija",
@@ -460,13 +466,26 @@ declare const messages: {
       "fontTitle": "Tipografía",
       "stampsTitle": "Sellos",
       "shape": "Forma",
-      "shapes": { "circle": "Círculo", "square": "Cuadrado", "hex": "Hexágono", "star": "Estrella" },
+      "shapes": {
+        "circle": "Círculo",
+        "square": "Cuadrado",
+        "hex": "Hexágono",
+        "star": "Estrella"
+      },
       "content": "Dentro del sello",
-      "modes": { "icon": "Icono", "number": "Número", "image": "Tu imagen" },
+      "modes": {
+        "icon": "Icono",
+        "number": "Número",
+        "image": "Tu imagen"
+      },
       "stampImage": "Imagen del sello",
       "stampImageHint": "Se recorta en cuadrado. Mejor una imagen sencilla.",
       "cardTitle": "Tarjeta",
-      "cardStyles": { "light": "Clara", "dark": "Oscura", "brand": "Color de marca" },
+      "cardStyles": {
+        "light": "Clara",
+        "dark": "Oscura",
+        "brand": "Color de marca"
+      },
       "cardBg": "Tu propio diseño de tarjeta",
       "cardBgHint": "Una imagen apaisada (por ejemplo 1200×750). Se oscurece un poco para que se lean los sellos.",
       "save": "Guardar mi marca",

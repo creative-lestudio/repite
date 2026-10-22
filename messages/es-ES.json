@@ -110,6 +110,7 @@
       "phone": "Tu WhatsApp",
       "phoneHint": "Lo usamos para identificar tu tarjeta y recuperarla si cambias de móvil.",
       "birthday": "Tu cumpleaños",
+      "birthdayToggle": "+ Añade tu cumpleaños y recibe una sorpresa",
       "birthdayHint": "Solo el día y el mes, para darte una sorpresa.",
       "day": "Día",
       "month": "Mes",

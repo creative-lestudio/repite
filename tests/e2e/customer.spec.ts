@@ -13,6 +13,7 @@ test.describe("cliente", () => {
 
     await page.getByLabel("Tu nombre").fill("Prueba E2E");
     await page.getByLabel("Tu WhatsApp").fill(phone);
+    await page.getByText("Añade tu cumpleaños").click();
     await page.getByLabel("Día").selectOption("14");
     await page.getByLabel("Mes").selectOption("3");
     await consent.check();

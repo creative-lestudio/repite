@@ -42,56 +42,61 @@ export function SignupForm({ slug, locationName }: { slug: string; locationName:
       <Field id="phone" label={t("phone")} hint={t("phoneHint")} error={fieldError("phone")}>
         <Input name="phone" type="tel" inputMode="tel" autoComplete="tel" required />
       </Field>
-      <fieldset className="flex flex-col gap-1.5">
-        <legend className="text-sm font-semibold">
-          {t("birthday")} <span className="text-muted font-normal">({tc("optional")})</span>
-        </legend>
-        <p id="birthday-hint" className="text-muted text-sm">
-          {t("birthdayHint")}
-        </p>
-        <div className="mt-1 grid grid-cols-[5.5rem_1fr] gap-3">
-          <label className="sr-only" htmlFor="birthDay">
-            {t("day")}
-          </label>
-          <select
-            id="birthDay"
-            name="birthDay"
-            defaultValue=""
-            className={selectClass}
-            aria-describedby="birthday-hint"
-            aria-invalid={fieldError("birthDay") ? true : undefined}
-          >
-            <option value="">{t("day")}</option>
-            {Array.from({ length: 31 }, (_, i) => (
-              <option key={i + 1} value={i + 1}>
-                {i + 1}
-              </option>
-            ))}
-          </select>
-          <label className="sr-only" htmlFor="birthMonth">
-            {t("month")}
-          </label>
-          <select
-            id="birthMonth"
-            name="birthMonth"
-            defaultValue=""
-            className={selectClass}
-            aria-describedby="birthday-hint"
-          >
-            <option value="">{t("month")}</option>
-            {Array.from({ length: 12 }, (_, i) => (
-              <option key={i} value={i + 1}>
-                {t(`months.m${(i + 1) as 1}`)}
-              </option>
-            ))}
-          </select>
-        </div>
-        {fieldError("birthDay") && (
-          <p role="alert" className="text-danger text-sm font-medium">
-            {fieldError("birthDay")}
+      <details open={Boolean(fieldError("birthDay"))} className="group">
+        <summary className="text-primary min-h-11 cursor-pointer py-2 text-sm font-semibold underline-offset-4 hover:underline">
+          {t("birthdayToggle")}
+        </summary>
+        <fieldset className="flex flex-col gap-1.5">
+          <legend className="text-sm font-semibold">
+            {t("birthday")} <span className="text-muted font-normal">({tc("optional")})</span>
+          </legend>
+          <p id="birthday-hint" className="text-muted text-sm">
+            {t("birthdayHint")}
           </p>
-        )}
-      </fieldset>
+          <div className="mt-1 grid grid-cols-[5.5rem_1fr] gap-3">
+            <label className="sr-only" htmlFor="birthDay">
+              {t("day")}
+            </label>
+            <select
+              id="birthDay"
+              name="birthDay"
+              defaultValue=""
+              className={selectClass}
+              aria-describedby="birthday-hint"
+              aria-invalid={fieldError("birthDay") ? true : undefined}
+            >
+              <option value="">{t("day")}</option>
+              {Array.from({ length: 31 }, (_, i) => (
+                <option key={i + 1} value={i + 1}>
+                  {i + 1}
+                </option>
+              ))}
+            </select>
+            <label className="sr-only" htmlFor="birthMonth">
+              {t("month")}
+            </label>
+            <select
+              id="birthMonth"
+              name="birthMonth"
+              defaultValue=""
+              className={selectClass}
+              aria-describedby="birthday-hint"
+            >
+              <option value="">{t("month")}</option>
+              {Array.from({ length: 12 }, (_, i) => (
+                <option key={i} value={i + 1}>
+                  {t(`months.m${(i + 1) as 1}`)}
+                </option>
+              ))}
+            </select>
+          </div>
+          {fieldError("birthDay") && (
+            <p role="alert" className="text-danger text-sm font-medium">
+              {fieldError("birthDay")}
+            </p>
+          )}
+        </fieldset>
+      </details>
       <Checkbox
         id="consent"
         name="consent"
