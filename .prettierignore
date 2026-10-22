@@ -5,3 +5,4 @@ supabase/.temp
 playwright-report
 test-results
 src/lib/supabase/database.types.ts
+messages/es-ES.d.json.ts

@@ -2,195 +2,299 @@
 // See: https://next-intl.dev/docs/workflows/typescript#messages-arguments
 
 declare const messages: {
-  meta: {
-    description: "Repite convierte cada visita a tu local en una relación: tarjeta de sellos por QR, memoria de cada cliente y mensajes listos para que vuelvan.";
-  };
-  common: {
-    appName: "Repite";
-    loading: "Cargando…";
-    save: "Guardar cambios";
-    cancel: "Cancelar";
-    back: "Volver";
-    continue: "Continuar";
-    close: "Cerrar";
-    retry: "Intentar de nuevo";
-    optional: "opcional";
-    stampsLeft: "{count, plural, =0 {¡tarjeta completa!} one {te falta # sello} other {te faltan # sellos}}";
-    stampsOf: "{count, number} de {total, number} sellos";
-    notFoundTitle: "No encontramos esta página";
-    notFoundBody: "Puede que el enlace esté mal escrito o que la página ya no exista.";
-    goHome: "Ir al inicio";
-  };
-  errors: {
-    generic: "Algo no ha salido bien. Inténtalo de nuevo en unos segundos.";
-    network: "No hay conexión. Revisa tu internet e inténtalo otra vez.";
-    rateLimited: "Demasiados intentos seguidos. Espera un minuto y vuelve a probar.";
-    cooldown: "Este cliente ya sumó un sello hace poco. Podrá sumar otro a partir de las {time}.";
-    location_not_found: "No encontramos este local. Revisa el enlace o el QR.";
-    customer_not_found: "No encontramos a este cliente.";
-    no_active_program: "Este local todavía no tiene un programa de sellos activo.";
-    already_undone: "Esta visita ya se había deshecho.";
-    undo_window_passed: "Ya pasaron más de {minutes} minutos: esta visita no se puede deshacer.";
-    reward_already_redeemed: "Este premio ya se canjeó.";
-    reward_not_available: "Este premio ya no está disponible.";
-    reward_not_found: "No encontramos este premio.";
-    bonus_already_pending: "Ya tienes una solicitud pendiente de este tipo. El equipo la revisará pronto.";
-    bonus_review_already_given: "Ya recibiste el sello por tu reseña. ¡Gracias!";
-    bonus_disabled: "Este local no ofrece este sello extra ahora mismo.";
-    already_validated: "Esta solicitud ya estaba revisada.";
-    event_not_found: "No encontramos ese movimiento.";
-    invalid_pin: "El PIN debe tener entre 4 y 6 números.";
-    sessionExpired: "Tu sesión ha caducado. Vuelve a abrir tu tarjeta desde el QR del local.";
-    phoneInvalid: "Revisa el número: no parece un WhatsApp válido.";
-    nameRequired: "Escribe tu nombre para saber cómo llamarte.";
-    nameTooLong: "El nombre es demasiado largo.";
-    birthdayIncomplete: "Elige el día y el mes, o deja los dos vacíos.";
-    birthdayInvalid: "Esa fecha no existe. Revisa el día y el mes.";
-    form: "Revisa los campos marcados.";
-  };
-  stampCard: {
-    label: "Tarjeta de sellos: {count, number} de {total, number}";
-    stamp: "Sello {n, number}";
-    stampFilled: "Sello {n, number}, conseguido";
-    nextReward: "Tu próximo premio";
-    newStamp: "¡Nuevo sello!";
-  };
-  design: {
-    title: "Sistema de diseño";
-    intro: "Componentes base de Repite. Todo lo que ves aquí sale de los mismos tokens.";
-    addStamp: "Sumar un sello";
-    reset: "Vaciar tarjeta";
-  };
-  customer: {
-    nav: {
-      card: "Tarjeta";
-      rewards: "Premios";
-      extra: "Sellos extra";
-      history: "Historial";
-      settings: "Ajustes";
-      label: "Secciones de tu tarjeta";
-    };
-    notFound: {
-      title: "No encontramos este local";
-      body: "Puede que el enlace esté mal escrito o que el local ya no use Repite. Vuelve a escanear el QR del local.";
-    };
-    signup: {
-      title: "Tu tarjeta de {location}";
-      subtitle: "Suma sellos en cada visita y consigue {reward}. Sin apps ni contraseñas.";
-      subtitleNoProgram: "Suma sellos en cada visita y consigue premios. Sin apps ni contraseñas.";
-      name: "Tu nombre";
-      namePlaceholder: "María";
-      phone: "Tu WhatsApp";
-      phoneHint: "Lo usamos para identificar tu tarjeta y recuperarla si cambias de móvil.";
-      birthday: "Tu cumpleaños";
-      birthdayHint: "Solo el día y el mes, para darte una sorpresa.";
-      day: "Día";
-      month: "Mes";
-      consent: "Quiero recibir mensajes de {location} por WhatsApp";
-      consentHint: "Ofertas, tu cumpleaños o avisos de premios. Puedes darte de baja cuando quieras.";
-      submit: "Crear mi tarjeta";
-      legal: "Al crear tu tarjeta aceptas que {location} guarde tu nombre y tus visitas para gestionar tu programa de sellos.";
-      phoneExistsTitle: "Ya tienes una tarjeta con este número";
-      phoneExistsBody: "Te hemos enviado un enlace por WhatsApp para recuperarla en este móvil.";
-      haveCard: "¿Ya tienes tarjeta en otro móvil?";
-      recover: "Recuperar mi tarjeta";
-      months: {
-        m1: "enero";
-        m2: "febrero";
-        m3: "marzo";
-        m4: "abril";
-        m5: "mayo";
-        m6: "junio";
-        m7: "julio";
-        m8: "agosto";
-        m9: "septiembre";
-        m10: "octubre";
-        m11: "noviembre";
-        m12: "diciembre";
-      };
-    };
-    card: {
-      hello: "Hola, {name}";
-      welcome: "¡Tu tarjeta está lista! Enséñale tu código al equipo en cada visita para sumar sellos.";
-      showCode: "Mostrar mi código";
-      hideCode: "Ocultar mi código";
-      codeHint: "Enséñale este código al equipo para sumar tu sello.";
-      codeAlt: "Código QR personal de {name}";
-      rewardReady: "{count, plural, one {Tienes un premio listo} other {Tienes # premios listos}}";
-      rewardReadyAction: "Ver mis premios";
-      rewardWon: "¡Premio conseguido! Ya puedes canjearlo.";
-      noProgram: "Este local está preparando su programa de sellos. Vuelve pronto.";
-      pendingBonus: "{count, plural, one {Tienes un sello extra pendiente de revisar} other {Tienes # sellos extra pendientes de revisar}}";
-    };
-    rewards: {
-      title: "Tus premios";
-      emptyTitle: "Aún no tienes premios";
-      emptyBody: "{count, plural, one {Te falta # sello para conseguir {reward}.} other {Te faltan # sellos para conseguir {reward}.}}";
-      expires: "Válido hasta el {date}";
-      noExpiry: "Sin caducidad";
-      redeem: "Canjear premio";
-      redeemTitle: "Canjear {reward}";
-      redeemBody: "Enseña esta pantalla al equipo. Escanearán tu código y validarán el canje.";
-      redeemDone: "Listo";
-    };
-    extra: {
-      title: "Sellos extra";
-      intro: "Gana sellos de más ayudando a {location} a darse a conocer. El equipo los revisará y aparecerán en tu tarjeta.";
-      storyTitle: "Subir una historia";
-      storyBody: "Comparte una historia en Instagram mencionando a {handle}.";
-      storyBodyNoHandle: "Comparte una historia en Instagram mencionando al local.";
-      storyField: "Tu usuario de Instagram";
-      storyPlaceholder: "@tuusuario";
-      reviewTitle: "Dejar una reseña";
-      reviewBody: "Cuéntale al mundo qué te parece {location} en Google Maps.";
-      reviewOpen: "Abrir Google Maps";
-      reviewField: "Nombre con el que publicaste la reseña";
-      reviewPlaceholder: "María L.";
-      send: "Ya lo hice, pedir mi sello";
-      sent: "¡Recibido! El equipo lo revisará pronto y verás el sello en tu tarjeta.";
-      pending: "Pendiente de revisar";
-      reviewGiven: "Ya recibiste el sello por tu reseña. ¡Gracias!";
-      plusOne: "+1 sello";
-      disabled: "Este local no ofrece sellos extra por ahora.";
-    };
-    history: {
-      title: "Tu historial";
-      emptyTitle: "Todavía no hay movimientos";
-      emptyBody: "Cuando sumes tu primer sello lo verás aquí.";
-      visit: "Visita";
-      bonus_story: "Sello extra por historia";
-      bonus_review: "Sello extra por reseña";
-      reward_issued: "Premio conseguido";
-      redeem: "Premio canjeado";
-      adjust: "Corrección del equipo";
-      pending: "pendiente";
-      rejected: "no aprobado";
-    };
-    settings: {
-      title: "Ajustes";
-      language: "Idioma";
-      languages: {
-        "es-ES": "Español (España)";
-        "es-VE": "Español (Venezuela)";
-      };
-      messages: "Mensajes por WhatsApp";
-      messagesOn: "Recibo mensajes de {location}";
-      messagesHint: "Ofertas, tu cumpleaños o avisos de premios. Nunca más de uno cada pocos días.";
-      saved: "Cambios guardados";
-      signOut: "Cerrar la tarjeta en este móvil";
-      signOutHint: "Podrás recuperarla con un enlace a tu WhatsApp.";
-      install: "Añadir a la pantalla de inicio";
-      installHint: "Tendrás tu tarjeta a un toque, como una app.";
-      installIos: "En iPhone: pulsa Compartir y después «Añadir a pantalla de inicio».";
-    };
-    recover: {
-      title: "Recupera tu tarjeta";
-      body: "Escribe el WhatsApp con el que te registraste y te enviaremos un enlace para abrirla en este móvil.";
-      submit: "Enviarme el enlace";
-      sent: "Si ese número tiene tarjeta en {location}, en unos segundos te llegará un WhatsApp con el enlace. Caduca en 30 minutos.";
-      invalidLink: "Este enlace ya se usó o ha caducado. Pide uno nuevo.";
-      newAccount: "Crear una tarjeta nueva";
-    };
-  };
+  "meta": {
+    "description": "Repite convierte cada visita a tu local en una relación: tarjeta de sellos por QR, memoria de cada cliente y mensajes listos para que vuelvan."
+  },
+  "common": {
+    "appName": "Repite",
+    "loading": "Cargando…",
+    "save": "Guardar cambios",
+    "cancel": "Cancelar",
+    "back": "Volver",
+    "continue": "Continuar",
+    "close": "Cerrar",
+    "retry": "Intentar de nuevo",
+    "optional": "opcional",
+    "stampsLeft": "{count, plural, =0 {¡tarjeta completa!} one {te falta # sello} other {te faltan # sellos}}",
+    "stampsOf": "{count, number} de {total, number} sellos",
+    "notFoundTitle": "No encontramos esta página",
+    "notFoundBody": "Puede que el enlace esté mal escrito o que la página ya no exista.",
+    "goHome": "Ir al inicio"
+  },
+  "errors": {
+    "generic": "Algo no ha salido bien. Inténtalo de nuevo en unos segundos.",
+    "network": "No hay conexión. Revisa tu internet e inténtalo otra vez.",
+    "rateLimited": "Demasiados intentos seguidos. Espera un minuto y vuelve a probar.",
+    "cooldown": "Este cliente ya sumó un sello hace poco. Podrá sumar otro a partir de las {time}.",
+    "location_not_found": "No encontramos este local. Revisa el enlace o el QR.",
+    "customer_not_found": "No encontramos a este cliente.",
+    "no_active_program": "Este local todavía no tiene un programa de sellos activo.",
+    "already_undone": "Esta visita ya se había deshecho.",
+    "undo_window_passed": "Ya pasaron más de {minutes} minutos: esta visita no se puede deshacer.",
+    "reward_already_redeemed": "Este premio ya se canjeó.",
+    "reward_not_available": "Este premio ya no está disponible.",
+    "reward_not_found": "No encontramos este premio.",
+    "bonus_already_pending": "Ya tienes una solicitud pendiente de este tipo. El equipo la revisará pronto.",
+    "bonus_review_already_given": "Ya recibiste el sello por tu reseña. ¡Gracias!",
+    "bonus_disabled": "Este local no ofrece este sello extra ahora mismo.",
+    "already_validated": "Esta solicitud ya estaba revisada.",
+    "event_not_found": "No encontramos ese movimiento.",
+    "invalid_pin": "El PIN debe tener entre 4 y 6 números.",
+    "sessionExpired": "Tu sesión ha caducado. Vuelve a abrir tu tarjeta desde el QR del local.",
+    "phoneInvalid": "Revisa el número: no parece un WhatsApp válido.",
+    "nameRequired": "Escribe tu nombre para saber cómo llamarte.",
+    "nameTooLong": "El nombre es demasiado largo.",
+    "birthdayIncomplete": "Elige el día y el mes, o deja los dos vacíos.",
+    "birthdayInvalid": "Esa fecha no existe. Revisa el día y el mes.",
+    "form": "Revisa los campos marcados.",
+    "staffSessionExpired": "Tu sesión ha caducado. Vuelve a entrar con tu PIN.",
+    "noteInvalid": "Escribe la nota (máximo 1000 caracteres)."
+  },
+  "stampCard": {
+    "label": "Tarjeta de sellos: {count, number} de {total, number}",
+    "stamp": "Sello {n, number}",
+    "stampFilled": "Sello {n, number}, conseguido",
+    "nextReward": "Tu próximo premio",
+    "newStamp": "¡Nuevo sello!"
+  },
+  "design": {
+    "title": "Sistema de diseño",
+    "intro": "Componentes base de Repite. Todo lo que ves aquí sale de los mismos tokens.",
+    "addStamp": "Sumar un sello",
+    "reset": "Vaciar tarjeta"
+  },
+  "customer": {
+    "nav": {
+      "card": "Tarjeta",
+      "rewards": "Premios",
+      "extra": "Sellos extra",
+      "history": "Historial",
+      "settings": "Ajustes",
+      "label": "Secciones de tu tarjeta"
+    },
+    "notFound": {
+      "title": "No encontramos este local",
+      "body": "Puede que el enlace esté mal escrito o que el local ya no use Repite. Vuelve a escanear el QR del local."
+    },
+    "signup": {
+      "title": "Tu tarjeta de {location}",
+      "subtitle": "Suma sellos en cada visita y consigue {reward}. Sin apps ni contraseñas.",
+      "subtitleNoProgram": "Suma sellos en cada visita y consigue premios. Sin apps ni contraseñas.",
+      "name": "Tu nombre",
+      "namePlaceholder": "María",
+      "phone": "Tu WhatsApp",
+      "phoneHint": "Lo usamos para identificar tu tarjeta y recuperarla si cambias de móvil.",
+      "birthday": "Tu cumpleaños",
+      "birthdayHint": "Solo el día y el mes, para darte una sorpresa.",
+      "day": "Día",
+      "month": "Mes",
+      "consent": "Quiero recibir mensajes de {location} por WhatsApp",
+      "consentHint": "Ofertas, tu cumpleaños o avisos de premios. Puedes darte de baja cuando quieras.",
+      "submit": "Crear mi tarjeta",
+      "legal": "Al crear tu tarjeta aceptas que {location} guarde tu nombre y tus visitas para gestionar tu programa de sellos.",
+      "phoneExistsTitle": "Ya tienes una tarjeta con este número",
+      "phoneExistsBody": "Te hemos enviado un enlace por WhatsApp para recuperarla en este móvil.",
+      "haveCard": "¿Ya tienes tarjeta en otro móvil?",
+      "recover": "Recuperar mi tarjeta",
+      "months": {
+        "m1": "enero",
+        "m2": "febrero",
+        "m3": "marzo",
+        "m4": "abril",
+        "m5": "mayo",
+        "m6": "junio",
+        "m7": "julio",
+        "m8": "agosto",
+        "m9": "septiembre",
+        "m10": "octubre",
+        "m11": "noviembre",
+        "m12": "diciembre"
+      }
+    },
+    "card": {
+      "hello": "Hola, {name}",
+      "welcome": "¡Tu tarjeta está lista! Enséñale tu código al equipo en cada visita para sumar sellos.",
+      "showCode": "Mostrar mi código",
+      "hideCode": "Ocultar mi código",
+      "codeHint": "Enséñale este código al equipo para sumar tu sello.",
+      "codeAlt": "Código QR personal de {name}",
+      "rewardReady": "{count, plural, one {Tienes un premio listo} other {Tienes # premios listos}}",
+      "rewardReadyAction": "Ver mis premios",
+      "rewardWon": "¡Premio conseguido! Ya puedes canjearlo.",
+      "noProgram": "Este local está preparando su programa de sellos. Vuelve pronto.",
+      "pendingBonus": "{count, plural, one {Tienes un sello extra pendiente de revisar} other {Tienes # sellos extra pendientes de revisar}}"
+    },
+    "rewards": {
+      "title": "Tus premios",
+      "emptyTitle": "Aún no tienes premios",
+      "emptyBody": "{count, plural, one {Te falta # sello para conseguir {reward}.} other {Te faltan # sellos para conseguir {reward}.}}",
+      "expires": "Válido hasta el {date}",
+      "noExpiry": "Sin caducidad",
+      "redeem": "Canjear premio",
+      "redeemTitle": "Canjear {reward}",
+      "redeemBody": "Enseña esta pantalla al equipo. Escanearán tu código y validarán el canje.",
+      "redeemDone": "Listo"
+    },
+    "extra": {
+      "title": "Sellos extra",
+      "intro": "Gana sellos de más ayudando a {location} a darse a conocer. El equipo los revisará y aparecerán en tu tarjeta.",
+      "storyTitle": "Subir una historia",
+      "storyBody": "Comparte una historia en Instagram mencionando a {handle}.",
+      "storyBodyNoHandle": "Comparte una historia en Instagram mencionando al local.",
+      "storyField": "Tu usuario de Instagram",
+      "storyPlaceholder": "@tuusuario",
+      "reviewTitle": "Dejar una reseña",
+      "reviewBody": "Cuéntale al mundo qué te parece {location} en Google Maps.",
+      "reviewOpen": "Abrir Google Maps",
+      "reviewField": "Nombre con el que publicaste la reseña",
+      "reviewPlaceholder": "María L.",
+      "send": "Ya lo hice, pedir mi sello",
+      "sent": "¡Recibido! El equipo lo revisará pronto y verás el sello en tu tarjeta.",
+      "pending": "Pendiente de revisar",
+      "reviewGiven": "Ya recibiste el sello por tu reseña. ¡Gracias!",
+      "plusOne": "+1 sello",
+      "disabled": "Este local no ofrece sellos extra por ahora."
+    },
+    "history": {
+      "title": "Tu historial",
+      "emptyTitle": "Todavía no hay movimientos",
+      "emptyBody": "Cuando sumes tu primer sello lo verás aquí.",
+      "visit": "Visita",
+      "bonus_story": "Sello extra por historia",
+      "bonus_review": "Sello extra por reseña",
+      "reward_issued": "Premio conseguido",
+      "redeem": "Premio canjeado",
+      "adjust": "Corrección del equipo",
+      "pending": "pendiente",
+      "rejected": "no aprobado"
+    },
+    "settings": {
+      "title": "Ajustes",
+      "language": "Idioma",
+      "languages": {
+        "es-ES": "Español (España)",
+        "es-VE": "Español (Venezuela)"
+      },
+      "messages": "Mensajes por WhatsApp",
+      "messagesOn": "Recibo mensajes de {location}",
+      "messagesHint": "Ofertas, tu cumpleaños o avisos de premios. Nunca más de uno cada pocos días.",
+      "saved": "Cambios guardados",
+      "signOut": "Cerrar la tarjeta en este móvil",
+      "signOutHint": "Podrás recuperarla con un enlace a tu WhatsApp.",
+      "install": "Añadir a la pantalla de inicio",
+      "installHint": "Tendrás tu tarjeta a un toque, como una app.",
+      "installIos": "En iPhone: pulsa Compartir y después «Añadir a pantalla de inicio»."
+    },
+    "recover": {
+      "title": "Recupera tu tarjeta",
+      "body": "Escribe el WhatsApp con el que te registraste y te enviaremos un enlace para abrirla en este móvil.",
+      "submit": "Enviarme el enlace",
+      "sent": "Si ese número tiene tarjeta en {location}, en unos segundos te llegará un WhatsApp con el enlace. Caduca en 30 minutos.",
+      "invalidLink": "Este enlace ya se usó o ha caducado. Pide uno nuevo.",
+      "newAccount": "Crear una tarjeta nueva"
+    }
+  },
+  "staff": {
+    "title": "Equipo",
+    "pairing": {
+      "title": "Vincula esta tablet",
+      "body": "Para usar el panel del equipo, esta tablet tiene que estar vinculada a tu local.",
+      "steps": "Pide al dueño que abra Repite › Equipo › Tablets y escanea con esta tablet el código de vinculación.",
+      "invalid": "Ese enlace de vinculación no es válido o la tablet se dio de baja. Pide uno nuevo al dueño."
+    },
+    "signIn": {
+      "title": "¿Quién eres?",
+      "subtitle": "Toca tu nombre y escribe tu PIN.",
+      "emptyTitle": "Todavía no hay nadie del equipo",
+      "emptyBody": "El dueño puede dar de alta al equipo y sus PIN desde Repite › Equipo.",
+      "pinFor": "PIN de {name}",
+      "pinLabel": "PIN",
+      "digit": "Número {n}",
+      "delete": "Borrar",
+      "enter": "Entrar",
+      "change": "No soy {name}",
+      "wrong": "{count, plural, =0 {PIN incorrecto.} one {PIN incorrecto. Te queda # intento.} other {PIN incorrecto. Te quedan # intentos.}}",
+      "locked": "Demasiados intentos. Por seguridad, este PIN está bloqueado hasta las {time}.",
+      "rateLimited": "Demasiados intentos desde esta tablet. Espera unos minutos.",
+      "inactive": "Este acceso está desactivado. Habla con el dueño."
+    },
+    "header": {
+      "switch": "Cambiar de persona",
+      "signedAs": "Atiende: {name}"
+    },
+    "nav": {
+      "home": "Inicio",
+      "scan": "Escanear",
+      "pending": "Pendientes",
+      "label": "Secciones del equipo"
+    },
+    "home": {
+      "searchLabel": "Buscar cliente",
+      "searchPlaceholder": "Nombre o teléfono",
+      "searchHint": "Escribe al menos 2 letras o 3 números.",
+      "noResults": "No encontramos a nadie con «{query}». Si es nuevo, que escanee el QR del local para crear su tarjeta.",
+      "scan": "Escanear código del cliente",
+      "today": "Visitas de hoy",
+      "todayCount": "{count, plural, =0 {Ninguna todavía} one {# visita} other {# visitas}}",
+      "todayEmptyTitle": "Aún no hay visitas hoy",
+      "todayEmptyBody": "Cuando registres la primera visita aparecerá aquí. Podrás deshacerla durante 10 minutos.",
+      "by": "por {name}",
+      "undo": "Deshacer",
+      "undone": "Deshecha",
+      "undoDone": "Visita deshecha",
+      "pendingBanner": "{count, plural, one {Hay # sello extra por validar} other {Hay # sellos extra por validar}}",
+      "pendingAction": "Validar sellos extra"
+    },
+    "scan": {
+      "title": "Escanear código",
+      "body": "Apunta la cámara al código QR de la tarjeta del cliente.",
+      "start": "Activar la cámara",
+      "denied": "No tenemos permiso para usar la cámara. Actívalo en los ajustes del navegador o busca al cliente por nombre.",
+      "unsupported": "Esta tablet no permite escanear desde el navegador. Busca al cliente por nombre o teléfono.",
+      "notRepite": "Ese código no es una tarjeta de Repite.",
+      "notFound": "No encontramos esa tarjeta en tu local."
+    },
+    "customer": {
+      "lastVisit": "Última visita: {date}",
+      "neverVisited": "Todavía no ha venido",
+      "usualOrder": "Pedido habitual",
+      "usualOrderEmpty": "Sin pedido habitual",
+      "usualOrderEdit": "Cambiar",
+      "usualOrderSave": "Guardar pedido",
+      "usualOrderPlaceholder": "Ej.: cortado con avena",
+      "registerVisit": "Registrar visita",
+      "visitDone": "Visita registrada: {count, number} de {total, number} sellos",
+      "rewardIssued": "¡Tarjeta completa! {name} ya tiene su premio.",
+      "rewardsTitle": "Premios por canjear",
+      "redeem": "Canjear premio",
+      "redeemConfirm": "¿Canjear «{reward}» ahora?",
+      "redeemYes": "Sí, canjear",
+      "redeemDone": "Premio canjeado",
+      "bonusTitle": "Sellos extra por validar",
+      "bonus_story": "Historia en Instagram",
+      "bonus_review": "Reseña en Google",
+      "approve": "Aprobar",
+      "reject": "Rechazar",
+      "approved": "Sello extra aprobado",
+      "rejected": "Solicitud rechazada",
+      "notesTitle": "Notas del equipo",
+      "notesEmpty": "Sin notas todavía. Apunta gustos o detalles para recordarlos la próxima vez.",
+      "addNote": "Añadir nota",
+      "noteLabel": "Nueva nota",
+      "notePlaceholder": "Ej.: le gusta sentarse en la terraza",
+      "notePin": "Fijar arriba",
+      "pinned": "Fijada",
+      "noConsent": "No quiere recibir mensajes",
+      "back": "Volver al inicio"
+    },
+    "pending": {
+      "title": "Sellos extra por validar",
+      "intro": "Comprueba la historia o la reseña antes de aprobar el sello.",
+      "emptyTitle": "Todo al día",
+      "emptyBody": "No hay sellos extra pendientes. Cuando un cliente pida uno, aparecerá aquí.",
+      "handle": "Usuario: {handle}",
+      "openCustomer": "Ver ficha"
+    }
+  }
 };
 export default messages;

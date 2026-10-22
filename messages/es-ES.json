@@ -43,7 +43,9 @@
     "nameTooLong": "El nombre es demasiado largo.",
     "birthdayIncomplete": "Elige el día y el mes, o deja los dos vacíos.",
     "birthdayInvalid": "Esa fecha no existe. Revisa el día y el mes.",
-    "form": "Revisa los campos marcados."
+    "form": "Revisa los campos marcados.",
+    "staffSessionExpired": "Tu sesión ha caducado. Vuelve a entrar con tu PIN.",
+    "noteInvalid": "Escribe la nota (máximo 1000 caracteres)."
   },
   "stampCard": {
     "label": "Tarjeta de sellos: {count, number} de {total, number}",
@@ -187,6 +189,108 @@
       "sent": "Si ese número tiene tarjeta en {location}, en unos segundos te llegará un WhatsApp con el enlace. Caduca en 30 minutos.",
       "invalidLink": "Este enlace ya se usó o ha caducado. Pide uno nuevo.",
       "newAccount": "Crear una tarjeta nueva"
+    }
+  },
+  "staff": {
+    "title": "Equipo",
+    "pairing": {
+      "title": "Vincula esta tablet",
+      "body": "Para usar el panel del equipo, esta tablet tiene que estar vinculada a tu local.",
+      "steps": "Pide al dueño que abra Repite › Equipo › Tablets y escanea con esta tablet el código de vinculación.",
+      "invalid": "Ese enlace de vinculación no es válido o la tablet se dio de baja. Pide uno nuevo al dueño."
+    },
+    "signIn": {
+      "title": "¿Quién eres?",
+      "subtitle": "Toca tu nombre y escribe tu PIN.",
+      "emptyTitle": "Todavía no hay nadie del equipo",
+      "emptyBody": "El dueño puede dar de alta al equipo y sus PIN desde Repite › Equipo.",
+      "pinFor": "PIN de {name}",
+      "pinLabel": "PIN",
+      "digit": "Número {n}",
+      "delete": "Borrar",
+      "enter": "Entrar",
+      "change": "No soy {name}",
+      "wrong": "{count, plural, =0 {PIN incorrecto.} one {PIN incorrecto. Te queda # intento.} other {PIN incorrecto. Te quedan # intentos.}}",
+      "locked": "Demasiados intentos. Por seguridad, este PIN está bloqueado hasta las {time}.",
+      "rateLimited": "Demasiados intentos desde esta tablet. Espera unos minutos.",
+      "inactive": "Este acceso está desactivado. Habla con el dueño."
+    },
+    "header": {
+      "switch": "Cambiar de persona",
+      "signedAs": "Atiende: {name}"
+    },
+    "nav": {
+      "home": "Inicio",
+      "scan": "Escanear",
+      "pending": "Pendientes",
+      "label": "Secciones del equipo"
+    },
+    "home": {
+      "searchLabel": "Buscar cliente",
+      "searchPlaceholder": "Nombre o teléfono",
+      "searchHint": "Escribe al menos 2 letras o 3 números.",
+      "noResults": "No encontramos a nadie con «{query}». Si es nuevo, que escanee el QR del local para crear su tarjeta.",
+      "scan": "Escanear código del cliente",
+      "today": "Visitas de hoy",
+      "todayCount": "{count, plural, =0 {Ninguna todavía} one {# visita} other {# visitas}}",
+      "todayEmptyTitle": "Aún no hay visitas hoy",
+      "todayEmptyBody": "Cuando registres la primera visita aparecerá aquí. Podrás deshacerla durante 10 minutos.",
+      "by": "por {name}",
+      "undo": "Deshacer",
+      "undone": "Deshecha",
+      "undoDone": "Visita deshecha",
+      "pendingBanner": "{count, plural, one {Hay # sello extra por validar} other {Hay # sellos extra por validar}}",
+      "pendingAction": "Validar sellos extra"
+    },
+    "scan": {
+      "title": "Escanear código",
+      "body": "Apunta la cámara al código QR de la tarjeta del cliente.",
+      "start": "Activar la cámara",
+      "denied": "No tenemos permiso para usar la cámara. Actívalo en los ajustes del navegador o busca al cliente por nombre.",
+      "unsupported": "Esta tablet no permite escanear desde el navegador. Busca al cliente por nombre o teléfono.",
+      "notRepite": "Ese código no es una tarjeta de Repite.",
+      "notFound": "No encontramos esa tarjeta en tu local."
+    },
+    "customer": {
+      "lastVisit": "Última visita: {date}",
+      "neverVisited": "Todavía no ha venido",
+      "usualOrder": "Pedido habitual",
+      "usualOrderEmpty": "Sin pedido habitual",
+      "usualOrderEdit": "Cambiar",
+      "usualOrderSave": "Guardar pedido",
+      "usualOrderPlaceholder": "Ej.: cortado con avena",
+      "registerVisit": "Registrar visita",
+      "visitDone": "Visita registrada: {count, number} de {total, number} sellos",
+      "rewardIssued": "¡Tarjeta completa! {name} ya tiene su premio.",
+      "rewardsTitle": "Premios por canjear",
+      "redeem": "Canjear premio",
+      "redeemConfirm": "¿Canjear «{reward}» ahora?",
+      "redeemYes": "Sí, canjear",
+      "redeemDone": "Premio canjeado",
+      "bonusTitle": "Sellos extra por validar",
+      "bonus_story": "Historia en Instagram",
+      "bonus_review": "Reseña en Google",
+      "approve": "Aprobar",
+      "reject": "Rechazar",
+      "approved": "Sello extra aprobado",
+      "rejected": "Solicitud rechazada",
+      "notesTitle": "Notas del equipo",
+      "notesEmpty": "Sin notas todavía. Apunta gustos o detalles para recordarlos la próxima vez.",
+      "addNote": "Añadir nota",
+      "noteLabel": "Nueva nota",
+      "notePlaceholder": "Ej.: le gusta sentarse en la terraza",
+      "notePin": "Fijar arriba",
+      "pinned": "Fijada",
+      "noConsent": "No quiere recibir mensajes",
+      "back": "Volver al inicio"
+    },
+    "pending": {
+      "title": "Sellos extra por validar",
+      "intro": "Comprueba la historia o la reseña antes de aprobar el sello.",
+      "emptyTitle": "Todo al día",
+      "emptyBody": "No hay sellos extra pendientes. Cuando un cliente pida uno, aparecerá aquí.",
+      "handle": "Usuario: {handle}",
+      "openCustomer": "Ver ficha"
     }
   }
 }

@@ -15,7 +15,7 @@ SaaS de fidelización para cafeterías (España y Venezuela). Tres interfaces: C
 | E2E (Playwright, 360 px)          | `pnpm test:e2e`                                |
 | Tipos de la BD                    | `pnpm db:types`                                |
 
-`messages/es-ES.d.json.ts` lo genera next-intl al arrancar `next dev`/`next build` para tipar las claves y argumentos; se versiona para que `tsc` funcione en CI. Si `tsc` da errores raros de claves, borra `tsconfig.tsbuildinfo`.
+`messages/es-ES.d.json.ts` tipa claves y argumentos de los textos; lo regenera `pnpm i18n:types` (incluido en `pnpm typecheck`) y también next-intl al arrancar. Se versiona. Los argumentos numéricos de ICU se escriben `{n, number}`; los `{x}` sin formato son `string`.
 
 En el contenedor de Claude Code: `dockerd` puede no estar arrancado; lánzalo antes de `pnpm db:start`. Playwright está fijado a 1.56.1 para usar el Chromium preinstalado.
 
@@ -32,7 +32,7 @@ Next.js 15 (App Router, Server Actions) · TypeScript estricto · Supabase (Post
 3. **Libro de sellos append-only (`stamp_events`)**: saldo = suma de `quantity` aprobada. Tipos: `visit` (+1), `bonus_story`/`bonus_review` (+1, pendientes de validar), `reward_issued` (−sellos necesarios; la tarjeta se llena, se emite `rewards` y se reinicia), `redeem` (0, marca canje), `adjust` (±n, correcciones y deshacer con `reverses_event_id`). Trigger impide borrar o editar salvo validar un pendiente.
 4. **Toda mutación del libro va por funciones Postgres** (`register_visit`, `undo_visit`, `request_bonus`, `validate_bonus`, `redeem_reward`): transaccionales, idempotentes por `idempotency_key` y serializadas por cliente con `pg_advisory_xact_lock`. Solo `service_role` puede ejecutarlas. Los errores de negocio salen como `P0001` con un código (`cooldown`, `already_undone`…) que se traduce en `messages/*.json > errors`.
 5. **Intervalo mínimo entre sellos**: `locations.settings.stamp_cooldown_hours` (por defecto 4). Ventana de deshacer: 10 minutos.
-6. **PIN del equipo**: la tablet se vincula primero al local (`staff_devices`, token hasheado) y luego cada empleado elige su nombre y teclea su PIN (bcrypt con pgcrypto, bloqueo 15 min tras 5 fallos).
+6. **PIN del equipo**: la tablet se vincula abriendo `/equipo/vincular?t=<token del dispositivo>` (el dueño lo mostrará como QR; cookie `rd` de 400 días, hash en `staff_devices`, revocable). Después cada empleado toca su nombre y teclea su PIN (bcrypt con pgcrypto, bloqueo 15 min tras 5 fallos) → cookie firmada `rs` de 8 h, revalidada contra la BD en cada petición. «Cambiar de persona» cierra solo la sesión del empleado.
 7. **Configuración por datos**: `locations.settings` (jsonb), `opportunity_rules.params`, `message_templates` (globales con `organization_id = null` + propias del local), `feature_flags`.
 8. **Proveedores externos detrás de interfaces** en `src/server/providers` (`MessagingProvider`, `AIProvider`, `PaymentsProvider`, `ReviewsProvider`) y se eligen por variables de entorno. Por defecto: mensajería `mock`, IA `template`.
 9. **i18n sin prefijo en la URL** (los QR deben ser cortos y estables). Idioma: cookie `repite_locale` → idioma del local → `Accept-Language` → `es-ES`. `messages/es-VE.json` contiene solo las diferencias respecto a `es-ES.json`.
@@ -42,7 +42,9 @@ Next.js 15 (App Router, Server Actions) · TypeScript estricto · Supabase (Post
 13. **Tarjeta en vivo**: la PWA consulta el estado cada 5 s mientras está visible (Server Action `getCardStateAction`) y guarda en `localStorage` el último saldo visto para animar los sellos sumados mientras estaba cerrada. Sin Realtime: el cliente no es usuario de Supabase Auth.
 14. **Cumpleaños** sin año real: se guarda como `2000-MM-DD` (año bisiesto convencional); el motor compara mes y día.
 15. QR personal del cliente: `${APP_URL}/equipo/q/<qr_token>`; al escanearlo con la cámara normal abre la ficha en el panel del equipo.
-16. Enumeraciones como `text` + `check` (más fáciles de evolucionar que los `enum` de Postgres).
+16. **Panel del equipo**: «Registrar visita» envía una clave de idempotencia nueva por toque; deshacer durante 10 min desde «Visitas de hoy»; el día se calcula en la zona horaria del local (`src/domain/time.ts`). Toda acción comprueba que el evento/premio pertenece al local u organización de la tablet.
+17. Escáner QR: `BarcodeDetector` nativo y, si no existe, `jsqr` cargado bajo demanda.
+18. Enumeraciones como `text` + `check` (más fáciles de evolucionar que los `enum` de Postgres).
 
 ## Estructura
 
@@ -63,21 +65,22 @@ tests/unit, tests/e2e
 - Mobile-first desde 360 px; objetivos táctiles ≥ 44 px (`min-h-11`); foco visible; `Field` conecta etiqueta, ayuda y error.
 - Colores solo vía tokens (`bg-primary`, `text-muted`, `bg-brand`…), nunca hex sueltos en componentes.
 - Validación con Zod en todo borde (Server Actions, Route Handlers).
-- Cada corte vertical: migración + lógica + UI + pruebas, en un commit.
+- Cada corte vertical: migración + lógica + UI + pruebas, en un commit. Antes de commitear: `pnpm format && pnpm lint && pnpm typecheck && pnpm test`.
+- Las E2E crean sus propios clientes (`seedCustomer` en `tests/e2e/helpers.ts`) para poder repetirse sin reiniciar la BD.
 - No incluir identificadores de modelo de IA en commits ni código salvo en configuración (`ANTHROPIC_MODEL`).
 
 ## Datos de demostración (seed)
 
 - Dueño: `demo@repite.app` / `repite-demo` → Café Aurora (`/c/cafe-aurora`), Madrid, EUR, 8 sellos = «Un café gratis».
 - Segunda cuenta para probar aislamiento: `sol@repite.app` / `repite-demo` → Panadería Sol (Caracas, USD).
-- Equipo Café Aurora: Lucía (PIN 1234, manager), Mateo (PIN 5678). Token de tablet de desarrollo: `dev-device-cafe-aurora`.
+- Equipo Café Aurora: Lucía (PIN 1234, manager), Mateo (PIN 5678). Vincula la tablet en local abriendo `/equipo/vincular?t=dev-device-cafe-aurora`.
 - Clientes con casos para el motor: María (cumpleaños hoy), Javier (le falta 1 sello), Lucía F. (ausente 21 días), Daniel (premio listo, sin consentimiento), Andreína (es-VE, historia pendiente de validar).
 
 ## Estado
 
 - [x] Corte 0: base y diseño
 - [x] Corte 1: registro y tarjeta del cliente
-- [ ] Corte 2: panel del equipo
+- [x] Corte 2: panel del equipo
 - [ ] Corte 3: panel del dueño
 - [ ] Corte 4: motor de oportunidades
 - [ ] Corte 5: métricas

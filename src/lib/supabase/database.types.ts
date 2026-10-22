@@ -646,6 +646,16 @@ isOneToOne: false
 "set_staff_pin":
 { Args: { "p_location": string,"p_pin": string,"p_staff": string }; Returns: undefined
                            },
+"staff_day_visits":
+{ Args: { "p_location": string,"p_since": string }; Returns: {
+              "created_at": string,"customer_id": string,"customer_name": string,"event_id": string,"staff_name": string,"undone": boolean
+            }[]
+                           },
+"staff_pending_bonuses":
+{ Args: { "p_location": string }; Returns: {
+              "created_at": string,"customer_id": string,"customer_name": string,"event_id": string,"evidence": Json,"type": string
+            }[]
+                           },
 "undo_visit":
 { Args: { "p_event": string,"p_staff": string,"p_window_minutes"?: number }; Returns: Json
                            },

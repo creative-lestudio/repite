@@ -39,3 +39,33 @@ export async function customerIdByPhone(phone: string) {
     .single();
   return data!.id as string;
 }
+
+export const AURORA_PROGRAM = "a0000000-0000-4000-8000-0000000000c1";
+export const DEV_DEVICE_TOKEN = "dev-device-cafe-aurora";
+
+/** Crea un cliente nuevo en Café Aurora con `stamps` sellos antiguos (fuera del intervalo mínimo). */
+export async function seedCustomer(name: string, stamps = 0) {
+  const phone = `+34${randomPhone()}`;
+  const { data, error } = await admin
+    .from("customers")
+    .insert({ organization_id: AURORA.organizationId, name, phone_e164: phone, marketing_consent: true })
+    .select("id, qr_token")
+    .single();
+  if (error) throw error;
+  if (stamps > 0) {
+    const old = new Date(Date.now() - 2 * 86_400_000).toISOString();
+    const rows = Array.from({ length: stamps }, (_, i) => ({
+      organization_id: AURORA.organizationId,
+      customer_id: data.id,
+      location_id: AURORA.locationId,
+      program_id: AURORA_PROGRAM,
+      type: "visit",
+      quantity: 1,
+      idempotency_key: `e2e-seed:${data.id}:${i}`,
+      created_at: old,
+    }));
+    const { error: e2 } = await admin.from("stamp_events").insert(rows);
+    if (e2) throw e2;
+  }
+  return { id: data.id as string, qrToken: data.qr_token as string, phone };
+}

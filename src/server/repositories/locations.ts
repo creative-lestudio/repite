@@ -31,17 +31,24 @@ export interface PublicLocation {
   orgStatus: string;
 }
 
-/** Local público por slug (para /c/[slug]). Se cachea durante la petición. */
-export const getLocationBySlug = cache(async (slug: string): Promise<PublicLocation | null> => {
-  const { data, error } = await createServiceClient()
-    .from("locations")
-    .select(
-      "id, organization_id, name, slug, address, timezone, locale, logo_path, brand_color, settings, organizations!inner(country, currency, status, deleted_at)",
-    )
-    .eq("slug", slug)
-    .is("deleted_at", null)
-    .maybeSingle();
-  if (error) throw error;
+const LOCATION_COLUMNS =
+  "id, organization_id, name, slug, address, timezone, locale, logo_path, brand_color, settings, organizations!inner(country, currency, status, deleted_at)";
+
+type LocationRow = {
+  id: string;
+  organization_id: string;
+  name: string;
+  slug: string;
+  address: string | null;
+  timezone: string;
+  locale: string;
+  logo_path: string | null;
+  brand_color: string | null;
+  settings: unknown;
+  organizations: { country: string; currency: string; status: string; deleted_at: string | null };
+};
+
+function toLocation(data: LocationRow | null): PublicLocation | null {
   if (!data) return null;
   const org = data.organizations;
   if (org.deleted_at || org.status !== "active") return null;
@@ -60,6 +67,29 @@ export const getLocationBySlug = cache(async (slug: string): Promise<PublicLocat
     currency: org.currency as "EUR" | "USD",
     orgStatus: org.status,
   };
+}
+
+/** Local público por slug (para /c/[slug]). Se cachea durante la petición. */
+export const getLocationBySlug = cache(async (slug: string): Promise<PublicLocation | null> => {
+  const { data, error } = await createServiceClient()
+    .from("locations")
+    .select(LOCATION_COLUMNS)
+    .eq("slug", slug)
+    .is("deleted_at", null)
+    .maybeSingle();
+  if (error) throw error;
+  return toLocation(data as LocationRow | null);
+});
+
+export const getLocationById = cache(async (id: string): Promise<PublicLocation | null> => {
+  const { data, error } = await createServiceClient()
+    .from("locations")
+    .select(LOCATION_COLUMNS)
+    .eq("id", id)
+    .is("deleted_at", null)
+    .maybeSingle();
+  if (error) throw error;
+  return toLocation(data as LocationRow | null);
 });
 
 export interface ProgramSummary {

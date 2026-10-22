@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "node scripts/i18n-types.mjs && tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "test": "vitest run",
@@ -18,7 +18,8 @@
     "db:stop": "supabase stop",
     "db:reset": "supabase db reset",
     "db:types": "supabase gen types typescript --local > src/lib/supabase/database.types.ts",
-    "icons": "python3 scripts/make-icons.py public/icons"
+    "icons": "python3 scripts/make-icons.py public/icons",
+    "i18n:types": "node scripts/i18n-types.mjs"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.17",
@@ -28,6 +29,7 @@
     "@tanstack/react-query": "^5.104.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "jsqr": "^1.4.0",
     "lucide-react": "^1.61.0",
     "next": "15.5.28",
     "next-intl": "^4.14.9",
