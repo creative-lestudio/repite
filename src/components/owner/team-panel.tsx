@@ -16,7 +16,7 @@ import {
 import type { FormState } from "@/server/actions/owner";
 
 const selectClass =
-  "min-h-12 w-full rounded-lg border border-border bg-surface px-3 text-base focus-visible:border-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/25";
+  "min-h-12 w-full rounded-lg border border-input bg-surface px-3 text-base focus-visible:border-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/25";
 
 export function AddStaffForm() {
   const t = useTranslations("owner.team");
@@ -214,7 +214,7 @@ export function DevicesPanel({
       {devices.length === 0 ? (
         <p className="text-muted text-sm">{t("tabletsEmpty")}</p>
       ) : (
-        <ul className="bg-surface shadow-card divide-y divide-blue-100 rounded-xl ring-1 ring-blue-100">
+        <ul className="bg-surface shadow-card divide-cream-100 ring-cream-100 divide-y rounded-xl ring-1">
           {devices.map((d) => (
             <li key={d.id} className="flex flex-wrap items-center gap-3 px-4 py-3">
               <Tablet className="text-primary size-6 shrink-0" aria-hidden />

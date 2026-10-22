@@ -44,7 +44,7 @@ export function ProgramForm({
     <div className="grid gap-8 lg:grid-cols-[1fr_22rem] lg:items-start">
       <form
         action={action}
-        className="bg-surface shadow-card flex flex-col gap-5 rounded-xl p-5 ring-1 ring-blue-100"
+        className="bg-surface shadow-card ring-cream-100 flex flex-col gap-5 rounded-xl p-5 ring-1"
         noValidate
       >
         {state && !state.ok && state.error !== "form" && <Alert tone="danger">{te(state.error as never)}</Alert>}

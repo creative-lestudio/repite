@@ -71,7 +71,7 @@ export default async function CustomersPage({
             id="filtro"
             name="filtro"
             defaultValue={filter}
-            className="border-border bg-surface focus-visible:border-primary focus-visible:ring-primary/25 min-h-12 rounded-lg border px-3 text-base focus-visible:ring-3 focus-visible:outline-none"
+            className="border-input bg-surface focus-visible:border-primary focus-visible:ring-primary/25 min-h-12 rounded-lg border px-3 text-base focus-visible:ring-3 focus-visible:outline-none"
           >
             {Object.entries(FILTER_LABEL).map(([value, key]) => (
               <option key={value} value={value}>
@@ -90,12 +90,12 @@ export default async function CustomersPage({
           <EmptyState icon={<Users />} title={t("emptyAllTitle")} description={t("emptyAllBody")} />
         )
       ) : (
-        <ul className="bg-surface shadow-card divide-y divide-blue-100 rounded-xl ring-1 ring-blue-100">
+        <ul className="bg-surface shadow-card divide-cream-100 ring-cream-100 divide-y rounded-xl ring-1">
           {rows.map((c) => (
             <li key={c.id}>
               <Link
                 href={`/app/clientes/${c.id}`}
-                className="flex min-h-16 flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3 hover:bg-blue-50"
+                className="hover:bg-cream-50 flex min-h-16 flex-wrap items-center gap-x-4 gap-y-1 px-4 py-3"
               >
                 <span className="bg-primary-soft text-primary font-display flex size-10 shrink-0 items-center justify-center rounded-full font-bold">
                   {c.name.charAt(0).toUpperCase()}

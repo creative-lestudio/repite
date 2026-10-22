@@ -74,7 +74,7 @@ export default async function OwnerHome() {
       {done < steps.length ? (
         <section
           aria-labelledby="checklist"
-          className="bg-surface shadow-card flex flex-col gap-4 rounded-xl p-5 ring-1 ring-blue-100"
+          className="bg-surface shadow-card ring-cream-100 flex flex-col gap-4 rounded-xl p-5 ring-1"
         >
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 id="checklist" className="text-xl font-bold">
@@ -88,7 +88,7 @@ export default async function OwnerHome() {
             aria-valuemax={steps.length}
             aria-valuenow={done}
             aria-label={t("checklistTitle")}
-            className="h-2 overflow-hidden rounded-full bg-blue-100"
+            className="bg-cream-100 h-2 overflow-hidden rounded-full"
           >
             <div
               className="bg-primary h-full rounded-full transition-all"
@@ -101,7 +101,7 @@ export default async function OwnerHome() {
                 {s.done ? (
                   <CheckCircle2 className="text-success mt-0.5 size-6 shrink-0" aria-hidden />
                 ) : (
-                  <Circle className="mt-0.5 size-6 shrink-0 text-blue-200" aria-hidden />
+                  <Circle className="text-cream-200 mt-0.5 size-6 shrink-0" aria-hidden />
                 )}
                 <div className="flex flex-1 flex-wrap items-center justify-between gap-2">
                   <div>
@@ -137,7 +137,7 @@ export default async function OwnerHome() {
             return (
               <li key={c.label}>
                 {c.href ? (
-                  <Link href={c.href} className="block h-full rounded-xl hover:ring-2 hover:ring-blue-200">
+                  <Link href={c.href} className="hover:ring-cream-200 block h-full rounded-xl hover:ring-2">
                     {inner}
                   </Link>
                 ) : (

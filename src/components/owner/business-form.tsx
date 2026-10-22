@@ -9,7 +9,7 @@ import { slugify } from "@/domain/slug";
 import { createBusinessAction, type FormState } from "@/server/actions/owner";
 
 const selectClass =
-  "min-h-12 w-full rounded-lg border border-border bg-surface px-3 text-base text-foreground focus-visible:border-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/25";
+  "min-h-12 w-full rounded-lg border border-input bg-surface px-3 text-base text-foreground focus-visible:border-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/25";
 
 export function BusinessForm() {
   const t = useTranslations("owner.start");

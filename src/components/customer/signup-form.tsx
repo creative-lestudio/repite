@@ -7,7 +7,7 @@ import { Alert, Button, Checkbox, Field, Input } from "@/components/ui";
 import { signUpAction, type SignupState } from "@/server/actions/customer";
 
 const selectClass =
-  "min-h-12 w-full rounded-lg border border-border bg-surface px-3 text-base text-foreground focus-visible:border-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/25 aria-invalid:border-danger";
+  "min-h-12 w-full rounded-lg border border-input bg-surface px-3 text-base text-foreground focus-visible:border-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/25 aria-invalid:border-danger";
 
 export function SignupForm({ slug, locationName }: { slug: string; locationName: string }) {
   const t = useTranslations("customer.signup");

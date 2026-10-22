@@ -99,7 +99,7 @@ export default async function StaffCustomerPage({ params }: { params: Promise<{ 
             </section>
           )}
 
-          <div className="bg-surface rounded-xl p-4 ring-1 ring-blue-100">
+          <div className="bg-surface ring-cream-100 rounded-xl p-4 ring-1">
             <UsualOrder customerId={customer.id} value={customer.usual_order} />
           </div>
 

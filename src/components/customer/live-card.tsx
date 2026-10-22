@@ -115,7 +115,7 @@ export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome }
       {rewards > 0 && (
         <Link
           href={`/c/${slug}/premios`}
-          className="bg-primary-soft flex min-h-14 items-center gap-3 rounded-xl px-4 text-blue-950 ring-1 ring-blue-200 hover:bg-blue-200"
+          className="bg-primary-soft text-ink-950 ring-cream-200 hover:bg-cream-200 flex min-h-14 items-center gap-3 rounded-xl px-4 ring-1"
         >
           <Gift className="text-primary size-6 shrink-0" aria-hidden />
           <span className="flex-1 font-semibold">{t("rewardReady", { count: rewards })}</span>
@@ -143,7 +143,7 @@ export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome }
       {showCode && (
         <div
           id="my-code"
-          className="bg-surface shadow-card animate-fade-in flex flex-col items-center gap-3 rounded-xl p-5 ring-1 ring-blue-100"
+          className="bg-surface shadow-card animate-fade-in ring-cream-100 flex flex-col items-center gap-3 rounded-xl p-5 ring-1"
         >
           <div
             role="img"

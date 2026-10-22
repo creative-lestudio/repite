@@ -1,34 +1,32 @@
-// Genera los iconos PNG de la PWA a partir del mismo SVG de la marca (src/app/icon.svg).
+// Genera los iconos PNG de la PWA a partir de la marca (src/app/icon.svg y src/components/brand/paths.json).
 // Uso: pnpm icons
 import { chromium } from "@playwright/test";
 import { readFileSync } from "node:fs";
 
-const svg = readFileSync("src/app/icon.svg", "utf8");
-const inner = svg
-  .replace(/^[\s\S]*?<svg[^>]*>/, "")
-  .replace(/<\/svg>\s*$/, "")
-  .replace(/<rect[^>]*\/>/, "");
-const BLUE = "#2255D6";
+const icon = readFileSync("src/app/icon.svg", "utf8");
+const { mark } = JSON.parse(readFileSync("src/components/brand/paths.json", "utf8"));
+const [bx, by, bw, bh] = mark.box;
 
-function html(size, maskable) {
-  // maskable: fondo azul a sangre y marca reducida para respetar la zona segura
-  const mark = maskable ? `<g transform="translate(16 16) scale(0.72) translate(-16 -16)">${inner}</g>` : inner;
-  const bg = maskable
-    ? `<rect width="32" height="32" fill="${BLUE}"/>`
-    : `<rect width="32" height="32" rx="9" fill="${BLUE}"/>`;
-  return `<body style="margin:0;background:transparent"><svg width="${size}" height="${size}" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">${bg}${mark}</svg></body>`;
+// Versión «maskable»: fondo rojo a sangre y la R más pequeña para respetar la zona segura (≈ 66 %)
+function maskable(size) {
+  const scale = (100 * 0.42) / bh;
+  const tw = bw * scale;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 100 100"><rect width="100" height="100" fill="#FF3B2E"/><g transform="translate(${50 - tw / 2} 29) scale(${scale}) translate(${-bx} ${-by})"><path d="${mark.d}" fill="#F6EDE6" fill-rule="evenodd"/></g></svg>`;
 }
+const standard = (size) => icon.replace("<svg ", `<svg width="${size}" height="${size}" `);
 
 const browser = await chromium.launch();
 const page = await browser.newPage();
-for (const [file, size, maskable] of [
+for (const [file, size, isMask] of [
   ["icon-192.png", 192, false],
   ["icon-512.png", 512, false],
   ["icon-maskable-512.png", 512, true],
   ["apple-touch-icon.png", 180, true],
 ]) {
   await page.setViewportSize({ width: size, height: size });
-  await page.setContent(html(size, maskable));
-  await page.screenshot({ path: `public/icons/${file}`, omitBackground: !maskable });
+  await page.setContent(
+    `<body style="margin:0;background:transparent">${isMask ? maskable(size) : standard(size)}</body>`,
+  );
+  await page.screenshot({ path: `public/icons/${file}`, omitBackground: !isMask });
 }
 await browser.close();

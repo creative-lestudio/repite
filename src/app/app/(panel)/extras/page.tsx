@@ -49,7 +49,7 @@ export default async function BonusesPage() {
         {pending.length === 0 ? (
           <p className="text-muted text-sm">{t("pendingEmpty")}</p>
         ) : (
-          <ul className="bg-surface shadow-card divide-y divide-blue-100 rounded-xl ring-1 ring-blue-100">
+          <ul className="bg-surface shadow-card divide-cream-100 ring-cream-100 divide-y rounded-xl ring-1">
             {pending.map(row)}
           </ul>
         )}
@@ -62,7 +62,7 @@ export default async function BonusesPage() {
         {items.length === 0 ? (
           <EmptyState icon={<Sparkles />} title={t("historyEmpty")} />
         ) : (
-          <ul className="bg-surface shadow-card divide-y divide-blue-100 rounded-xl ring-1 ring-blue-100">
+          <ul className="bg-surface shadow-card divide-cream-100 ring-cream-100 divide-y rounded-xl ring-1">
             {items.map(row)}
           </ul>
         )}

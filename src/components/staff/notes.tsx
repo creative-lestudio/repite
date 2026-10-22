@@ -30,7 +30,7 @@ export function Notes({ customerId, notes }: { customerId: string; notes: Note[]
       </div>
       {open && (
         <form
-          className="bg-surface flex flex-col gap-3 rounded-xl p-4 ring-1 ring-blue-100"
+          className="bg-surface ring-cream-100 flex flex-col gap-3 rounded-xl p-4 ring-1"
           onSubmit={(e) => {
             e.preventDefault();
             run(
@@ -69,7 +69,7 @@ export function Notes({ customerId, notes }: { customerId: string; notes: Note[]
       ) : (
         <ul className="flex flex-col gap-2">
           {notes.map((n) => (
-            <li key={n.id} className="bg-surface rounded-lg p-3 ring-1 ring-blue-100">
+            <li key={n.id} className="bg-surface ring-cream-100 rounded-lg p-3 ring-1">
               <p>{n.text}</p>
               <p className="text-muted mt-1 flex items-center gap-2 text-xs">
                 {n.pinned && (

@@ -9,7 +9,7 @@ import type { BusinessType } from "@/domain/business-types";
 import { saveSettingsAction, type FormState } from "@/server/actions/owner";
 
 const selectClass =
-  "min-h-12 w-full rounded-lg border border-border bg-surface px-3 text-base focus-visible:border-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/25";
+  "min-h-12 w-full rounded-lg border border-input bg-surface px-3 text-base focus-visible:border-primary focus-visible:outline-none focus-visible:ring-3 focus-visible:ring-primary/25";
 
 export interface SettingsValues {
   name: string;
@@ -151,7 +151,7 @@ export function SettingsForm({ v }: { v: SettingsValues }) {
           <Input
             name="brandColor"
             defaultValue={v.brandColor}
-            placeholder="#2255D6"
+            placeholder="#FF3B2E"
             maxLength={7}
             autoCapitalize="none"
           />

@@ -68,12 +68,12 @@ export function CustomerSearch() {
           <p className="text-muted py-3 text-sm">{t("noResults", { query: query.trim() })}</p>
         )}
         {hits && hits.length > 0 && (
-          <ul className="bg-surface shadow-card divide-y divide-blue-100 rounded-xl ring-1 ring-blue-100">
+          <ul className="bg-surface shadow-card divide-cream-100 ring-cream-100 divide-y rounded-xl ring-1">
             {hits.map((h) => (
               <li key={h.id}>
                 <Link
                   href={`/equipo/clientes/${h.id}`}
-                  className="flex min-h-14 items-center gap-3 px-4 py-2 hover:bg-blue-50"
+                  className="hover:bg-cream-50 flex min-h-14 items-center gap-3 px-4 py-2"
                 >
                   <span className="bg-primary-soft text-primary font-display flex size-10 shrink-0 items-center justify-center rounded-full font-bold">
                     {h.name.charAt(0)}

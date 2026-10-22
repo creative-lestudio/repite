@@ -842,7 +842,7 @@ declare const messages: {
       "cta": "Crear mi cuenta gratis"
     },
     "footer": {
-      "tagline": "Fidelización cercana para locales con personalidad.",
+      "tagline": "Buena comida, más veces.",
       "product": "Producto",
       "account": "Cuenta",
       "legal": "Legal",

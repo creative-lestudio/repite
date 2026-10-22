@@ -17,7 +17,7 @@ export function DayVisits({ visits, timeZone, now }: { visits: DayVisit[]; timeZ
   const time = new Intl.DateTimeFormat("es-ES", { hour: "2-digit", minute: "2-digit", timeZone });
 
   return (
-    <ol className="bg-surface shadow-card divide-y divide-blue-100 rounded-xl ring-1 ring-blue-100">
+    <ol className="bg-surface shadow-card divide-cream-100 ring-cream-100 divide-y rounded-xl ring-1">
       {visits.map((v) => {
         const canUndo = !v.undone && now - new Date(v.created_at).getTime() < UNDO_MINUTES * 60_000;
         return (

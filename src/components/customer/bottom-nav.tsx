@@ -20,7 +20,7 @@ export function BottomNav({ slug }: { slug: string }) {
   return (
     <nav
       aria-label={t("label")}
-      className="bg-surface/95 fixed inset-x-0 bottom-0 z-10 border-t border-blue-100 pb-[env(safe-area-inset-bottom)] backdrop-blur"
+      className="bg-surface/95 border-cream-100 fixed inset-x-0 bottom-0 z-10 border-t pb-[env(safe-area-inset-bottom)] backdrop-blur"
     >
       <ul className="mx-auto grid max-w-md grid-cols-5">
         {items.map(({ href, label, Icon }) => {
@@ -32,7 +32,7 @@ export function BottomNav({ slug }: { slug: string }) {
                 aria-current={active ? "page" : undefined}
                 className={cn(
                   "flex min-h-16 flex-col items-center justify-center gap-1 px-1 text-[0.6875rem] font-semibold",
-                  active ? "text-primary" : "text-muted hover:text-blue-800",
+                  active ? "text-primary" : "text-muted hover:text-wine-800",
                 )}
               >
                 <Icon className="size-6" aria-hidden strokeWidth={active ? 2.5 : 2} />

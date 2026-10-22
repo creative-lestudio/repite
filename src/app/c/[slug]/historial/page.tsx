@@ -20,7 +20,7 @@ export default async function HistoryPage({ params }: { params: Promise<{ slug: 
       {items.length === 0 ? (
         <EmptyState icon={<History />} title={t("emptyTitle")} description={t("emptyBody")} />
       ) : (
-        <ol className="bg-surface shadow-card divide-y divide-blue-100 rounded-xl ring-1 ring-blue-100">
+        <ol className="bg-surface shadow-card divide-cream-100 ring-cream-100 divide-y rounded-xl ring-1">
           {items.map((e) => {
             const qty = e.type === "reward_issued" || e.type === "redeem" ? null : e.quantity;
             return (

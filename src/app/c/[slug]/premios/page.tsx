@@ -37,7 +37,7 @@ export default async function RewardsPage({ params }: { params: Promise<{ slug: 
       ) : (
         <ul className="flex flex-col gap-3">
           {state.rewards.map((r) => (
-            <li key={r.id} className="bg-surface shadow-card flex flex-col gap-3 rounded-xl p-5 ring-1 ring-blue-100">
+            <li key={r.id} className="bg-surface shadow-card ring-cream-100 flex flex-col gap-3 rounded-xl p-5 ring-1">
               <div className="flex items-start gap-3">
                 <span className="bg-primary-soft text-primary flex size-11 shrink-0 items-center justify-center rounded-full">
                   <Gift className="size-6" aria-hidden />

@@ -33,7 +33,7 @@ export function StickyCta() {
     <div
       data-testid="sticky-cta"
       aria-hidden={!show}
-      className={`fixed inset-x-0 bottom-0 z-20 border-t border-blue-100 bg-white/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur transition-transform duration-300 md:hidden ${show ? "translate-y-0" : "translate-y-full"}`}
+      className={`border-cream-100 fixed inset-x-0 bottom-0 z-20 border-t bg-white/95 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur transition-transform duration-300 md:hidden ${show ? "translate-y-0" : "translate-y-full"}`}
     >
       <Button asChild size="lg" block tabIndex={show ? 0 : -1}>
         <Link href="/registro">{t("cta")}</Link>

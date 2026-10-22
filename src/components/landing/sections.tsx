@@ -28,7 +28,9 @@ export function SectionTitle({
       <h2 id={id} className="text-3xl font-extrabold text-balance sm:text-4xl md:text-5xl">
         {title}
       </h2>
-      {subtitle && <p className={cn("mt-3 text-lg text-pretty", light ? "text-blue-200" : "text-muted")}>{subtitle}</p>}
+      {subtitle && (
+        <p className={cn("mt-3 text-lg text-pretty", light ? "text-cream-200" : "text-muted")}>{subtitle}</p>
+      )}
     </div>
   );
 }
@@ -37,7 +39,7 @@ export async function PromiseStrip() {
   const { landing } = await getMessages();
   const strip = Object.values(landing.strip);
   return (
-    <section aria-label="Resumen" className="border-y border-blue-100 bg-white">
+    <section aria-label="Resumen" className="border-cream-100 border-y bg-white">
       <ul className="mx-auto grid max-w-6xl grid-cols-2 gap-x-4 gap-y-3 px-4 py-6 md:grid-cols-4">
         {strip.map((s) => (
           <li key={s} className="flex items-center gap-2 text-sm font-semibold">
@@ -58,8 +60,8 @@ export async function HowSection() {
   const visuals = [
     // 1 · escanea
     <div key="1" className="flex h-full items-center justify-center">
-      <div className="bg-surface shadow-card flex flex-col items-center gap-2 rounded-2xl p-4 ring-1 ring-blue-100">
-        <QrCode className="size-16 text-blue-950" aria-hidden strokeWidth={1.5} />
+      <div className="bg-surface shadow-card ring-cream-100 flex flex-col items-center gap-2 rounded-2xl p-4 ring-1">
+        <QrCode className="text-ink-950 size-16" aria-hidden strokeWidth={1.5} />
         <span className="text-primary text-xs font-bold">{v.qr}</span>
       </div>
     </div>,
@@ -69,7 +71,7 @@ export async function HowSection() {
         {[1, 1, 1, 0].map((on, i) => (
           <span
             key={i}
-            className={cn("size-3.5 rounded-full border-2", on ? "bg-primary border-primary" : "border-blue-200")}
+            className={cn("size-3.5 rounded-full border-2", on ? "bg-primary border-primary" : "border-cream-200")}
           />
         ))}
       </div>
@@ -77,7 +79,7 @@ export async function HowSection() {
         {["1", "2", "3", "4", "5", "6"].map((d) => (
           <span
             key={d}
-            className="bg-surface font-display flex size-8 items-center justify-center rounded-lg text-sm font-bold text-blue-950 ring-1 ring-blue-100"
+            className="bg-surface font-display text-ink-950 ring-cream-100 flex size-8 items-center justify-center rounded-lg text-sm font-bold ring-1"
           >
             {d}
           </span>
@@ -87,7 +89,7 @@ export async function HowSection() {
     </div>,
     // 3 · mensaje
     <div key="3" className="flex h-full flex-col items-center justify-center gap-2 px-3">
-      <div className="bg-surface shadow-card w-full max-w-[13rem] rounded-2xl rounded-bl-sm p-3 text-left text-xs ring-1 ring-blue-100">
+      <div className="bg-surface shadow-card ring-cream-100 w-full max-w-[13rem] rounded-2xl rounded-bl-sm p-3 text-left text-xs ring-1">
         <p className="text-muted">{v.hello}</p>
       </div>
       <span className="bg-primary rounded-full px-3 py-1.5 text-xs font-bold text-white">{v.approve}</span>
@@ -103,9 +105,9 @@ export async function HowSection() {
             <li key={s.title}>
               <Reveal
                 delay={i * 120}
-                className="bg-surface shadow-card flex h-full flex-col overflow-hidden rounded-2xl ring-1 ring-blue-100"
+                className="bg-surface shadow-card ring-cream-100 flex h-full flex-col overflow-hidden rounded-2xl ring-1"
               >
-                <div className="h-44 border-b border-blue-100 bg-blue-50">{visuals[i]}</div>
+                <div className="border-cream-100 bg-cream-50 h-44 border-b">{visuals[i]}</div>
                 <div className="flex flex-1 flex-col gap-2 p-6">
                   <span className="bg-primary font-display flex size-9 items-center justify-center rounded-full text-base font-extrabold text-white">
                     {i + 1}
@@ -134,9 +136,9 @@ export async function SectorsSection() {
               <Reveal delay={i * 120} className="h-full">
                 <Link
                   href={`/para/${SECTOR_SLUGS[s]}`}
-                  className="group hover:ring-primary flex h-full flex-col gap-4 rounded-2xl bg-blue-50 p-7 ring-1 ring-transparent transition-all hover:-translate-y-1 hover:shadow-lg"
+                  className="group hover:ring-primary bg-cream-100 flex h-full flex-col gap-4 rounded-2xl p-7 ring-1 ring-transparent transition-all hover:-translate-y-1 hover:shadow-lg"
                 >
-                  <span className="bg-surface text-primary flex size-14 items-center justify-center rounded-2xl ring-1 ring-blue-100">
+                  <span className="bg-surface text-primary ring-cream-100 flex size-14 items-center justify-center rounded-2xl ring-1">
                     <SectorIcon sector={s} className="size-7" aria-hidden />
                   </span>
                   <h3 className="font-display text-2xl font-extrabold">{ts(`${s}.plural`)}</h3>
@@ -179,7 +181,7 @@ export async function FeaturesSection() {
                   delay={(i % 3) * 100}
                   className={cn(
                     "flex h-full flex-col gap-4 rounded-2xl p-7",
-                    featured ? "bg-blue-950 text-white" : "bg-white ring-1 ring-blue-100",
+                    featured ? "bg-ink-950 text-white" : "ring-cream-100 bg-white ring-1",
                   )}
                 >
                   <span
@@ -193,7 +195,7 @@ export async function FeaturesSection() {
                   <h3 className={cn("font-bold", featured ? "font-display text-2xl md:text-3xl" : "text-lg")}>
                     {f.title}
                   </h3>
-                  <p className={cn(featured ? "max-w-md text-lg text-blue-200" : "text-muted")}>{f.body}</p>
+                  <p className={cn(featured ? "text-cream-200 max-w-md text-lg" : "text-muted")}>{f.body}</p>
                   {featured && (
                     <div className="mt-auto w-full max-w-sm pt-6">
                       <StampCard total={8} filled={5} newStamp={5} rewardName="Un café gratis" sector="cafeteria" />
@@ -241,16 +243,16 @@ export async function WhoSection() {
 export async function PreviewSection() {
   const t = await getTranslations("landing.preview");
   return (
-    <section aria-labelledby="preview-title" className="overflow-hidden bg-blue-950 px-4 py-20 text-white md:py-28">
+    <section aria-labelledby="preview-title" className="bg-ink-950 overflow-hidden px-4 py-20 text-white md:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionTitle id="preview-title" title={t("title")} subtitle={t("subtitle")} light />
         <div className="mt-14 grid items-end gap-10 md:grid-cols-[1fr_17rem]">
           <figure>
             <div className="overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-white/10">
-              <div className="flex items-center gap-1.5 border-b border-blue-100 bg-blue-50 px-4 py-2.5" aria-hidden>
-                <span className="size-2.5 rounded-full bg-blue-200" />
-                <span className="size-2.5 rounded-full bg-blue-200" />
-                <span className="size-2.5 rounded-full bg-blue-200" />
+              <div className="border-cream-100 bg-cream-50 flex items-center gap-1.5 border-b px-4 py-2.5" aria-hidden>
+                <span className="bg-cream-200 size-2.5 rounded-full" />
+                <span className="bg-cream-200 size-2.5 rounded-full" />
+                <span className="bg-cream-200 size-2.5 rounded-full" />
               </div>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -262,7 +264,7 @@ export async function PreviewSection() {
                 className="w-full"
               />
             </div>
-            <figcaption className="mt-3 text-center text-sm text-blue-200">{t("panelCaption")}</figcaption>
+            <figcaption className="text-cream-200 mt-3 text-center text-sm">{t("panelCaption")}</figcaption>
           </figure>
           <figure>
             {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -274,7 +276,7 @@ export async function PreviewSection() {
               loading="lazy"
               className="mx-auto w-56 rounded-[2rem] shadow-2xl ring-1 ring-white/10 md:w-full"
             />
-            <figcaption className="mt-3 text-center text-sm text-blue-200">{t("phoneCaption")}</figcaption>
+            <figcaption className="text-cream-200 mt-3 text-center text-sm">{t("phoneCaption")}</figcaption>
           </figure>
         </div>
       </div>
@@ -301,7 +303,7 @@ export async function PricingSection() {
       <div className="mx-auto max-w-4xl">
         <SectionTitle id="pricing-title" title={tp("title")} subtitle={tp("subtitle")} />
         <div className="mt-12 grid gap-6 md:grid-cols-2">
-          <div className="bg-surface shadow-card flex flex-col gap-5 rounded-2xl p-8 ring-1 ring-blue-100">
+          <div className="bg-surface shadow-card ring-cream-100 flex flex-col gap-5 rounded-2xl p-8 ring-1">
             <div>
               <h3 className="font-display text-2xl font-extrabold">{tp("free.name")}</h3>
               <p className="text-muted mt-1 text-sm">{tp("free.tagline")}</p>
@@ -315,7 +317,7 @@ export async function PricingSection() {
             </Button>
           </div>
 
-          <div className="bg-surface shadow-card flex flex-col gap-5 rounded-2xl p-8 ring-2 ring-blue-600">
+          <div className="bg-surface shadow-card flex flex-col gap-5 rounded-2xl p-8 ring-2 ring-red-600">
             <div className="flex items-start justify-between gap-2">
               <div>
                 <h3 className="font-display text-2xl font-extrabold">{tp("pro.name")}</h3>
@@ -356,7 +358,7 @@ export async function FaqSection() {
         <SectionTitle id="faq-title" title={t("title")} />
         <div className="mt-12 flex flex-col gap-3">
           {faq.map((f) => (
-            <details key={f.q} className="group rounded-xl bg-blue-50 px-5 py-1 open:bg-blue-100/60">
+            <details key={f.q} className="group bg-cream-100 open:bg-cream-200/60 rounded-xl px-5 py-1">
               <summary className="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 font-bold [&::-webkit-details-marker]:hidden">
                 {f.q}
                 <span
@@ -381,16 +383,16 @@ export async function FinalCta() {
     <section
       id="final"
       aria-labelledby="final-title"
-      className="bg-primary relative overflow-hidden px-4 py-24 text-white"
+      className="bg-wine-800 relative overflow-hidden px-4 py-24 text-white"
     >
       <div aria-hidden className="dot-grid absolute inset-0 opacity-20" />
       <div className="relative mx-auto flex max-w-2xl flex-col items-center gap-6 text-center">
-        <StampRow tone="light" className="justify-center" />
+        <StampRow className="justify-center" />
         <h2 id="final-title" className="text-3xl font-extrabold text-balance sm:text-5xl">
           {t("title")}
         </h2>
-        <p className="text-lg text-blue-100">{t("subtitle")}</p>
-        <Button asChild size="lg" className="bg-white text-blue-800 hover:bg-blue-100">
+        <p className="text-cream-100 text-lg">{t("subtitle")}</p>
+        <Button asChild size="lg" className="text-wine-800 hover:bg-cream-100 bg-white">
           <Link href="/registro">
             {t("cta")}
             <ArrowRight aria-hidden />

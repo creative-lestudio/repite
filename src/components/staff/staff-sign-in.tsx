@@ -63,7 +63,7 @@ export function StaffSignIn({ staff }: { staff: { id: string; name: string }[] }
               <button
                 type="button"
                 onClick={() => setSelected(s)}
-                className="bg-surface shadow-card hover:ring-primary flex min-h-24 w-full flex-col items-center justify-center gap-2 rounded-xl p-3 ring-1 ring-blue-100"
+                className="bg-surface shadow-card hover:ring-primary ring-cream-100 flex min-h-24 w-full flex-col items-center justify-center gap-2 rounded-xl p-3 ring-1"
               >
                 <span className="bg-primary-soft text-primary font-display flex size-11 items-center justify-center rounded-full text-lg font-extrabold">
                   {s.name.charAt(0)}
@@ -101,7 +101,7 @@ export function StaffSignIn({ staff }: { staff: { id: string; name: string }[] }
             key={i}
             className={cn(
               "size-4 rounded-full border-2",
-              i < pin.length ? "bg-primary border-primary" : "border-blue-200",
+              i < pin.length ? "bg-primary border-primary" : "border-cream-200",
             )}
           />
         ))}
@@ -119,7 +119,7 @@ export function StaffSignIn({ staff }: { staff: { id: string; name: string }[] }
           type="button"
           onClick={() => setPin((p) => p.slice(0, -1))}
           aria-label={t("delete")}
-          className="text-muted flex min-h-16 items-center justify-center rounded-xl hover:bg-blue-100"
+          className="text-muted hover:bg-cream-100 flex min-h-16 items-center justify-center rounded-xl"
         >
           <Delete className="size-7" aria-hidden />
         </button>
@@ -151,7 +151,7 @@ function PinKey({ label, aria, onPress }: { label: string; aria: string; onPress
       type="button"
       onClick={onPress}
       aria-label={aria}
-      className="bg-surface shadow-card font-display min-h-16 rounded-xl text-2xl font-bold ring-1 ring-blue-100 hover:bg-blue-50 active:bg-blue-100"
+      className="bg-surface shadow-card font-display ring-cream-100 hover:bg-cream-50 active:bg-cream-100 min-h-16 rounded-xl text-2xl font-bold ring-1"
     >
       {label}
     </button>

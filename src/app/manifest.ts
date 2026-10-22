@@ -7,8 +7,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: "Tu tarjeta de sellos, siempre a mano.",
     start_url: "/",
     display: "standalone",
-    background_color: "#F4F8FF",
-    theme_color: "#2255D6",
+    background_color: "#FBF7F3",
+    theme_color: "#FF3B2E",
     lang: "es",
     icons: [
       { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },

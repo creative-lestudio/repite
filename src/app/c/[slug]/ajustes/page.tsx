@@ -13,7 +13,7 @@ export default async function SettingsPage({ params }: { params: Promise<{ slug:
   return (
     <div className="flex flex-col gap-6">
       <h1 className="text-2xl font-extrabold">{t("title")}</h1>
-      <div className="bg-surface shadow-card rounded-xl p-5 ring-1 ring-blue-100">
+      <div className="bg-surface shadow-card ring-cream-100 rounded-xl p-5 ring-1">
         <PreferencesForm
           slug={slug}
           locationName={location.name}

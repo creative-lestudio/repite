@@ -45,9 +45,9 @@ export async function buildMaterialPdf(input: MaterialInput): Promise<Uint8Array
   const a4 = input.format === "a4";
   const [w, h] = a4 ? [595.28, 841.89] : [297.64, 419.53];
   const k = a4 ? 1 : 0.5; // escala de tipografías y márgenes
-  const brand = hexToRgb(input.brandColor ?? "#2255D6");
-  const ink = hexToRgb("#0A1840");
-  const muted = hexToRgb("#5B6B8C");
+  const brand = hexToRgb(input.brandColor ?? "#FF3B2E");
+  const ink = hexToRgb("#111111");
+  const muted = hexToRgb("#6B655E");
 
   const doc = await PDFDocument.create();
   doc.setTitle(`QR ${clean(input.locationName)}`);
@@ -83,7 +83,7 @@ export async function buildMaterialPdf(input: MaterialInput): Promise<Uint8Array
     width: 900,
     margin: 1,
     errorCorrectionLevel: "M",
-    color: { dark: "#0A1840", light: "#FFFFFF" },
+    color: { dark: "#111111", light: "#FFFFFF" },
   });
   const img = await doc.embedPng(png);
   const qrSize = 300 * k;

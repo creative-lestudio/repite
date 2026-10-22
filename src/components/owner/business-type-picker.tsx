@@ -33,8 +33,8 @@ export function BusinessTypePicker({
               "bg-surface flex min-h-24 flex-col items-center justify-center gap-2 rounded-xl border-2 p-3 text-center font-semibold transition-colors",
               "peer-focus-visible:ring-primary peer-focus-visible:ring-4 peer-focus-visible:ring-offset-2",
               value === type
-                ? "border-primary bg-primary-soft text-blue-800"
-                : "border-border text-foreground hover:border-blue-600/50",
+                ? "border-primary bg-primary-soft text-wine-800"
+                : "border-border text-foreground hover:border-red-600/50",
             )}
           >
             <SectorIcon sector={type} className="size-7" aria-hidden />

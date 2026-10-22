@@ -17,7 +17,7 @@ export function StaffNav({ pendingCount }: { pendingCount: number }) {
   return (
     <nav
       aria-label={t("label")}
-      className="bg-surface/95 fixed inset-x-0 bottom-0 z-10 border-t border-blue-100 pb-[env(safe-area-inset-bottom)] backdrop-blur"
+      className="bg-surface/95 border-cream-100 fixed inset-x-0 bottom-0 z-10 border-t pb-[env(safe-area-inset-bottom)] backdrop-blur"
     >
       <ul className="mx-auto grid max-w-3xl grid-cols-3">
         {items.map(({ href, label, Icon, badge }) => {
@@ -29,7 +29,7 @@ export function StaffNav({ pendingCount }: { pendingCount: number }) {
                 aria-current={active ? "page" : undefined}
                 className={cn(
                   "relative flex min-h-16 flex-col items-center justify-center gap-1 text-xs font-semibold",
-                  active ? "text-primary" : "text-muted hover:text-blue-800",
+                  active ? "text-primary" : "text-muted hover:text-wine-800",
                 )}
               >
                 <span className="relative">

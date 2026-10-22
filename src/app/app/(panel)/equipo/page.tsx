@@ -27,7 +27,7 @@ export default async function TeamPage() {
         {staff.length === 0 ? (
           <EmptyState icon={<Users />} title={t("emptyTitle")} description={t("emptyBody")} />
         ) : (
-          <ul className="bg-surface shadow-card divide-y divide-blue-100 rounded-xl ring-1 ring-blue-100">
+          <ul className="bg-surface shadow-card divide-cream-100 ring-cream-100 divide-y rounded-xl ring-1">
             {staff.map((m) => (
               <StaffRow key={m.id} member={m} />
             ))}

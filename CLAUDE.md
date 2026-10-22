@@ -57,7 +57,8 @@ Next.js 15 (App Router, Server Actions) · TypeScript estricto · Supabase (Post
 24. **Web pública** (`/` y `/para/<sector>`): portada con selector de sector (`HeroDemo`), logotipo (`src/components/brand/logo.tsx`; los iconos PWA se generan con `pnpm icons` desde `src/app/icon.svg`), secciones en `src/components/landing/sections.tsx`, animaciones de entrada seguras (`Reveal`, visibles sin JS y sin movimiento si se prefiere), botón fijo en móvil (`StickyCta`), vista previa con capturas reales (`public/landing/*.webp`, se regeneran con `scripts/dev/landing-shots.mjs`), precio, preguntas, `/legal/*` (borradores sin revisión legal), `robots`, `sitemap`, imagen Open Graph y JSON-LD. Los textos con listas se guardan como objetos `i1, i2…` (las listas rompen el tipado de next-intl) y se leen con `getMessages()`.
 25. **Tipo de negocio** (`locations.business_type`: `cafeteria` · `restaurante` · `heladeria` · `otro`): cambia el icono del sello (`SectorIcon`), los ejemplos de premio/nombre y los sellos sugeridos (`src/domain/business-types.ts` + `messages > sectors`), y la palabra de respaldo de los mensajes. La lógica no cambia. Se elige en el alta (`BusinessTypePicker`) y en Ajustes. Para añadir un sector: valor en el `check` de la migración, entrada en `BUSINESS_TYPES`/`BUSINESS_PRESETS`, icono en `sector-icon.tsx` y textos en `sectors`. Vocabulario neutro: «lo de siempre» (no «pedido habitual»). Los sectores con página propia (`LANDING_SECTORS`) tienen `/para/<slug>`.
 26. **Plan de pago = «Pro»** en la interfaz (antes «Repite», que se confundía con la marca).
-27. Enumeraciones como `text` + `check` (más fáciles de evolucionar que los `enum` de Postgres).
+27. **Identidad visual** (tablero en `docs/identidad/`): rojo apetito, vino, crema y negro. Tokens en `src/app/globals.css` (`ink-*`, `wine-800`, `red-500/600`, `cream-*`, `stone-*`, `border-input`). Logotipo vectorizado en `src/components/brand/` (`paths.json` + `Logo`/`LogoMark`/`AppIcon`); iconos PWA con `pnpm icons`. `StampCard` tiene variante `tone="dark"`.
+28. Enumeraciones como `text` + `check` (más fáciles de evolucionar que los `enum` de Postgres).
 
 ## Estructura
 
@@ -76,7 +77,7 @@ tests/unit, tests/e2e
 
 - Textos de interfaz siempre en `messages/*.json`, tono cálido, frases en minúscula salvo la primera letra. La misma acción se llama igual en toda la app: «Registrar visita», «Canjear premio», «Validar sellos extra», «Añadir nota», «Aprobar y enviar», «Programar», «Descartar».
 - Mobile-first desde 360 px; objetivos táctiles ≥ 44 px (`min-h-11`); foco visible; `Field` conecta etiqueta, ayuda y error.
-- Colores solo vía tokens (`bg-primary`, `text-muted`, `bg-brand`…), nunca hex sueltos en componentes.
+- Colores solo vía tokens (`bg-primary`, `text-muted`, `bg-brand`, `bg-cream-100`, `text-ink-950`…), nunca hex sueltos en componentes. Identidad y contrastes en `docs/IDENTIDAD.md`: rojo de marca `red-500` solo decorativo/grande; rojo de acción `red-600` para botones, enlaces y texto.
 - Validación con Zod en todo borde (Server Actions, Route Handlers).
 - Cada corte vertical: migración + lógica + UI + pruebas, en un commit. Antes de commitear: `pnpm format && pnpm lint && pnpm typecheck && pnpm test`.
 - Las E2E crean sus propios clientes (`seedCustomer` en `tests/e2e/helpers.ts`) para poder repetirse sin reiniciar la BD.

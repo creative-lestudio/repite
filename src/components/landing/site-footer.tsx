@@ -6,16 +6,19 @@ export async function SiteFooter() {
   const t = await getTranslations("landing");
   const tn = await getTranslations("landing.nav");
   const f = await getTranslations("landing.footer");
-  const link = "text-muted hover:text-primary inline-flex min-h-11 items-center text-sm";
+  const link = "inline-flex min-h-11 items-center text-sm text-stone-400 hover:text-white";
+  const heading = "text-cream-50 mb-1 text-sm font-bold";
   return (
-    <footer className="border-t border-blue-100 bg-white">
-      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 md:grid-cols-[2fr_1fr_1fr_1fr]">
+    <footer className="bg-ink-950 text-cream-100">
+      <div className="mx-auto grid max-w-6xl gap-8 px-4 py-12 md:grid-cols-[2fr_1fr_1fr_1fr]">
         <div>
-          <Logo />
-          <p className="text-muted mt-2 max-w-xs text-sm">{f("tagline")}</p>
+          <Link href="/" aria-label="Repite, inicio">
+            <Logo className="text-cream-100 h-9" />
+          </Link>
+          <p className="font-display text-cream-50 mt-4 max-w-xs text-lg font-bold">{f("tagline")}</p>
         </div>
         <nav aria-label={f("product")}>
-          <p className="mb-1 text-sm font-bold">{f("product")}</p>
+          <p className={heading}>{f("product")}</p>
           <ul>
             <li>
               <Link className={link} href="/#como-funciona">
@@ -35,7 +38,7 @@ export async function SiteFooter() {
           </ul>
         </nav>
         <nav aria-label={f("account")}>
-          <p className="mb-1 text-sm font-bold">{f("account")}</p>
+          <p className={heading}>{f("account")}</p>
           <ul>
             <li>
               <Link className={link} href="/entrar">
@@ -50,7 +53,7 @@ export async function SiteFooter() {
           </ul>
         </nav>
         <nav aria-label={f("legal")}>
-          <p className="mb-1 text-sm font-bold">{f("legal")}</p>
+          <p className={heading}>{f("legal")}</p>
           <ul>
             <li>
               <Link className={link} href="/legal/privacidad">
@@ -65,7 +68,7 @@ export async function SiteFooter() {
           </ul>
         </nav>
       </div>
-      <p className="text-muted border-t border-blue-100 px-4 py-4 text-center text-xs">
+      <p className="border-t border-white/10 px-4 py-4 text-center text-xs text-stone-400">
         {f("rights", { year: String(new Date().getFullYear()) })}
       </p>
     </footer>

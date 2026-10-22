@@ -42,9 +42,9 @@ export function LoginForm({ next, linkError }: { next: string; linkError: boolea
       </form>
 
       <div className="text-muted flex items-center gap-3 text-sm" aria-hidden>
-        <span className="h-px flex-1 bg-blue-200" />
+        <span className="bg-cream-200 h-px flex-1" />
         {t("or")}
-        <span className="h-px flex-1 bg-blue-200" />
+        <span className="bg-cream-200 h-px flex-1" />
       </div>
 
       {magicState?.ok ? (

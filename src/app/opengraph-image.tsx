@@ -1,29 +1,34 @@
 import { ImageResponse } from "next/og";
+import paths from "@/components/brand/paths.json";
 
-export const alt = "Repite · Que tus clientes vuelvan";
+export const alt = "Repite · Buena comida, más veces";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Imagen que se ve al compartir el enlace: azul de Repite, titular y una tarjeta de sellos
+// Imagen que se ve al compartir el enlace: crema, logotipo en negro, lema y una tarjeta de sellos en rojo de marca
 export default function OpengraphImage() {
+  const [x, y, w, h] = paths.wordmark.box;
+  const logoW = 470;
   return new ImageResponse(
     <div
       style={{
         width: "100%",
         height: "100%",
         display: "flex",
-        background: "#F4F8FF",
+        background: "#F6EDE6",
         padding: 72,
         alignItems: "center",
         justifyContent: "space-between",
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: 28, maxWidth: 640 }}>
-        <div style={{ fontSize: 44, fontWeight: 800, color: "#2255D6" }}>Repite</div>
-        <div style={{ fontSize: 68, fontWeight: 800, color: "#0A1840", lineHeight: 1.05 }}>
-          Que tus clientes vuelvan.
+      <div style={{ display: "flex", flexDirection: "column", gap: 36, maxWidth: 640 }}>
+        <svg width={logoW} height={(logoW * h) / w} viewBox={`${x} ${y} ${w} ${h}`}>
+          <path d={paths.wordmark.d} fill="#111111" fillRule="evenodd" />
+        </svg>
+        <div style={{ fontSize: 58, fontWeight: 800, color: "#111111", lineHeight: 1.05 }}>
+          Buena comida, más veces.
         </div>
-        <div style={{ fontSize: 30, color: "#5B6B8C" }}>Tarjeta de sellos con QR para tu local. Sin apps.</div>
+        <div style={{ fontSize: 28, color: "#6B655E" }}>Tarjeta de sellos con QR para tu local. Sin apps.</div>
       </div>
       <div
         style={{
@@ -31,10 +36,10 @@ export default function OpengraphImage() {
           flexWrap: "wrap",
           width: 330,
           gap: 18,
-          background: "white",
+          background: "#FFFFFF",
           padding: 32,
           borderRadius: 36,
-          border: "2px solid #C9D8FF",
+          border: "2px solid #E6D8CC",
         }}
       >
         {Array.from({ length: 8 }, (_, i) => (
@@ -45,8 +50,8 @@ export default function OpengraphImage() {
               height: 66,
               borderRadius: 33,
               display: "flex",
-              background: i < 5 ? "#2255D6" : "white",
-              border: i < 5 ? "none" : "3px dashed #C9D8FF",
+              background: i < 5 ? "#FF3B2E" : "#FFFFFF",
+              border: i < 5 ? "none" : "3px dashed #E6D8CC",
             }}
           />
         ))}

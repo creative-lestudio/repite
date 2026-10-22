@@ -22,14 +22,14 @@ export async function Hero({
     <section id="inicio" className="hero-mesh overflow-hidden">
       <div className="mx-auto grid max-w-6xl items-center gap-16 px-4 pt-12 pb-28 md:grid-cols-[1.05fr_0.95fr] md:pt-20 md:pb-32">
         <div className="flex flex-col items-start gap-6">
-          <p className="bg-surface rounded-full px-3.5 py-1.5 text-sm font-semibold text-blue-800 shadow-sm ring-1 ring-blue-100">
+          <p className="bg-surface text-wine-800 ring-cream-100 rounded-full px-3.5 py-1.5 text-sm font-semibold shadow-sm ring-1">
             {eyebrow ?? t("eyebrow")}
           </p>
           <h1 className="text-5xl font-extrabold text-balance sm:text-6xl md:text-7xl md:leading-[1.02]">
             {title ?? (
               <>
                 {t("titleA")}{" "}
-                <span className="text-primary relative inline-block">
+                <span className="relative inline-block text-red-500">
                   {t("titleB")}
                   <svg
                     aria-hidden
@@ -39,7 +39,7 @@ export async function Hero({
                   >
                     <path
                       d="M2 8 Q 25 2 50 7 T 100 7 T 150 7 T 198 6"
-                      stroke="var(--blue-200)"
+                      stroke="var(--cream-200)"
                       strokeWidth="5"
                       fill="none"
                       strokeLinecap="round"

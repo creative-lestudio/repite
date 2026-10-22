@@ -18,7 +18,7 @@ export function AuthShell({
       </Link>
       <h1 className="text-3xl font-extrabold">{title}</h1>
       <p className="text-muted mt-2 mb-6">{subtitle}</p>
-      <div className="bg-surface shadow-card rounded-xl p-5 ring-1 ring-blue-100">{children}</div>
+      <div className="bg-surface shadow-card ring-cream-100 rounded-xl p-5 ring-1">{children}</div>
     </main>
   );
 }

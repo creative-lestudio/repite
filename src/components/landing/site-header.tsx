@@ -6,10 +6,10 @@ import { Button } from "@/components/ui";
 export async function SiteHeader() {
   const t = await getTranslations("landing.nav");
   return (
-    <header className="bg-background/90 sticky top-0 z-30 border-b border-blue-100 backdrop-blur">
+    <header className="bg-background/90 border-cream-100 sticky top-0 z-30 border-b backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <Link href="/" aria-label={t("home")}>
-          <Logo />
+          <Logo className="text-ink-950 h-9" />
         </Link>
         <nav aria-label={t("label")} className="hidden items-center gap-6 md:flex">
           {[

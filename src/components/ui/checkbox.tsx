@@ -13,7 +13,7 @@ export const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
         ref={ref}
         id={id}
         type="checkbox"
-        className="border-border accent-primary mt-0.5 size-6 shrink-0 cursor-pointer rounded-md"
+        className="border-input accent-primary mt-0.5 size-6 shrink-0 cursor-pointer rounded-md"
         {...props}
       />
       <span className="flex flex-col gap-0.5">

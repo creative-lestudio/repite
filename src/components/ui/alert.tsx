@@ -3,10 +3,10 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 const tones = {
-  info: { cls: "bg-primary-soft text-blue-950 border-blue-200", Icon: Info },
-  success: { cls: "bg-success/8 text-blue-950 border-success/30", Icon: CheckCircle2 },
-  warning: { cls: "bg-warning/8 text-blue-950 border-warning/30", Icon: AlertTriangle },
-  danger: { cls: "bg-danger/8 text-blue-950 border-danger/30", Icon: XCircle },
+  info: { cls: "bg-primary-soft text-ink-950 border-cream-200", Icon: Info },
+  success: { cls: "bg-success/8 text-ink-950 border-success/30", Icon: CheckCircle2 },
+  warning: { cls: "bg-warning/8 text-ink-950 border-warning/30", Icon: AlertTriangle },
+  danger: { cls: "bg-danger/8 text-ink-950 border-danger/30", Icon: XCircle },
 } as const;
 
 export function Alert({

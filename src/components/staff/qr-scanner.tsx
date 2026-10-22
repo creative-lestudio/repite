@@ -85,7 +85,7 @@ export function QrScanner({ initialError }: { initialError?: string }) {
       {status === "denied" && <Alert tone="danger">{t("denied")}</Alert>}
       {status === "unsupported" && <Alert tone="warning">{t("unsupported")}</Alert>}
       {status === "notRepite" && <Alert tone="warning">{t("notRepite")}</Alert>}
-      <div className="relative aspect-square w-full max-w-md self-center overflow-hidden rounded-xl bg-blue-950">
+      <div className="bg-ink-950 relative aspect-square w-full max-w-md self-center overflow-hidden rounded-xl">
         <video ref={video} playsInline muted className="size-full object-cover" aria-hidden />
         {status === "scanning" || status === "notRepite" ? (
           <div aria-hidden className="pointer-events-none absolute inset-[18%] rounded-xl border-4 border-white/90" />

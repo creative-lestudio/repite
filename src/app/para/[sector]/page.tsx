@@ -60,7 +60,7 @@ export default async function SectorPage({ params }: { params: Promise<{ sector:
               {benefits.map((b) => (
                 <li
                   key={b.title}
-                  className="bg-surface shadow-card flex flex-col gap-2 rounded-2xl p-7 ring-1 ring-blue-100"
+                  className="bg-surface shadow-card ring-cream-100 flex flex-col gap-2 rounded-2xl p-7 ring-1"
                 >
                   <h3 className="text-xl font-bold">{b.title}</h3>
                   <p className="text-muted">{b.body}</p>
@@ -77,7 +77,7 @@ export default async function SectorPage({ params }: { params: Promise<{ sector:
             <SectionTitle id="rewards-title" title={t("rewards")} subtitle={t("rewardsSubtitle")} />
             <ul className="mt-10 grid gap-3 sm:grid-cols-2">
               {rewards.map((r) => (
-                <li key={r} className="flex items-center gap-3 rounded-xl bg-blue-50 p-4 font-semibold">
+                <li key={r} className="bg-cream-50 flex items-center gap-3 rounded-xl p-4 font-semibold">
                   <Check className="text-success size-5 shrink-0" aria-hidden />
                   {r}
                 </li>

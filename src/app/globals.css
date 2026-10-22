@@ -1,43 +1,51 @@
 @import "tailwindcss";
 
-/* Tokens de Repite: azul y blanco. Cambiar aquí y se propaga a toda la app. */
+/* Identidad de Repite: rojo apetito, vino, crema y negro. Cambiar aquí y se propaga a toda la app.
+   Doc: docs/IDENTIDAD.md. Los pares de contraste cumplen WCAG AA (ver la tabla del documento). */
 :root {
-  --blue-950: #0a1840;
-  --blue-800: #12308c;
-  --blue-600: #2255d6;
-  --blue-200: #c9d8ff;
-  --blue-100: #e6eeff;
-  --blue-50: #f4f8ff;
+  --ink-950: #111111; /* texto principal y fondos oscuros */
+  --ink-900: #1c1b1a; /* superficies sobre fondo oscuro */
+  --wine-800: #7a0d12; /* rojo vino: pulsado/hover y texto sobre crema */
+  --red-600: #c9281b; /* rojo de acción: botones, enlaces y texto rojo (AA sobre crema y blanco) */
+  --red-500: #ff3b2e; /* rojo de marca: logotipo, sellos y acentos grandes (no para texto pequeño) */
+  --cream-200: #e6d8cc; /* bordes y separadores */
+  --cream-100: #f6ede6; /* superficies suaves y estados seleccionados */
+  --cream-50: #fbf7f3; /* fondo de la app */
+  --stone-600: #6b655e; /* texto secundario */
+  --stone-400: #a7a39c; /* gris de marca (solo decorativo) */
   --white: #ffffff;
-  --slate-600: #5b6b8c;
-  --success: #1e8e5a;
-  --danger: #c62828;
-  --warning: #b26a00;
+  --success: #136b42;
+  --danger: #b3261e;
+  --warning: #9a5b00;
 
   /* Roles semánticos */
-  --background: var(--blue-50);
+  --background: var(--cream-50);
   --surface: var(--white);
-  --foreground: var(--blue-950);
-  --muted: var(--slate-600);
-  --primary: var(--blue-600);
-  --primary-hover: var(--blue-800);
-  --primary-soft: var(--blue-100);
-  --border: var(--blue-200);
-  --ring: var(--blue-600);
-  /* Color de marca del local; por defecto el azul de Repite */
-  --brand: var(--blue-600);
+  --foreground: var(--ink-950);
+  --muted: var(--stone-600);
+  --primary: var(--red-600);
+  --primary-hover: var(--wine-800);
+  --primary-soft: var(--cream-100);
+  --border: var(--cream-200);
+  --input: #a1978d; /* borde de campos de formulario (≥ 3:1 sobre blanco) */
+  --ring: var(--red-600);
+  /* Color de marca del local (sellos y detalles); por defecto el rojo de Repite */
+  --brand: var(--red-500);
 
   --radius: 0.875rem;
 }
 
 @theme inline {
-  --color-blue-950: var(--blue-950);
-  --color-blue-800: var(--blue-800);
-  --color-blue-600: var(--blue-600);
-  --color-blue-200: var(--blue-200);
-  --color-blue-100: var(--blue-100);
-  --color-blue-50: var(--blue-50);
-  --color-slate-600: var(--slate-600);
+  --color-ink-950: var(--ink-950);
+  --color-ink-900: var(--ink-900);
+  --color-wine-800: var(--wine-800);
+  --color-red-600: var(--red-600);
+  --color-red-500: var(--red-500);
+  --color-cream-200: var(--cream-200);
+  --color-cream-100: var(--cream-100);
+  --color-cream-50: var(--cream-50);
+  --color-stone-600: var(--stone-600);
+  --color-stone-400: var(--stone-400);
   --color-success: var(--success);
   --color-danger: var(--danger);
   --color-warning: var(--warning);
@@ -50,6 +58,7 @@
   --color-primary-hover: var(--primary-hover);
   --color-primary-soft: var(--primary-soft);
   --color-border: var(--border);
+  --color-input: var(--input);
   --color-ring: var(--ring);
   --color-brand: var(--brand);
 
@@ -77,7 +86,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 0.375rem);
 
-  --shadow-card: 0 1px 2px rgb(10 24 64 / 0.04), 0 4px 16px rgb(10 24 64 / 0.06);
+  --shadow-card: 0 1px 2px rgb(17 17 17 / 0.05), 0 4px 18px rgb(17 17 17 / 0.07);
 
   --animate-stamp: stamp 520ms cubic-bezier(0.2, 0.9, 0.3, 1.2) both;
   --animate-fade-in: fade-in 240ms ease-out both;
@@ -122,7 +131,7 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.025em;
   }
   :focus-visible {
     outline: 3px solid var(--ring);
@@ -143,11 +152,11 @@
 /* Fondos de la web pública */
 .hero-mesh {
   background:
-    radial-gradient(60% 55% at 88% 0%, color-mix(in srgb, var(--blue-600) 16%, transparent), transparent),
-    radial-gradient(45% 45% at 0% 35%, color-mix(in srgb, var(--blue-200) 75%, transparent), transparent),
+    radial-gradient(55% 55% at 90% 0%, color-mix(in srgb, var(--red-500) 18%, transparent), transparent),
+    radial-gradient(45% 50% at 0% 40%, color-mix(in srgb, var(--cream-200) 80%, transparent), transparent),
     var(--background);
 }
 .dot-grid {
-  background-image: radial-gradient(color-mix(in srgb, var(--blue-200) 80%, transparent) 1.2px, transparent 1.2px);
+  background-image: radial-gradient(color-mix(in srgb, var(--cream-200) 80%, transparent) 1.2px, transparent 1.2px);
   background-size: 22px 22px;
 }

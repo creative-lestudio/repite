@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Logo } from "@/components/brand/logo";
 import { cn } from "@/lib/utils";
 
 export function OwnerNav({
@@ -45,7 +46,7 @@ export function OwnerNav({
               aria-current={active ? "page" : undefined}
               className={cn(
                 "flex min-h-11 items-center gap-3 rounded-lg px-3 font-semibold",
-                active ? "bg-primary-soft text-blue-800" : "text-muted hover:bg-blue-50 hover:text-blue-800",
+                active ? "bg-primary-soft text-wine-800" : "text-muted hover:bg-cream-50 hover:text-wine-800",
               )}
             >
               <Icon className="size-5 shrink-0" aria-hidden />
@@ -58,7 +59,7 @@ export function OwnerNav({
   );
 
   const footer = (
-    <div className="flex flex-col gap-2 border-t border-blue-100 pt-4">
+    <div className="border-cream-100 flex flex-col gap-2 border-t pt-4">
       <Link
         href={`/c/${slug}`}
         target="_blank"
@@ -74,9 +75,9 @@ export function OwnerNav({
   return (
     <>
       {/* Escritorio: barra lateral fija */}
-      <aside className="bg-surface hidden w-64 shrink-0 flex-col gap-6 border-r border-blue-100 p-4 md:flex">
+      <aside className="bg-surface border-cream-100 hidden w-64 shrink-0 flex-col gap-6 border-r p-4 md:flex">
         <div>
-          <p className="font-display text-primary text-xl font-extrabold">Repite</p>
+          <Logo className="h-6" />
           <p className="text-muted truncate text-sm">{locationName}</p>
         </div>
         <nav aria-label={t("label")} className="flex-1">
@@ -86,9 +87,9 @@ export function OwnerNav({
       </aside>
 
       {/* Móvil: barra superior con menú */}
-      <header className="bg-surface sticky top-0 z-20 flex items-center justify-between border-b border-blue-100 px-4 py-2 md:hidden">
+      <header className="bg-surface border-cream-100 sticky top-0 z-20 flex items-center justify-between border-b px-4 py-2 md:hidden">
         <div className="min-w-0">
-          <p className="font-display text-primary leading-5 font-extrabold">Repite</p>
+          <Logo className="h-5" />
           <p className="text-muted truncate text-xs">{locationName}</p>
         </div>
         <button

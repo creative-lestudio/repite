@@ -14,6 +14,8 @@ export interface StampCardProps {
   locationName?: string;
   /** Tipo de negocio: decide el icono del sello. */
   sector?: string | null;
+  /** «dark»: tarjeta negra para fondos oscuros (portada y vistas de marketing). */
+  tone?: "light" | "dark";
   className?: string;
 }
 
@@ -24,29 +26,52 @@ function columnsFor(total: number) {
 }
 
 /** Elemento memorable de Repite: cada sello se "estampa" con una animación breve. */
-export function StampCard({ total, filled, newStamp, rewardName, locationName, sector, className }: StampCardProps) {
+export function StampCard({
+  total,
+  filled,
+  newStamp,
+  rewardName,
+  locationName,
+  sector,
+  tone = "light",
+  className,
+}: StampCardProps) {
   const t = useTranslations();
   const safeFilled = Math.max(0, Math.min(filled, total));
   const left = total - safeFilled;
   const cols = columnsFor(total);
+  const dark = tone === "dark";
 
   return (
     <section
       aria-label={t("stampCard.label", { count: safeFilled, total })}
       className={cn(
-        "bg-surface shadow-card relative overflow-hidden rounded-xl p-5 ring-1 ring-blue-100",
+        "relative overflow-hidden rounded-xl p-5",
         "before:bg-brand before:absolute before:inset-x-0 before:top-0 before:h-1.5",
+        dark ? "bg-ink-900 text-cream-50 ring-1 ring-white/10" : "bg-surface shadow-card ring-cream-100 ring-1",
         className,
       )}
     >
       <header className="mb-5 flex flex-wrap items-end justify-between gap-x-3 gap-y-2">
         <div>
-          {locationName && <p className="text-muted text-sm font-medium">{locationName}</p>}
-          <p className="font-display text-foreground text-2xl font-extrabold whitespace-nowrap">
+          {locationName && (
+            <p className={cn("text-sm font-medium", dark ? "text-stone-400" : "text-muted")}>{locationName}</p>
+          )}
+          <p
+            className={cn(
+              "font-display text-2xl font-extrabold whitespace-nowrap",
+              dark ? "text-cream-50" : "text-foreground",
+            )}
+          >
             {t("common.stampsOf", { count: safeFilled, total })}
           </p>
         </div>
-        <span className="bg-primary-soft rounded-full px-3 py-1 text-sm font-semibold whitespace-nowrap text-blue-800">
+        <span
+          className={cn(
+            "rounded-full px-3 py-1 text-sm font-semibold whitespace-nowrap",
+            dark ? "text-cream-100 bg-white/10" : "bg-primary-soft text-wine-800",
+          )}
+        >
           {t("common.stampsLeft", { count: left })}
         </span>
       </header>
@@ -64,10 +89,16 @@ export function StampCard({ total, filled, newStamp, rewardName, locationName, s
                 className={cn(
                   "flex aspect-square w-full max-w-16 items-center justify-center rounded-full text-sm font-semibold",
                   isFilled
-                    ? "bg-brand -rotate-6 text-white shadow-[inset_0_-3px_0_rgb(0_0_0/0.15)]"
-                    : "border-2 border-dashed border-blue-200 text-blue-200",
+                    ? "bg-brand -rotate-6 text-white shadow-[inset_0_-3px_0_rgb(0_0_0/0.18)]"
+                    : dark
+                      ? "border-2 border-dashed border-white/25 text-white/40"
+                      : "border-cream-200 border-2 border-dashed text-stone-400",
                   isNew && "animate-stamp",
-                  !isFilled && isLast && "border-primary/40 text-primary border-solid",
+                  !isFilled &&
+                    isLast &&
+                    (dark
+                      ? "border-solid border-red-500/70 text-red-500"
+                      : "border-primary/40 text-primary border-solid"),
                 )}
               >
                 {isFilled ? (
@@ -84,11 +115,11 @@ export function StampCard({ total, filled, newStamp, rewardName, locationName, s
       </ol>
 
       {rewardName && (
-        <footer className="mt-5 flex items-center gap-3 rounded-lg bg-blue-50 p-3">
-          <Gift className="text-primary size-5 shrink-0" aria-hidden />
+        <footer className={cn("mt-5 flex items-center gap-3 rounded-lg p-3", dark ? "bg-white/5" : "bg-cream-50")}>
+          <Gift className={cn("size-5 shrink-0", dark ? "text-red-500" : "text-primary")} aria-hidden />
           <p className="text-sm">
-            <span className="text-muted">{t("stampCard.nextReward")}: </span>
-            <span className="text-foreground font-semibold">{rewardName}</span>
+            <span className={dark ? "text-stone-400" : "text-muted"}>{t("stampCard.nextReward")}: </span>
+            <span className={cn("font-semibold", dark ? "text-cream-50" : "text-foreground")}>{rewardName}</span>
           </p>
         </footer>
       )}

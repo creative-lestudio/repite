@@ -88,7 +88,7 @@ export default async function OwnerCustomerPage({ params }: { params: Promise<{ 
             ) : (
               <ul className="flex flex-col gap-2">
                 {detail.notes.map((n) => (
-                  <li key={n.id} className="bg-surface rounded-lg p-3 ring-1 ring-blue-100">
+                  <li key={n.id} className="bg-surface ring-cream-100 rounded-lg p-3 ring-1">
                     <p>{n.text}</p>
                     <p className="text-muted mt-1 flex items-center gap-2 text-xs">
                       {n.pinned && <Pin className="size-3" aria-hidden />}
@@ -108,7 +108,7 @@ export default async function OwnerCustomerPage({ params }: { params: Promise<{ 
             {detail.history.length === 0 ? (
               <p className="text-muted text-sm">{t("historyEmpty")}</p>
             ) : (
-              <ol className="bg-surface shadow-card divide-y divide-blue-100 rounded-xl ring-1 ring-blue-100">
+              <ol className="bg-surface shadow-card divide-cream-100 ring-cream-100 divide-y rounded-xl ring-1">
                 {detail.history.map((e) => {
                   const qty = e.type === "reward_issued" || e.type === "redeem" ? null : e.quantity;
                   return (

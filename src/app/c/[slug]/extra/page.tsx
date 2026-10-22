@@ -31,7 +31,7 @@ export default async function ExtraPage({ params }: { params: Promise<{ slug: st
       {program.bonus_story_enabled && (
         <section
           aria-labelledby="story"
-          className="bg-surface shadow-card flex flex-col gap-3 rounded-xl p-5 ring-1 ring-blue-100"
+          className="bg-surface shadow-card ring-cream-100 flex flex-col gap-3 rounded-xl p-5 ring-1"
         >
           <header className="flex items-start gap-3">
             <span className="bg-primary-soft text-primary flex size-11 shrink-0 items-center justify-center rounded-full">
@@ -65,7 +65,7 @@ export default async function ExtraPage({ params }: { params: Promise<{ slug: st
       {program.bonus_review_enabled && (
         <section
           aria-labelledby="review"
-          className="bg-surface shadow-card flex flex-col gap-3 rounded-xl p-5 ring-1 ring-blue-100"
+          className="bg-surface shadow-card ring-cream-100 flex flex-col gap-3 rounded-xl p-5 ring-1"
         >
           <header className="flex items-start gap-3">
             <span className="bg-primary-soft text-primary flex size-11 shrink-0 items-center justify-center rounded-full">

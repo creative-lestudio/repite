@@ -59,7 +59,7 @@ export default async function PlanPage() {
             aria-valuemin={0}
             aria-valuemax={usage.customerLimit}
             aria-valuenow={usage.customers}
-            className="h-3 overflow-hidden rounded-full bg-blue-100"
+            className="bg-cream-100 h-3 overflow-hidden rounded-full"
           >
             <div
               className={cn(
@@ -93,7 +93,7 @@ export default async function PlanPage() {
 
       <div className="grid gap-4 md:grid-cols-2">
         {plans.map((p) => (
-          <Card key={p.key} className={cn("flex flex-col gap-4", p.key === "pro" && "ring-2 ring-blue-600")}>
+          <Card key={p.key} className={cn("flex flex-col gap-4", p.key === "pro" && "ring-2 ring-red-600")}>
             <div>
               <h2 className="font-display text-xl font-extrabold">{p.name}</h2>
               <p className="font-display text-primary text-3xl font-extrabold">{p.price}</p>

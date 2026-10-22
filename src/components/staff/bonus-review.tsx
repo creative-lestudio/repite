@@ -14,7 +14,7 @@ export function BonusReview({ bonus, showCustomer }: { bonus: PendingBonus; show
   const handle = bonus.evidence?.handle;
 
   return (
-    <li className="bg-surface flex flex-col gap-3 rounded-lg p-3 ring-1 ring-blue-100">
+    <li className="bg-surface ring-cream-100 flex flex-col gap-3 rounded-lg p-3 ring-1">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <div className="flex flex-col">
           {showCustomer && <span className="font-semibold">{bonus.customer_name}</span>}

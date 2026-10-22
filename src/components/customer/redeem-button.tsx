@@ -35,7 +35,7 @@ export function RedeemButton({
         ref={dialog}
         onClose={() => setOpen(false)}
         aria-labelledby="redeem-title"
-        className="bg-surface m-auto w-[calc(100%-2rem)] max-w-sm rounded-xl p-6 backdrop:bg-blue-950/60"
+        className="bg-surface backdrop:bg-ink-950/60 m-auto w-[calc(100%-2rem)] max-w-sm rounded-xl p-6"
       >
         <div className="flex flex-col items-center gap-4 text-center">
           <h2 id="redeem-title" className="text-xl font-extrabold">

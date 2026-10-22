@@ -17,16 +17,17 @@ import { StampCardDemo } from "./stamp-card-demo";
 export const metadata = { title: "Sistema de diseño", robots: { index: false } };
 
 const swatches = [
-  ["blue-950", "#0A1840"],
-  ["blue-800", "#12308C"],
-  ["blue-600", "#2255D6"],
-  ["blue-200", "#C9D8FF"],
-  ["blue-100", "#E6EEFF"],
-  ["blue-50", "#F4F8FF"],
-  ["slate-600", "#5B6B8C"],
-  ["success", "#1E8E5A"],
-  ["danger", "#C62828"],
-  ["warning", "#B26A00"],
+  ["ink-950", "#111111"],
+  ["wine-800", "#7A0D12"],
+  ["red-600 (acción)", "#C9281B"],
+  ["red-500 (marca)", "#FF3B2E"],
+  ["cream-200", "#E6D8CC"],
+  ["cream-100", "#F6EDE6"],
+  ["cream-50", "#FBF7F3"],
+  ["stone-600", "#6B655E"],
+  ["success", "#136B42"],
+  ["danger", "#B3261E"],
+  ["warning", "#9A5B00"],
 ] as const;
 
 export default async function DesignPage() {
@@ -44,7 +45,7 @@ export default async function DesignPage() {
         </h2>
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-5">
           {swatches.map(([name, hex]) => (
-            <li key={name} className="bg-surface overflow-hidden rounded-lg border border-blue-100">
+            <li key={name} className="bg-surface border-cream-100 overflow-hidden rounded-lg border">
               <div className="h-14" style={{ background: hex }} />
               <p className="px-2 pt-1.5 text-xs font-semibold">{name}</p>
               <p className="text-muted px-2 pb-1.5 text-xs">{hex}</p>

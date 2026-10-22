@@ -16,7 +16,7 @@ export function RewardsList({ rewards }: { rewards: { id: string; reward_name: s
   return (
     <section
       aria-labelledby="rewards"
-      className="bg-primary-soft flex flex-col gap-3 rounded-xl p-4 ring-1 ring-blue-200"
+      className="bg-primary-soft ring-cream-200 flex flex-col gap-3 rounded-xl p-4 ring-1"
     >
       <h2 id="rewards" className="flex items-center gap-2 font-bold">
         <Gift className="text-primary size-5" aria-hidden />

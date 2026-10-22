@@ -41,7 +41,7 @@ export function PreferencesForm({
           id="locale"
           defaultValue={locale}
           onChange={(e) => save({ locale: e.target.value })}
-          className="border-border bg-surface focus-visible:border-primary focus-visible:ring-primary/25 min-h-12 rounded-lg border px-3 text-base focus-visible:ring-3 focus-visible:outline-none"
+          className="border-input bg-surface focus-visible:border-primary focus-visible:ring-primary/25 min-h-12 rounded-lg border px-3 text-base focus-visible:ring-3 focus-visible:outline-none"
         >
           {locales.map((l) => (
             <option key={l} value={l}>

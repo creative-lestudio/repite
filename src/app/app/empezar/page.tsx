@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
+import { Logo } from "@/components/brand/logo";
 import { BusinessForm } from "@/components/owner/business-form";
 import { createUserClient } from "@/lib/supabase/server";
 import { getOwnerContext } from "@/server/auth/owner";
@@ -19,10 +20,10 @@ export default async function StartPage() {
 
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col px-4 py-8">
-      <p className="font-display text-primary mb-8 text-xl font-extrabold">Repite</p>
+      <Logo className="mb-8 h-7" />
       <h1 className="text-3xl font-extrabold">{t("title")}</h1>
       <p className="text-muted mt-2 mb-6">{t("subtitle")}</p>
-      <div className="bg-surface shadow-card rounded-xl p-5 ring-1 ring-blue-100">
+      <div className="bg-surface shadow-card ring-cream-100 rounded-xl p-5 ring-1">
         <BusinessForm />
       </div>
       <form action={signOutOwnerAction} className="mt-6 flex flex-col items-center gap-1">
