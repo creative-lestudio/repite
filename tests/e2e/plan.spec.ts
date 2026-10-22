@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
-import { admin } from "./helpers";
+import { admin, clearRateLimits } from "./helpers";
+
+test.beforeEach(clearRateLimits);
 
 test("el plan Starter no deja crear el cliente 51 y lo explica con amabilidad", async ({ page }) => {
   test.setTimeout(60_000);

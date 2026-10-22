@@ -251,14 +251,14 @@ isOneToOne: false
                   ]
                 },"locations": {
                   Row: {
-                    "address": string | null,"brand": NonNullable<Json>,"brand_color": string | null,"business_type": string,"created_at": string,"deleted_at": string | null,"id": string,"locale": string,"logo_path": string | null,"name": string,"organization_id": string,"settings": NonNullable<Json>,"slug": string,"timezone": string,"updated_at": string
+                    "address": string | null,"brand": NonNullable<Json>,"brand_color": string | null,"business_type": string,"created_at": string,"deleted_at": string | null,"id": string,"latitude": number | null,"locale": string,"logo_path": string | null,"longitude": number | null,"name": string,"organization_id": string,"settings": NonNullable<Json>,"slug": string,"timezone": string,"updated_at": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "address"?: string | null,"brand"?: NonNullable<Json>,"brand_color"?: string | null,"business_type"?: string,"created_at"?: string,"deleted_at"?: string | null,"id"?: string,"locale"?: string,"logo_path"?: string | null,"name": string,"organization_id": string,"settings"?: NonNullable<Json>,"slug": string,"timezone"?: string,"updated_at"?: string
+                    "address"?: string | null,"brand"?: NonNullable<Json>,"brand_color"?: string | null,"business_type"?: string,"created_at"?: string,"deleted_at"?: string | null,"id"?: string,"latitude"?: number | null,"locale"?: string,"logo_path"?: string | null,"longitude"?: number | null,"name": string,"organization_id": string,"settings"?: NonNullable<Json>,"slug": string,"timezone"?: string,"updated_at"?: string
                   }
                   Update: {
-                    "address"?: string | null,"brand"?: NonNullable<Json>,"brand_color"?: string | null,"business_type"?: string,"created_at"?: string,"deleted_at"?: string | null,"id"?: string,"locale"?: string,"logo_path"?: string | null,"name"?: string,"organization_id"?: string,"settings"?: NonNullable<Json>,"slug"?: string,"timezone"?: string,"updated_at"?: string
+                    "address"?: string | null,"brand"?: NonNullable<Json>,"brand_color"?: string | null,"business_type"?: string,"created_at"?: string,"deleted_at"?: string | null,"id"?: string,"latitude"?: number | null,"locale"?: string,"logo_path"?: string | null,"longitude"?: number | null,"name"?: string,"organization_id"?: string,"settings"?: NonNullable<Json>,"slug"?: string,"timezone"?: string,"updated_at"?: string
                   }
                   Relationships: [
                     {

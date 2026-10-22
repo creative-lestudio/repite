@@ -4,7 +4,15 @@ import { mkdtempSync, readFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { beforeAll, describe, expect, it, vi } from "vitest";
-import { hexToRgb, parseSerial, passSerial, stampRow, statusLine, type PassContent } from "@/domain/wallet";
+import {
+  hexToRgb,
+  parseSerial,
+  passSerial,
+  proximityText,
+  stampRow,
+  statusLine,
+  type PassContent,
+} from "@/domain/wallet";
 
 vi.mock("server-only", () => ({}));
 
@@ -39,6 +47,12 @@ describe("dominio de Wallet", () => {
     expect(statusLine(content)).toBe("Te faltan 5 sellos");
     expect(statusLine({ ...content, filled: 7 })).toBe("Te falta 1 sello");
     expect(statusLine({ ...content, rewardsReady: 1 })).toBe("¡Premio listo!");
+  });
+
+  it("el aviso por cercanía menciona el premio, el cupón o los sellos que faltan", () => {
+    expect(proximityText({ ...content })).toBe("Estás cerca de Café Aurora: te faltan 5 sellos.");
+    expect(proximityText({ ...content, couponsReady: 1 })).toContain("cupón");
+    expect(proximityText({ ...content, rewardsReady: 1 })).toContain("premio");
   });
 
   it("convierte colores hex y cae al rojo de marca si son inválidos", () => {
@@ -85,6 +99,11 @@ describe("Google Wallet", () => {
     expect(obj.barcode.value).toBe(content.qrUrl);
     expect(obj.classId).toBe(claims.payload.loyaltyClasses[0].id);
     expect(obj.id.startsWith("3388000000000000001.")).toBe(true);
+    expect(obj.locations).toBeUndefined();
+
+    const withCoords = googleSaveUrl({ ...content, coords: { latitude: 40.4168, longitude: -3.7038 } }, LOC);
+    const claims2 = JSON.parse(Buffer.from(withCoords.split("/save/")[1]!.split(".")[1]!, "base64url").toString());
+    expect(claims2.payload.loyaltyObjects[0].locations).toEqual([{ latitude: 40.4168, longitude: -3.7038 }]);
   });
 });
 

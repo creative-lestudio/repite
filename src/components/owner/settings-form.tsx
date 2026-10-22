@@ -1,11 +1,13 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import Link from "next/link";
+import { useActionState, useEffect, useRef, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Alert, Button, Card, Field, Input } from "@/components/ui";
 import { useToast } from "@/components/staff/toaster";
 import { BusinessTypePicker } from "@/components/owner/business-type-picker";
 import type { BusinessType } from "@/domain/business-types";
+import { geocodeAddressAction } from "@/server/actions/geocode";
 import { saveSettingsAction, type FormState } from "@/server/actions/owner";
 
 const selectClass =
@@ -20,6 +22,9 @@ export interface SettingsValues {
   cooldownHours: number;
   messageGapDays: number;
   averageTicket: string;
+  latitude: string;
+  longitude: string;
+  proximityAllowed: boolean;
   whatsapp: string;
   instagram: string;
   reviewUrl: string;
@@ -34,6 +39,22 @@ export function SettingsForm({ v }: { v: SettingsValues }) {
   const ts = useTranslations("owner.start.countries");
   const toast = useToast();
   const [type, setType] = useState<BusinessType>(v.businessType);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [lat, setLat] = useState(v.latitude);
+  const [lng, setLng] = useState(v.longitude);
+  const [searching, startSearch] = useTransition();
+  const tp = useTranslations("owner.plan");
+
+  const findCoords = () =>
+    startSearch(async () => {
+      const address = String(new FormData(formRef.current!).get("address") ?? "");
+      const r = await geocodeAddressAction(address);
+      if (r.ok) {
+        setLat(String(r.coords.latitude));
+        setLng(String(r.coords.longitude));
+        toast({ tone: "success", text: t("geocodeDone") });
+      } else toast({ tone: "danger", text: te(r.error as never) });
+    });
   const [state, action, pending] = useActionState<FormState, FormData>(saveSettingsAction, null);
   useEffect(() => {
     if (state?.ok) toast({ tone: "success", text: t("saved") });
@@ -44,7 +65,7 @@ export function SettingsForm({ v }: { v: SettingsValues }) {
   const err = (n: string) => (fields[n] ? te(fields[n] as never) : undefined);
 
   return (
-    <form action={action} className="flex flex-col gap-6" noValidate>
+    <form ref={formRef} action={action} className="flex flex-col gap-6" noValidate>
       {state && !state.ok && (
         <Alert tone="danger">{te((state.error === "form" ? "settingsInvalid" : state.error) as never)}</Alert>
       )}
@@ -92,6 +113,47 @@ export function SettingsForm({ v }: { v: SettingsValues }) {
           <p>{t("countryValue", { country: ts(v.country as "ES"), currency: v.currency })}</p>
           <p className="text-muted text-sm">{t("countryHint")}</p>
         </div>
+      </Card>
+
+      <Card className="flex flex-col gap-4">
+        <h2 className="text-lg font-bold">{t("proximityTitle")}</h2>
+        <p className="text-muted text-sm">{t("proximityHint")}</p>
+        {!v.proximityAllowed && (
+          <p className="bg-cream-100 flex flex-wrap items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-semibold">
+            {tp("locked", { plan: "plus" })}
+            <Link href="/app/plan" className="text-primary underline underline-offset-4">
+              {tp("upgradeLink")}
+            </Link>
+          </p>
+        )}
+        <fieldset disabled={!v.proximityAllowed} className="flex flex-col gap-4 disabled:opacity-60">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field id="latitude" label={t("latitude")} error={err("latitude")}>
+              <Input
+                name="latitude"
+                inputMode="decimal"
+                value={lat}
+                onChange={(e) => setLat(e.target.value)}
+                maxLength={20}
+                placeholder="40.4168"
+              />
+            </Field>
+            <Field id="longitude" label={t("longitude")}>
+              <Input
+                name="longitude"
+                inputMode="decimal"
+                value={lng}
+                onChange={(e) => setLng(e.target.value)}
+                maxLength={20}
+                placeholder="-3.7038"
+              />
+            </Field>
+          </div>
+          <Button type="button" variant="secondary" loading={searching} onClick={findCoords} className="self-start">
+            {t("geocode")}
+          </Button>
+          <p className="text-muted text-xs">{t("coordsHelp")}</p>
+        </fieldset>
       </Card>
 
       <Card className="flex flex-col gap-4">

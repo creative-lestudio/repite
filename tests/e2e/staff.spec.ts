@@ -1,5 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
-import { admin, AURORA, DEV_DEVICE_TOKEN, seedCustomer } from "./helpers";
+import { admin, AURORA, DEV_DEVICE_TOKEN, seedCustomer, clearRateLimits } from "./helpers";
+
+test.beforeEach(clearRateLimits);
 
 async function signIn(page: Page, pin = "1234") {
   await page.goto(`/equipo/vincular?t=${DEV_DEVICE_TOKEN}`);

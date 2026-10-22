@@ -44,3 +44,5 @@ Con el correo gratuito de Supabase el remitente siempre es «Supabase Auth». Pa
 
 1. Google Cloud Console → _APIs y servicios → Credenciales → ID de cliente de OAuth_ (aplicación web). En «URI de redirección» pega la dirección `…/auth/v1/callback` que muestra Supabase.
 2. Supabase → **Authentication → Providers → Google**: activa, pega el ID y el secreto.
+
+3. En Vercel → _Settings → Environment Variables_ añade `NEXT_PUBLIC_GOOGLE_LOGIN` = `1` y redespliega. Mientras no esté, el botón «Registrarme con Google» no se muestra (así nadie ve un botón que no funciona).

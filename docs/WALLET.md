@@ -40,6 +40,11 @@ El código ya está hecho. **Los botones solo aparecen cuando rellenas las clave
    - `APPLE_WALLET_WWDR_PEM` = `wwdr.pem` en base64
 8. Redespliega.
 
+## Qué lleva la tarjeta
+
+- Sellos, premio y QR personal; el **nivel VIP** y el **cupón** disponibles (si los hay).
+- Con **Plus** y las coordenadas del local (Ajustes → «Aviso al pasar cerca del local»), la tarjeta aparece en la pantalla de bloqueo al pasar cerca. Apple y Google deciden el momento exacto y pueden limitar la frecuencia.
+
 ## Cómo funciona
 
 - El cliente (con su sesión iniciada) toca el botón: `/c/<local>/wallet/apple` descarga el `.pkpass`; `/c/<local>/wallet/google` abre el guardado de Google.

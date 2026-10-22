@@ -1,4 +1,7 @@
 import { expect, test } from "@playwright/test";
+import { clearRateLimits } from "./helpers";
+
+test.beforeEach(clearRateLimits);
 
 test.describe("web pública", () => {
   test("presenta el producto y lleva a crear cuenta", async ({ page }) => {

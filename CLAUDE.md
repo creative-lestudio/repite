@@ -65,7 +65,8 @@ Next.js 15 (App Router, Server Actions) · TypeScript estricto · Supabase (Post
 32. **Resultados** (`/app/resultados`, `public.owner_metrics`, `src/domain/metrics.ts`): visitas, clientes activos/nuevos, % que repite (visitas con orden > 1 por cliente, excluyendo deshechas), premios, visitas por día y hora, y ingresos estimados = visitas de repetición × `settings.average_ticket`. SECURITY INVOKER (la RLS aísla). Starter/Basic ven el resumen; Plus, el detalle y la comparación con el periodo anterior.
 33. **Cupones y niveles VIP**: tablas `coupons` y `customer_coupons` (audiencia `all`/`welcome`/`birthday`; emisión perezosa e idempotente con `public.issue_coupons`, que además aplica el límite del plan: Starter 0, Basic 1 activo, Plus sin límite; canje con `public.redeem_coupon` solo desde el equipo). Los niveles viven en `loyalty_programs.levels` (jsonb, máx. 3, solo Plus) y se calculan con las visitas totales (`customer_card.visits_total`, `src/domain/levels.ts`). Cupón y nivel aparecen en la tarjeta del cliente, en la ficha del equipo y en el pase de Wallet.
 34. El botón «Registrarme con Google» solo se pinta si `NEXT_PUBLIC_GOOGLE_LOGIN=1` (cuando el proveedor ya está activado en Supabase).
-35. Enumeraciones como `text` + `check` (más fáciles de evolucionar que los `enum` de Postgres).
+35. **Aviso por cercanía** (Plus): `locations.latitude/longitude` (ajustes del dueño; búsqueda con Nominatim o coordenadas pegadas, `src/domain/geo.ts`). El pase de Apple lleva `locations` con `relevantText` y el objeto de Google, `locations`; ambos solo se rellenan si el plan lo incluye (`planSpec().proximity`).
+36. Enumeraciones como `text` + `check` (más fáciles de evolucionar que los `enum` de Postgres).
 
 ## Estructura
 

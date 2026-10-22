@@ -55,6 +55,7 @@ export function googleLoyaltyObject(c: PassContent, cfg: GoogleConfig, locationI
           ]
         : []),
     ],
+    ...(c.coords ? { locations: [{ latitude: c.coords.latitude, longitude: c.coords.longitude }] } : {}),
     barcode: { type: "QR_CODE", value: c.qrUrl, alternateText: WALLET_TEXT.scanHint },
   };
 }
@@ -111,6 +112,7 @@ export async function updateGoogleObject(c: PassContent, locationId: string): Pr
     headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
     body: JSON.stringify({
       loyaltyPoints: obj.loyaltyPoints,
+      ...(c.coords ? { locations: obj.locations } : {}),
       textModulesData: obj.textModulesData,
       state: "ACTIVE",
     }),

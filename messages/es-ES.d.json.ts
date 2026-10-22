@@ -27,6 +27,9 @@ declare const messages: {
     "rateLimited": "Demasiados intentos seguidos. Espera un minuto y vuelve a probar.",
     "planRequired": "Esta opción no está incluida en tu plan. Puedes cambiarlo en Plan y facturación.",
     "planLimit": "Has llegado al límite de tu plan. Puedes cambiarlo en Plan y facturación.",
+    "coordsInvalid": "Revisa las coordenadas: la latitud va entre -90 y 90 y la longitud entre -180 y 180.",
+    "addressTooShort": "Escribe primero la dirección de tu local.",
+    "addressNotFound": "No encontramos esa dirección. Prueba con calle, número y ciudad, o escribe las coordenadas.",
     "ticketRange": "Escribe un importe entre 0 y 1000.",
     "imageInvalid": "No pudimos leer esa imagen. Prueba con un PNG, JPG o WEBP.",
     "imageTooBig": "La imagen pesa demasiado. El máximo son 4 MB.",
@@ -383,12 +386,7 @@ declare const messages: {
     "signOut": "Cerrar sesión"
   },
   "plans": {
-    "names": {
-      "starter": "Starter",
-      "basic": "Basic",
-      "plus": "Plus",
-      "trial": "Prueba gratuita"
-    },
+    "names": { "starter": "Starter", "basic": "Basic", "plus": "Plus", "trial": "Prueba gratuita" },
     "taglines": {
       "starter": "Para probar con tu primer local",
       "basic": "Para locales con clientela fija",
@@ -544,26 +542,13 @@ declare const messages: {
       "fontTitle": "Tipografía",
       "stampsTitle": "Sellos",
       "shape": "Forma",
-      "shapes": {
-        "circle": "Círculo",
-        "square": "Cuadrado",
-        "hex": "Hexágono",
-        "star": "Estrella"
-      },
+      "shapes": { "circle": "Círculo", "square": "Cuadrado", "hex": "Hexágono", "star": "Estrella" },
       "content": "Dentro del sello",
-      "modes": {
-        "icon": "Icono",
-        "number": "Número",
-        "image": "Tu imagen"
-      },
+      "modes": { "icon": "Icono", "number": "Número", "image": "Tu imagen" },
       "stampImage": "Imagen del sello",
       "stampImageHint": "Se recorta en cuadrado. Mejor una imagen sencilla.",
       "cardTitle": "Tarjeta",
-      "cardStyles": {
-        "light": "Clara",
-        "dark": "Oscura",
-        "brand": "Color de marca"
-      },
+      "cardStyles": { "light": "Clara", "dark": "Oscura", "brand": "Color de marca" },
       "cardBg": "Tu propio diseño de tarjeta",
       "cardBgHint": "Una imagen apaisada (por ejemplo 1200×750). Se oscurece un poco para que se lean los sellos.",
       "save": "Guardar mi marca",
@@ -827,6 +812,13 @@ declare const messages: {
       "cooldown": "Horas mínimas entre dos sellos del mismo cliente",
       "cooldownHint": "Evita que se sumen sellos por error. Lo habitual son 4 horas.",
       "messageGap": "Días mínimos entre dos mensajes al mismo cliente",
+      "proximityTitle": "Aviso al pasar cerca del local",
+      "proximityHint": "Con la tarjeta en el Wallet, tus clientes ven un aviso en la pantalla de bloqueo cuando pasan cerca de tu local.",
+      "latitude": "Latitud",
+      "longitude": "Longitud",
+      "geocode": "Buscar con mi dirección",
+      "geocodeDone": "Coordenadas encontradas. Pulsa Guardar para aplicarlas.",
+      "coordsHelp": "También puedes copiarlas de Google Maps: pulsa con el botón derecho sobre tu local y toca los números de arriba.",
       "averageTicket": "Ticket medio por visita",
       "averageTicketHint": "Lo que gasta de media un cliente cada vez que viene. Con él calculamos tus ingresos estimados en Resultados.",
       "messageGapHint": "Para no agobiar a tus clientes.",
@@ -1007,10 +999,7 @@ declare const messages: {
           "title": "Te recuerda cuando está cerca",
           "body": "Con Plus, la tarjeta aparece en la pantalla de bloqueo al pasar cerca de tu local."
         },
-        "i4": {
-          "title": "Con tu marca",
-          "body": "Tu color, tu nombre y tu logotipo en cada tarjeta."
-        }
+        "i4": { "title": "Con tu marca", "body": "Tu color, tu nombre y tu logotipo en cada tarjeta." }
       },
       "lockScreen": "Pantalla de bloqueo",
       "nearTitle": "Estás cerca de Café Aurora",

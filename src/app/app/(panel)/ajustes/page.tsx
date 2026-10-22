@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { SettingsForm } from "@/components/owner/settings-form";
+import { planSpec } from "@/domain/plan";
 import { requireManager } from "@/server/auth/owner";
 
 export default async function SettingsPage() {
@@ -18,6 +19,9 @@ export default async function SettingsPage() {
           timezone: ctx.location.timezone,
           cooldownHours: Number(s.stamp_cooldown_hours ?? 4),
           messageGapDays: Number(s.message_min_days ?? 7),
+          latitude: ctx.location.latitude === null ? "" : String(ctx.location.latitude),
+          longitude: ctx.location.longitude === null ? "" : String(ctx.location.longitude),
+          proximityAllowed: planSpec(ctx.organization.effectivePlan).proximity,
           averageTicket: s.average_ticket ? String(s.average_ticket) : "",
           whatsapp: String(s.contact_whatsapp ?? ""),
           instagram: String(s.instagram_handle ?? ""),

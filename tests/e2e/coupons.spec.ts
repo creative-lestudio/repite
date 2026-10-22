@@ -1,5 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
-import { admin, AURORA, customerIdByPhone, DEV_DEVICE_TOKEN, randomPhone } from "./helpers";
+import { admin, AURORA, customerIdByPhone, DEV_DEVICE_TOKEN, randomPhone, clearRateLimits } from "./helpers";
+
+test.beforeEach(clearRateLimits);
 
 async function ownerLogin(page: Page) {
   await page.goto("/entrar");
@@ -82,5 +84,22 @@ test("niveles VIP: el dueño Plus los guarda", async ({ page }) => {
     await expect(page.getByLabel("Visitas").first()).toHaveValue("10");
   } finally {
     await admin.from("loyalty_programs").update({ levels: [] }).eq("organization_id", AURORA.organizationId);
+  }
+});
+
+test("aviso por cercanía: el dueño Plus guarda las coordenadas de su local", async ({ page }) => {
+  try {
+    await ownerLogin(page);
+    await page.goto("/app/ajustes");
+    await expect(page.getByRole("heading", { name: "Aviso al pasar cerca del local" })).toBeVisible();
+    await page.getByLabel("Latitud").fill("40.4168");
+    await page.getByLabel("Longitud").fill("-3.7038");
+    await page.getByRole("button", { name: /guardar/i }).click();
+    await expect(page.getByText(/guardado|guardada/i).first()).toBeVisible();
+    await page.reload();
+    await expect(page.getByLabel("Latitud")).toHaveValue("40.4168");
+    await expect(page.getByLabel("Longitud")).toHaveValue("-3.7038");
+  } finally {
+    await admin.from("locations").update({ latitude: null, longitude: null }).eq("id", AURORA.locationId);
   }
 });

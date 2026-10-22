@@ -37,5 +37,6 @@ export async function loadPassContent(customerId: string, locationId: string): P
     levelName: level?.name ?? null,
     couponsReady: state.coupons.length,
     couponTitle: state.coupons[0]?.title ?? null,
+    coords: planSpec(location.plan).proximity ? location.coords : null,
   };
 }

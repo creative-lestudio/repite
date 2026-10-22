@@ -63,6 +63,8 @@ export const settingsSchema = z.object({
   timezone: z.enum(["Europe/Madrid", "Atlantic/Canary", "America/Caracas"]),
   cooldownHours: z.coerce.number().min(0, "hoursRange").max(72, "hoursRange"),
   messageGapDays: z.coerce.number().int().min(1, "daysRange").max(90, "daysRange"),
+  latitude: z.string().trim().max(20).default(""),
+  longitude: z.string().trim().max(20).default(""),
   averageTicket: z.preprocess(
     (v) => (typeof v === "string" ? v.trim().replace(",", ".") : v),
     z

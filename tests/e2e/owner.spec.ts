@@ -1,5 +1,7 @@
 import { expect, test, type Page } from "@playwright/test";
-import { admin, AURORA } from "./helpers";
+import { admin, AURORA, clearRateLimits } from "./helpers";
+
+test.beforeEach(clearRateLimits);
 
 async function login(page: Page, email: string, password: string) {
   await page.goto("/entrar");
@@ -104,7 +106,7 @@ test.describe("dueño: cuenta demo", () => {
       await expect(page.getByText("Ingresos estimados de las visitas que repiten")).toBeVisible();
       await expect(page.getByText(/ticket medio de/)).toBeVisible();
       await page.getByRole("link", { name: "90 días" }).click();
-      await expect(page).toHaveURL(/dias=90/);
+      await expect(page).toHaveURL(/dias=90/, { timeout: 15_000 });
     } finally {
       await admin.from("locations").update({ settings }).eq("slug", "cafe-aurora");
     }

@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import type { Json } from "@/lib/supabase/database.types";
+import { parseCoord } from "@/domain/geo";
 import { parseLevels } from "@/domain/levels";
 import { planSpec } from "@/domain/plan";
 import { COUNTRY_DEFAULTS } from "@/domain/slug";
@@ -160,10 +161,20 @@ export async function saveSettingsAction(_prev: FormState, formData: FormData): 
     opening_hours: v.openingHours,
     average_ticket: v.averageTicket,
   };
+  // Coordenadas del local: solo se guardan con un plan que incluye el aviso por cercanía
+  const lat = parseCoord(v.latitude, "lat");
+  const lng = parseCoord(v.longitude, "lng");
+  const wantsCoords = v.latitude !== "" || v.longitude !== "";
+  if (planSpec(ctx.organization.effectivePlan).proximity && wantsCoords && (lat === null || lng === null))
+    return { ok: false, error: "form", fields: { latitude: "coordsInvalid" } };
+  const coords = planSpec(ctx.organization.effectivePlan).proximity
+    ? { latitude: wantsCoords ? lat : null, longitude: wantsCoords ? lng : null }
+    : {};
   const supabase = await createUserClient();
   const { error } = await supabase
     .from("locations")
     .update({
+      ...coords,
       name: v.name,
       address: v.address,
       locale: v.locale,

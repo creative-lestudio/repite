@@ -31,6 +31,8 @@ export interface PublicLocation {
   /** Marca que aplica ahora: lo guardado, limitado a lo que incluye el plan. */
   brand: Brand;
   plan: EffectivePlan;
+  /** Coordenadas del local (aviso por cercanía). */
+  coords: { latitude: number; longitude: number } | null;
   businessType: BusinessType;
   settings: LocationSettings;
   country: Country;
@@ -39,7 +41,7 @@ export interface PublicLocation {
 }
 
 const LOCATION_COLUMNS =
-  "id, organization_id, name, slug, address, timezone, locale, logo_path, brand_color, brand, business_type, settings, organizations!inner(country, currency, status, deleted_at, plan, trial_ends_at)";
+  "id, organization_id, name, slug, address, timezone, locale, logo_path, brand_color, brand, latitude, longitude, business_type, settings, organizations!inner(country, currency, status, deleted_at, plan, trial_ends_at)";
 
 type LocationRow = {
   id: string;
@@ -52,6 +54,8 @@ type LocationRow = {
   logo_path: string | null;
   brand_color: string | null;
   brand: unknown;
+  latitude: number | null;
+  longitude: number | null;
   business_type: string;
   settings: unknown;
   organizations: {
@@ -81,6 +85,10 @@ function toLocation(data: LocationRow | null): PublicLocation | null {
     brandColor: data.brand_color,
     brand: restrictBrand(parseBrand(data.brand, data.brand_color, data.logo_path), planSpec(plan).customization),
     plan,
+    coords:
+      data.latitude !== null && data.longitude !== null
+        ? { latitude: Number(data.latitude), longitude: Number(data.longitude) }
+        : null,
     businessType: asBusinessType(data.business_type),
     settings: (data.settings ?? {}) as LocationSettings,
     country: org.country as Country,

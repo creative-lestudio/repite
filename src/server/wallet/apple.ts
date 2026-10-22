@@ -5,7 +5,7 @@ import sharp from "sharp";
 import { PKPass } from "passkit-generator";
 import { onColor } from "@/domain/brand";
 import { env } from "@/lib/env";
-import { hexToRgb, stampRow, statusLine, WALLET_TEXT, type PassContent } from "@/domain/wallet";
+import { hexToRgb, proximityText, stampRow, statusLine, WALLET_TEXT, type PassContent } from "@/domain/wallet";
 import { createServiceClient } from "@/lib/supabase/server";
 import { WALLET_IMAGES } from "./assets";
 import { appleConfig, type AppleConfig } from "./config";
@@ -92,6 +92,13 @@ export async function buildApplePass(content: PassContent, cfg: AppleConfig = ap
       label: WALLET_TEXT.coupon,
       value: content.couponsReady === 1 ? (content.couponTitle ?? "1") : WALLET_TEXT.coupons(content.couponsReady),
       textAlignment: "PKTextAlignmentRight",
+    });
+  }
+  if (content.coords) {
+    pass.setLocations({
+      latitude: content.coords.latitude,
+      longitude: content.coords.longitude,
+      relevantText: proximityText(content),
     });
   }
   pass.setBarcodes({

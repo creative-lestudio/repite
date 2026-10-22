@@ -36,6 +36,8 @@ export interface PassContent {
   levelName?: string | null;
   couponsReady?: number;
   couponTitle?: string | null;
+  /** Coordenadas del local para el aviso por cercanía (null si no aplica). */
+  coords?: { latitude: number; longitude: number } | null;
 }
 
 export function passSerial(locationId: string, customerId: string): string {
@@ -57,4 +59,17 @@ export function hexToRgb(hex: string): string {
   if (!m) return "rgb(255, 59, 46)";
   const n = parseInt(m[1]!, 16);
   return `rgb(${(n >> 16) & 255}, ${(n >> 8) & 255}, ${n & 255})`;
+}
+
+/** Texto del aviso en la pantalla de bloqueo cuando el cliente está cerca del local. */
+export function proximityText(
+  c: Pick<PassContent, "locationName" | "filled" | "total" | "rewardsReady" | "couponsReady">,
+): string {
+  const detail =
+    c.rewardsReady > 0
+      ? "tienes un premio esperándote"
+      : (c.couponsReady ?? 0) > 0
+        ? "tienes un cupón para canjear"
+        : statusLine(c).toLowerCase();
+  return `Estás cerca de ${c.locationName}: ${detail}.`;
 }

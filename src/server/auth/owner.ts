@@ -32,6 +32,8 @@ export interface OwnerContext {
     brand: Brand;
     /** Lo que aplica con el plan actual. */
     brandApplied: Brand;
+    latitude: number | null;
+    longitude: number | null;
     businessType: BusinessType;
     settings: Record<string, unknown>;
   };
@@ -49,7 +51,7 @@ export const getOwnerContext = cache(async (): Promise<OwnerContext | null> => {
   const { data: membership } = await supabase
     .from("memberships")
     .select(
-      "role, organization_id, location_id, organizations!inner(id, name, country, currency, plan, trial_ends_at, onboarding, locations(id, name, slug, timezone, locale, address, brand_color, logo_path, brand, business_type, settings, created_at, deleted_at))",
+      "role, organization_id, location_id, organizations!inner(id, name, country, currency, plan, trial_ends_at, onboarding, locations(id, name, slug, timezone, locale, address, brand_color, logo_path, brand, latitude, longitude, business_type, settings, created_at, deleted_at))",
     )
     .eq("user_id", claims.sub)
     .is("deleted_at", null)
@@ -89,6 +91,8 @@ export const getOwnerContext = cache(async (): Promise<OwnerContext | null> => {
       brandColor: location.brand_color,
       brand: stored,
       brandApplied: restrictBrand(stored, planSpec(plan).customization),
+      latitude: location.latitude === null ? null : Number(location.latitude),
+      longitude: location.longitude === null ? null : Number(location.longitude),
       businessType: asBusinessType(location.business_type),
       settings: (location.settings ?? {}) as Record<string, unknown>,
     },

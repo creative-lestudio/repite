@@ -1,5 +1,7 @@
 import { expect, test } from "@playwright/test";
-import { admin, AURORA, customerIdByPhone, randomPhone } from "./helpers";
+import { admin, AURORA, customerIdByPhone, randomPhone, clearRateLimits } from "./helpers";
+
+test.beforeEach(clearRateLimits);
 
 test.describe("cliente", () => {
   test("se registra por QR, ve su tarjeta y recibe un sello nuevo animado", async ({ page }) => {

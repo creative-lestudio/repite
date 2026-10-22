@@ -69,3 +69,8 @@ export async function seedCustomer(name: string, stamps = 0) {
   }
   return { id: data.id as string, qrToken: data.qr_token as string, phone };
 }
+
+/** Las pruebas hacen muchos inicios de sesión y altas seguidas: se vacía el contador de límites para no mezclar pruebas. */
+export async function clearRateLimits() {
+  await admin.from("rate_limits").delete().neq("key", "");
+}
