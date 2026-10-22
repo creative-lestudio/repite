@@ -65,6 +65,12 @@ isOneToOne: false
       foreignKeyName: "customer_notes_customer_id_fkey"
       columns: ["customer_id"]
 isOneToOne: false
+      referencedRelation: "customer_stats"
+      referencedColumns: ["customer_id"]
+    },{
+      foreignKeyName: "customer_notes_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
       referencedRelation: "customers"
       referencedColumns: ["id"]
     },{
@@ -88,6 +94,12 @@ isOneToOne: false
                   }
                   Relationships: [
                     {
+      foreignKeyName: "customer_sessions_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
+      referencedRelation: "customer_stats"
+      referencedColumns: ["customer_id"]
+    },{
       foreignKeyName: "customer_sessions_customer_id_fkey"
       columns: ["customer_id"]
 isOneToOne: false
@@ -229,6 +241,12 @@ isOneToOne: false
       foreignKeyName: "magic_links_customer_id_fkey"
       columns: ["customer_id"]
 isOneToOne: false
+      referencedRelation: "customer_stats"
+      referencedColumns: ["customer_id"]
+    },{
+      foreignKeyName: "magic_links_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
       referencedRelation: "customers"
       referencedColumns: ["id"]
     },{
@@ -301,6 +319,12 @@ isOneToOne: false
       foreignKeyName: "messages_customer_id_fkey"
       columns: ["customer_id"]
 isOneToOne: false
+      referencedRelation: "customer_stats"
+      referencedColumns: ["customer_id"]
+    },{
+      foreignKeyName: "messages_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
       referencedRelation: "customers"
       referencedColumns: ["id"]
     },{
@@ -336,6 +360,12 @@ isOneToOne: false
                   }
                   Relationships: [
                     {
+      foreignKeyName: "opportunities_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
+      referencedRelation: "customer_stats"
+      referencedColumns: ["customer_id"]
+    },{
       foreignKeyName: "opportunities_customer_id_fkey"
       columns: ["customer_id"]
 isOneToOne: false
@@ -442,6 +472,12 @@ isOneToOne: false
                   }
                   Relationships: [
                     {
+      foreignKeyName: "rewards_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
+      referencedRelation: "customer_stats"
+      referencedColumns: ["customer_id"]
+    },{
       foreignKeyName: "rewards_customer_id_fkey"
       columns: ["customer_id"]
 isOneToOne: false
@@ -579,6 +615,12 @@ isOneToOne: false
       foreignKeyName: "stamp_events_customer_id_fkey"
       columns: ["customer_id"]
 isOneToOne: false
+      referencedRelation: "customer_stats"
+      referencedColumns: ["customer_id"]
+    },{
+      foreignKeyName: "stamp_events_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
       referencedRelation: "customers"
       referencedColumns: ["id"]
     },{
@@ -622,13 +664,30 @@ isOneToOne: false
                 }
           }
           Views: {
-            [_ in never]: never
+            "customer_stats": {
+                  Row: {
+                    "balance": number | null,"customer_id": string | null,"organization_id": string | null,"rewards_available": number | null,"rewards_redeemed": number | null,"visits": number | null
+                  }
+                  ComputedFields: never
+                  Relationships: [
+                    {
+      foreignKeyName: "customers_organization_id_fkey"
+      columns: ["organization_id"]
+isOneToOne: false
+      referencedRelation: "organizations"
+      referencedColumns: ["id"]
+    }
+                  ]
+                }
           }
           Functions: {
             "create_organization_with_owner":
 { Args: { "p_country": string,"p_currency": string,"p_locale": string,"p_location_name": string,"p_name": string,"p_slug": string,"p_timezone": string }; Returns: Json
                            },
 "customer_card":
+{ Args: { "p_customer": string,"p_location": string }; Returns: Json
+                           },
+"owner_customer_card":
 { Args: { "p_customer": string,"p_location": string }; Returns: Json
                            },
 "rate_limit_hit":
@@ -645,6 +704,9 @@ isOneToOne: false
                            },
 "set_staff_pin":
 { Args: { "p_location": string,"p_pin": string,"p_staff": string }; Returns: undefined
+                           },
+"slug_available":
+{ Args: { "p_slug": string }; Returns: boolean
                            },
 "staff_day_visits":
 { Args: { "p_location": string,"p_since": string }; Returns: {

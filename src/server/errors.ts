@@ -17,6 +17,9 @@ export const BUSINESS_ERRORS = [
   "already_validated",
   "event_not_found",
   "invalid_pin",
+  "slug_taken",
+  "already_has_organization",
+  "not_authenticated",
 ] as const;
 export type BusinessErrorCode = (typeof BUSINESS_ERRORS)[number];
 

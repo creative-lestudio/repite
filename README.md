@@ -30,6 +30,7 @@ pnpm dev                 # http://localhost:3000
 | ------------------- | --------------------------------------------------------------- | --------------------------------- |
 | Tarjeta del cliente | `/c/cafe-aurora`                                                | regístrate con cualquier móvil    |
 | Panel del equipo    | `/equipo/vincular?t=dev-device-cafe-aurora` y después `/equipo` | Lucía · PIN `1234`                |
+| Web pública         | `/`                                                             | —                                 |
 | Panel del dueño     | `/app`                                                          | `demo@repite.app` / `repite-demo` |
 | Sistema de diseño   | `/design`                                                       | —                                 |
 

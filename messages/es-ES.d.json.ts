@@ -48,7 +48,28 @@ declare const messages: {
     "birthdayInvalid": "Esa fecha no existe. Revisa el día y el mes.",
     "form": "Revisa los campos marcados.",
     "staffSessionExpired": "Tu sesión ha caducado. Vuelve a entrar con tu PIN.",
-    "noteInvalid": "Escribe la nota (máximo 1000 caracteres)."
+    "noteInvalid": "Escribe la nota (máximo 1000 caracteres).",
+    "emailInvalid": "Revisa el correo: no parece una dirección válida.",
+    "passwordShort": "La contraseña debe tener al menos 8 caracteres.",
+    "passwordRequired": "Escribe tu contraseña.",
+    "loginFailed": "El correo o la contraseña no coinciden. Revisa los datos o entra con un enlace al correo.",
+    "emailTaken": "Ya hay una cuenta con este correo. Prueba a entrar.",
+    "not_authenticated": "Tu sesión ha caducado. Vuelve a entrar.",
+    "already_has_organization": "Esta cuenta ya tiene un negocio creado.",
+    "slug_taken": "Ese enlace ya lo usa otro local. Prueba con otro nombre.",
+    "businessNameRequired": "Escribe el nombre de tu negocio.",
+    "locationNameRequired": "Escribe el nombre de tu local.",
+    "slugInvalid": "Usa solo letras, números y guiones (entre 3 y 50 caracteres).",
+    "stampsRange": "Elige entre 3 y 30 sellos.",
+    "rewardRequired": "Escribe qué se llevará el cliente (por ejemplo, un café gratis).",
+    "expiryRange": "Los días de caducidad deben estar entre 1 y 730, o déjalo vacío.",
+    "staffNameRequired": "Escribe el nombre del empleado.",
+    "pinInvalid": "El PIN debe tener entre 4 y 6 números.",
+    "settingsInvalid": "Revisa los campos marcados.",
+    "hoursRange": "Elige entre 0 y 72 horas.",
+    "daysRange": "Elige entre 1 y 90 días.",
+    "colorInvalid": "El color debe ser un valor como #2255D6.",
+    "urlInvalid": "Escribe una dirección web completa, que empiece por https://"
   },
   "stampCard": {
     "label": "Tarjeta de sellos: {count, number} de {total, number}",
@@ -294,6 +315,483 @@ declare const messages: {
       "emptyBody": "No hay sellos extra pendientes. Cuando un cliente pida uno, aparecerá aquí.",
       "handle": "Usuario: {handle}",
       "openCustomer": "Ver ficha"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Entra en Repite",
+      "subtitle": "Gestiona tu local, tus clientes y tus mensajes.",
+      "email": "Tu correo",
+      "password": "Contraseña",
+      "submit": "Entrar",
+      "or": "o",
+      "magic": "Enviarme un enlace al correo",
+      "magicSent": "Te hemos enviado un enlace a tu correo. Ábrelo desde este dispositivo para entrar.",
+      "noAccount": "¿Aún no tienes cuenta?",
+      "create": "Crea tu cuenta gratis",
+      "linkError": "Ese enlace ya se usó o ha caducado. Pide uno nuevo.",
+      "forgot": "¿Sin contraseña? Usa el enlace al correo."
+    },
+    "signup": {
+      "title": "Crea tu cuenta",
+      "subtitle": "30 días gratis, sin tarjeta. Te lleva menos de 5 minutos.",
+      "email": "Tu correo",
+      "password": "Elige una contraseña",
+      "passwordHint": "Al menos 8 caracteres.",
+      "submit": "Crear mi cuenta",
+      "haveAccount": "¿Ya tienes cuenta?",
+      "enter": "Entra",
+      "sent": "Casi está. Te hemos enviado un correo: ábrelo y confirma tu cuenta para continuar.",
+      "terms": "Al crear tu cuenta aceptas los términos de uso y la política de privacidad."
+    },
+    "signOut": "Cerrar sesión"
+  },
+  "owner": {
+    "nav": {
+      "home": "Inicio",
+      "customers": "Clientes",
+      "program": "Programa de fidelidad",
+      "team": "Equipo",
+      "qr": "QR y material",
+      "bonuses": "Reseñas e historias",
+      "settings": "Ajustes",
+      "plan": "Plan y facturación",
+      "menu": "Menú",
+      "openMenu": "Abrir el menú",
+      "closeMenu": "Cerrar el menú",
+      "label": "Secciones del panel",
+      "signOut": "Cerrar sesión",
+      "viewCard": "Ver tarjeta del cliente"
+    },
+    "start": {
+      "title": "Vamos a crear tu tarjeta de sellos",
+      "subtitle": "Tres datos y listo. Podrás cambiarlo todo después.",
+      "business": "Tu negocio",
+      "businessName": "Nombre del negocio",
+      "businessNamePlaceholder": "Café Aurora",
+      "country": "País",
+      "countries": {
+        "ES": "España",
+        "VE": "Venezuela"
+      },
+      "countryHint": "Con esto elegimos la moneda y la hora de tu local.",
+      "location": "Tu local",
+      "locationName": "Nombre del local",
+      "locationHint": "Así lo verán tus clientes en su tarjeta.",
+      "slug": "Enlace de tu tarjeta",
+      "slugHint": "Tus clientes entrarán en repite.app/c/{slug}. Solo letras, números y guiones.",
+      "program": "Tu premio",
+      "stamps": "Sellos para ganar el premio",
+      "stampsHint": "Lo habitual son 8 o 10.",
+      "reward": "Premio",
+      "rewardPlaceholder": "Un café gratis",
+      "submit": "Crear mi tarjeta",
+      "signedAs": "Has entrado como {email}"
+    },
+    "home": {
+      "greeting": "Hola, {name}",
+      "trial": "{count, plural, =0 {Hoy termina tu prueba gratuita} one {Te queda # día de prueba gratuita} other {Te quedan # días de prueba gratuita}}",
+      "checklistTitle": "Para empezar a sumar clientes",
+      "checklistDone": "{done, number} de {total, number} pasos hechos",
+      "steps": {
+        "account": {
+          "title": "Crear tu cuenta",
+          "body": "Hecho"
+        },
+        "program": {
+          "title": "Definir tu premio",
+          "body": "Hecho",
+          "action": "Revisar el premio"
+        },
+        "qr": {
+          "title": "Descargar e imprimir tu QR",
+          "body": "Ponlo en el mostrador y en las mesas para que tus clientes lo escaneen.",
+          "action": "Descargar el QR"
+        },
+        "team": {
+          "title": "Dar de alta a tu equipo",
+          "body": "Cada empleado tendrá su PIN y vincularás la tablet de la barra.",
+          "action": "Añadir equipo"
+        }
+      },
+      "statsTitle": "Tu local de un vistazo",
+      "customers": "Clientes",
+      "visitsToday": "Visitas hoy",
+      "rewardsReady": "Premios por canjear",
+      "pendingBonuses": "Sellos extra por validar",
+      "emptyTitle": "Todavía no tienes clientes",
+      "emptyBody": "Descarga tu QR y colócalo en el local. Cada persona que lo escanee aparecerá aquí.",
+      "emptyAction": "Descargar el QR",
+      "completeTitle": "¡Todo listo!"
+    },
+    "customers": {
+      "title": "Clientes",
+      "searchLabel": "Buscar por nombre o teléfono",
+      "filterLabel": "Mostrar",
+      "filters": {
+        "all": "Todos",
+        "reward": "Con premio por canjear",
+        "inactive": "Sin venir hace más de 14 días",
+        "noConsent": "Sin permiso para mensajes"
+      },
+      "apply": "Buscar",
+      "export": "Exportar a CSV",
+      "count": "{count, plural, =0 {Ningún cliente} one {# cliente} other {# clientes}}",
+      "emptyTitle": "No hay clientes con ese filtro",
+      "emptyBody": "Prueba con otra búsqueda o quita el filtro.",
+      "emptyAllTitle": "Aún no hay clientes",
+      "emptyAllBody": "Cuando alguien escanee tu QR y cree su tarjeta, lo verás aquí.",
+      "visits": "{count, plural, one {# visita} other {# visitas}}",
+      "stamps": "{count, number} sellos",
+      "lastVisit": "Última visita: {when}",
+      "never": "Aún no ha venido",
+      "rewardReady": "Premio listo",
+      "noConsentBadge": "Sin mensajes",
+      "prev": "Anterior",
+      "next": "Siguiente",
+      "page": "Página {page, number}",
+      "back": "Volver a clientes",
+      "phone": "WhatsApp",
+      "birthday": "Cumpleaños",
+      "birthdayNone": "No lo ha indicado",
+      "language": "Idioma",
+      "since": "Cliente desde {date}",
+      "consent": "Permiso para mensajes",
+      "consentYes": "Sí, desde el {date}",
+      "consentNo": "No quiere recibir mensajes",
+      "usualOrder": "Pedido habitual",
+      "history": "Historial",
+      "notes": "Notas",
+      "addNote": "Añadir nota",
+      "noteLabel": "Nueva nota",
+      "notePlaceholder": "Ej.: le gusta sentarse en la terraza",
+      "notesEmpty": "Sin notas todavía.",
+      "historyEmpty": "Todavía no hay movimientos.",
+      "events": {
+        "visit": "Visita",
+        "bonus_story": "Sello extra por historia",
+        "bonus_review": "Sello extra por reseña",
+        "reward_issued": "Premio conseguido",
+        "redeem": "Premio canjeado",
+        "adjust": "Corrección"
+      },
+      "pending": "pendiente",
+      "rejected": "no aprobado"
+    },
+    "program": {
+      "title": "Programa de fidelidad",
+      "intro": "Define cuántos sellos necesita un cliente y qué se lleva. Los cambios se aplican a partir de ahora.",
+      "stamps": "Sellos para ganar el premio",
+      "reward": "Premio",
+      "rewardDescription": "Descripción del premio",
+      "rewardDescriptionHint": "Se muestra al cliente cuando consigue el premio.",
+      "expiry": "Caducidad del premio (días)",
+      "expiryHint": "Déjalo vacío si el premio no caduca.",
+      "bonusTitle": "Sellos extra",
+      "bonusStory": "Subir una historia a Instagram",
+      "bonusReview": "Dejar una reseña en Google Maps",
+      "bonusHint": "Cada uno suma un sello cuando tu equipo lo valida.",
+      "save": "Guardar programa",
+      "saved": "Programa guardado",
+      "previewTitle": "Así lo verá tu cliente",
+      "previewFilled": "Ejemplo con {count, number} sellos",
+      "warning": "Si cambias los sellos necesarios, las tarjetas ya empezadas usarán el nuevo número."
+    },
+    "team": {
+      "title": "Equipo",
+      "intro": "Cada empleado entra en la tablet con su PIN personal. Así sabes quién registró cada visita.",
+      "staffTitle": "Personas",
+      "emptyTitle": "Aún no hay nadie en tu equipo",
+      "emptyBody": "Añade a tu primer empleado y dale un PIN de 4 a 6 números.",
+      "name": "Nombre",
+      "role": "Rol",
+      "roles": {
+        "manager": "Responsable",
+        "staff": "Camarero/a"
+      },
+      "pin": "PIN",
+      "pinHint": "De 4 a 6 números. Solo lo sabrá esa persona.",
+      "add": "Añadir empleado",
+      "added": "Empleado añadido",
+      "changePin": "Cambiar PIN",
+      "pinSaved": "PIN actualizado",
+      "deactivate": "Dar de baja",
+      "reactivate": "Reactivar",
+      "deactivated": "De baja",
+      "active": "Activo",
+      "locked": "Bloqueado temporalmente",
+      "tabletsTitle": "Tablets del local",
+      "tabletsIntro": "Vincula la tablet de la barra: abre en ella el enlace o escanea el código que te mostramos.",
+      "tabletsEmpty": "Todavía no hay ninguna tablet vinculada.",
+      "tabletName": "Nombre de la tablet",
+      "tabletPlaceholder": "Tablet de la barra",
+      "addTablet": "Vincular una tablet",
+      "tabletReady": "Tablet creada",
+      "tabletOnce": "Este enlace solo se muestra ahora. Ábrelo en la tablet para vincularla.",
+      "tabletLink": "Enlace de vinculación",
+      "copy": "Copiar enlace",
+      "copied": "Enlace copiado",
+      "revoke": "Desvincular",
+      "lastSeen": "Visto {when}",
+      "neverSeen": "Aún sin usar",
+      "revoked": "Desvinculada"
+    },
+    "qr": {
+      "title": "QR y material",
+      "intro": "Este código lleva a tus clientes a su tarjeta de sellos. Imprímelo y colócalo donde lo vean.",
+      "link": "Enlace de tu tarjeta",
+      "qrAlt": "Código QR de {location}",
+      "downloadSvg": "Descargar QR (imagen)",
+      "posterTitle": "Cartel para el mostrador",
+      "posterBody": "Hoja A4 con tu QR, el nombre del local y tu premio.",
+      "tentTitle": "Tarjeta para las mesas",
+      "tentBody": "Tamaño A6, ideal para dejar en cada mesa.",
+      "downloadPdf": "Descargar PDF",
+      "tip": "Prueba el QR con tu propio móvil antes de imprimir cientos."
+    },
+    "bonuses": {
+      "title": "Reseñas e historias",
+      "intro": "Los sellos extra que piden tus clientes. Tu equipo los valida desde la tablet.",
+      "pendingTitle": "Pendientes de validar",
+      "pendingEmpty": "No hay nada pendiente.",
+      "historyTitle": "Últimos sellos extra",
+      "historyEmpty": "Todavía nadie ha pedido un sello extra.",
+      "type": {
+        "bonus_story": "Historia",
+        "bonus_review": "Reseña"
+      },
+      "status": {
+        "pending": "Pendiente",
+        "approved": "Aprobado",
+        "rejected": "Rechazado"
+      },
+      "stats": "{approved, number} aprobados · {pending, number} pendientes",
+      "handle": "Usuario: {handle}"
+    },
+    "settings": {
+      "title": "Ajustes",
+      "save": "Guardar ajustes",
+      "saved": "Ajustes guardados",
+      "businessTitle": "Tu local",
+      "name": "Nombre del local",
+      "address": "Dirección",
+      "addressPlaceholder": "Calle de la Luna 12, Madrid",
+      "hours": "Horario",
+      "hoursPlaceholder": "Lun a vie 8:00–20:00 · Sáb 9:00–14:00",
+      "regionTitle": "Idioma y hora",
+      "locale": "Idioma de tu tarjeta",
+      "timezone": "Zona horaria",
+      "country": "País y moneda",
+      "countryValue": "{country} · {currency}",
+      "countryHint": "Si necesitas cambiarlo, escríbenos.",
+      "rulesTitle": "Reglas del local",
+      "cooldown": "Horas mínimas entre dos sellos del mismo cliente",
+      "cooldownHint": "Evita que se sumen sellos por error. Lo habitual son 4 horas.",
+      "messageGap": "Días mínimos entre dos mensajes al mismo cliente",
+      "messageGapHint": "Para no agobiar a tus clientes.",
+      "contactTitle": "Contacto y redes",
+      "whatsapp": "WhatsApp del local",
+      "instagram": "Usuario de Instagram",
+      "instagramPlaceholder": "@cafeaurora",
+      "review": "Enlace para dejar una reseña en Google Maps",
+      "reviewHint": "Lo verán tus clientes en «Sellos extra».",
+      "brandTitle": "Marca",
+      "brandColor": "Color de tu tarjeta",
+      "brandHint": "Por defecto usamos el azul de Repite."
+    },
+    "plan": {
+      "title": "Plan y facturación",
+      "current": "Tu plan",
+      "trialName": "Prueba gratuita",
+      "trialBody": "{count, plural, =0 {Hoy termina tu prueba.} one {Te queda # día.} other {Te quedan # días.}} No hemos pedido ninguna tarjeta ni se te cobrará nada.",
+      "proName": "Repite",
+      "price": "{price} al mes",
+      "features": {
+        "i1": "Tarjeta de sellos con QR, sin apps",
+        "i2": "Clientes y notas ilimitados",
+        "i3": "Panel del equipo con PIN",
+        "i4": "Oportunidades y mensajes para que vuelvan",
+        "i5": "Soporte por correo"
+      },
+      "contact": "Activar mi plan",
+      "soon": "El pago online estará disponible muy pronto. Te avisaremos antes de que termine tu prueba.",
+      "endedTitle": "Tu prueba ha terminado"
+    }
+  },
+  "landing": {
+    "nav": {
+      "how": "Cómo funciona",
+      "features": "Ventajas",
+      "pricing": "Precio",
+      "faq": "Preguntas",
+      "login": "Entrar",
+      "cta": "Probar gratis",
+      "label": "Navegación principal",
+      "home": "Repite, inicio"
+    },
+    "hero": {
+      "eyebrow": "Fidelización para cafeterías y pequeños locales",
+      "title": "Que tus clientes vuelvan. Sin apps y sin complicaciones.",
+      "subtitle": "Tarjeta de sellos con un QR, la memoria de cada cliente y mensajes listos para que regresen. Tú solo tienes que aprobarlos.",
+      "cta": "Empezar gratis 30 días",
+      "demo": "Ver la tarjeta de demostración",
+      "note": "Sin tarjeta de crédito · Listo en menos de 5 minutos",
+      "chipStamp": "¡Sello nuevo!",
+      "chipStampBody": "María ya tiene 4 de 8",
+      "chipMessage": "Mensaje listo para aprobar",
+      "chipMessageBody": "«Hola, Javier, te falta un solo sello…»",
+      "phoneLabel": "Ejemplo de tarjeta de sellos en el móvil de un cliente"
+    },
+    "strip": {
+      "i1": "Sin descargar ninguna app",
+      "i2": "Sin contraseñas",
+      "i3": "Registro en menos de 20 segundos",
+      "i4": "Nada se envía sin tu permiso"
+    },
+    "how": {
+      "title": "Así de fácil",
+      "subtitle": "Tres pasos y tu local ya fideliza solo.",
+      "steps": {
+        "i1": {
+          "title": "El cliente escanea tu QR",
+          "body": "Pon el QR en el mostrador y en las mesas. En 20 segundos tiene su tarjeta en el móvil, sin descargar nada."
+        },
+        "i2": {
+          "title": "Tu equipo suma el sello",
+          "body": "Con una tablet en la barra y un PIN para cada empleado, registrar una visita es un toque. Nada de sellos duplicados."
+        },
+        "i3": {
+          "title": "Repite te dice cuándo escribirle",
+          "body": "Cumpleaños, clientes que llevan días sin venir, un sello que falta… Te preparamos el mensaje y tú decides si se envía."
+        }
+      }
+    },
+    "features": {
+      "title": "Todo lo que necesita un local pequeño",
+      "subtitle": "Sin módulos raros ni manuales. Cada cosa hace una cosa y la hace bien.",
+      "items": {
+        "i1": {
+          "title": "Tarjeta de sellos que da gusto abrir",
+          "body": "Cada sello se estampa con una pequeña animación. Tus clientes ven cuánto les falta y qué premio les espera."
+        },
+        "i2": {
+          "title": "Recuerda a cada cliente",
+          "body": "Su pedido de siempre, sus gustos, notas del equipo y todo su historial. Que nadie vuelva a tener que repetir «lo de siempre»."
+        },
+        "i3": {
+          "title": "Oportunidades para que vuelvan",
+          "body": "Detectamos cumpleaños, ausencias largas y premios a punto de caer, y te dejamos el mensaje redactado en el tono de tu local."
+        },
+        "i4": {
+          "title": "Tú apruebas cada mensaje",
+          "body": "Nada se envía solo. Revisas, editas si quieres y pulsas «Aprobar y enviar». Y solo escribimos a quien ha dado su permiso."
+        },
+        "i5": {
+          "title": "Equipo con PIN, sin líos",
+          "body": "Cada empleado entra con su PIN en la tablet. Sabes quién registró cada visita y nadie puede sumar dos sellos seguidos."
+        },
+        "i6": {
+          "title": "QR y carteles listos para imprimir",
+          "body": "Descarga el cartel de mostrador y la tarjeta de mesa con el nombre y el color de tu local."
+        }
+      }
+    },
+    "who": {
+      "title": "Pensado para las tres personas que lo usan",
+      "items": {
+        "i1": {
+          "who": "Tu cliente",
+          "body": "Escanea, suma sellos y ve su premio. Sin registrarse en nada más, sin recordar contraseñas."
+        },
+        "i2": {
+          "who": "Tu equipo",
+          "body": "Una pantalla grande, un botón claro y su PIN. Aprenden a usarlo en dos minutos."
+        },
+        "i3": {
+          "who": "Tú, el dueño",
+          "body": "Ves quién viene, quién vuelve y a quién le toca un mensaje, desde el móvil o el ordenador."
+        }
+      }
+    },
+    "preview": {
+      "title": "Un panel claro, desde el móvil o el ordenador",
+      "subtitle": "Clientes, premios, equipo y mensajes, cada cosa en su sitio.",
+      "alt": "Panel de Repite en un ordenador",
+      "altPhone": "Tarjeta de sellos de Repite en el móvil"
+    },
+    "pricing": {
+      "title": "Un solo plan, sin sorpresas",
+      "subtitle": "Empieza gratis y decide después.",
+      "badge": "30 días gratis",
+      "name": "Repite",
+      "perMonth": "al mes",
+      "priceNote": "{eur} en España · {usd} en Venezuela",
+      "features": {
+        "i1": "Tarjeta de sellos con QR, sin apps",
+        "i2": "Clientes y notas sin límite",
+        "i3": "Panel del equipo con PIN",
+        "i4": "Oportunidades y mensajes para que vuelvan",
+        "i5": "Cartel y tarjetas de mesa para imprimir",
+        "i6": "Soporte por correo"
+      },
+      "cta": "Empezar mi prueba gratuita",
+      "note": "No te pedimos tarjeta. Si no te convence, no pasa nada."
+    },
+    "faq": {
+      "title": "Preguntas frecuentes",
+      "items": {
+        "i1": {
+          "q": "¿Mis clientes tienen que descargar una app?",
+          "a": "No. Escanean el QR y su tarjeta se abre en el navegador del móvil. Si quieren, pueden añadirla a la pantalla de inicio para tenerla a un toque."
+        },
+        "i2": {
+          "q": "¿Cuánto tardo en ponerlo en marcha?",
+          "a": "Menos de 5 minutos: creas la cuenta, eliges tu premio, descargas el QR y vinculas la tablet. Te acompañamos paso a paso."
+        },
+        "i3": {
+          "q": "¿Y si mis clientes no quieren recibir mensajes?",
+          "a": "Solo escribimos a quien marca la casilla de permiso al registrarse, que viene sin marcar. Cada cliente puede darse de baja cuando quiera desde su tarjeta."
+        },
+        "i4": {
+          "q": "¿Se envían mensajes sin que yo lo sepa?",
+          "a": "Nunca. Repite te prepara el mensaje y tú lo revisas, lo editas si quieres y lo apruebas. Sin tu visto bueno, no sale nada."
+        },
+        "i5": {
+          "q": "¿Puedo usarlo con varios empleados?",
+          "a": "Sí. Cada persona tiene su PIN personal y queda registrado quién hizo cada cosa. Puedes dar de baja a alguien en un toque."
+        },
+        "i6": {
+          "q": "¿Qué pasa cuando terminan los 30 días?",
+          "a": "Te avisamos antes de que acabe. Si decides seguir, activas el plan; si no, no se te cobra nada porque nunca te pedimos la tarjeta."
+        },
+        "i7": {
+          "q": "¿Están seguros los datos de mis clientes?",
+          "a": "Sí. Los datos de cada negocio están completamente separados de los demás y solo puede verlos quien tú autorices."
+        },
+        "i8": {
+          "q": "¿Funciona en España y en Venezuela?",
+          "a": "Sí, está pensado para los dos: textos con el tono de cada país, euros o dólares y la hora de tu local."
+        }
+      }
+    },
+    "final": {
+      "title": "Tu próximo cliente fiel ya está tomando café",
+      "subtitle": "Prueba Repite 30 días gratis y mira cuántos vuelven.",
+      "cta": "Crear mi cuenta gratis"
+    },
+    "footer": {
+      "tagline": "Fidelización cercana para locales con personalidad.",
+      "product": "Producto",
+      "account": "Cuenta",
+      "legal": "Legal",
+      "privacy": "Privacidad",
+      "terms": "Términos de uso",
+      "demo": "Tarjeta de demostración",
+      "rights": "© {year} Repite. Todos los derechos reservados."
+    },
+    "legal": {
+      "draft": "Borrador pendiente de revisión legal antes del lanzamiento.",
+      "back": "Volver al inicio"
     }
   }
 };

@@ -76,3 +76,7 @@ revoke execute on function public.owner_customer_card from public, anon;
 grant execute on function public.owner_customer_card to authenticated;
 
 -- El dueño también puede añadir notas desde el panel (customer_notes ya tiene políticas por organización)
+
+-- El dueño puede registrar sus propias acciones en la auditoría (solo como sí mismo y en su organización)
+create policy audit_log_insert on public.audit_log for insert to authenticated
+  with check (actor_type = 'user' and actor_id = auth.uid() and app.is_member(organization_id));

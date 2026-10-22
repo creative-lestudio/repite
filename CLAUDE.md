@@ -44,7 +44,14 @@ Next.js 15 (App Router, Server Actions) · TypeScript estricto · Supabase (Post
 15. QR personal del cliente: `${APP_URL}/equipo/q/<qr_token>`; al escanearlo con la cámara normal abre la ficha en el panel del equipo.
 16. **Panel del equipo**: «Registrar visita» envía una clave de idempotencia nueva por toque; deshacer durante 10 min desde «Visitas de hoy»; el día se calcula en la zona horaria del local (`src/domain/time.ts`). Toda acción comprueba que el evento/premio pertenece al local u organización de la tablet.
 17. Escáner QR: `BarcodeDetector` nativo y, si no existe, `jsqr` cargado bajo demanda.
-18. Enumeraciones como `text` + `check` (más fáciles de evolucionar que los `enum` de Postgres).
+18. **Panel del dueño** (`/app`): Supabase Auth con correo + contraseña o enlace mágico; `src/middleware.ts` refresca la sesión y manda a `/entrar`. Todo el panel usa `createUserClient()` (RLS). `requireOwner()` / `requireManager()` (`src/server/auth/owner.ts`) dan organización, local y rol. Las páginas del panel viven en `src/app/app/(panel)/`; el asistente de alta `/app/empezar` está fuera del grupo (el usuario aún no tiene organización).
+19. **Alta de cuenta**: `create_organization_with_owner` (RPC con el JWT del usuario) crea organización + local + reglas de oportunidad y membresía `owner`; un usuario solo puede tener una organización en la fase 1. País → moneda, zona horaria e idioma por defecto (`COUNTRY_DEFAULTS`). El enlace `/c/<slug>` sale del nombre del local (`slugify`) y se valida con `slug_available`.
+20. **Equipo desde el panel**: los PIN y los tokens de tablet no se pueden escribir con el JWT; `src/server/repositories/team.ts` usa `service_role` tras `requireManager()` y comprueba siempre `organization_id`. El enlace de vinculación de una tablet se muestra una sola vez (solo se guarda el hash).
+21. **Material imprimible**: `/app/qr/pdf?formato=a4|a6` (pdf-lib, fuentes estándar → se filtran emojis) y `/app/qr/svg`. Descargar un PDF marca el paso «QR» del asistente.
+22. **CSV de clientes**: separador `;`, BOM UTF-8 y protección contra fórmulas de Excel (`src/domain/csv.ts`). Cada exportación queda en `audit_log`. El dueño puede insertar en `audit_log` solo como sí mismo (política `audit_log_insert`).
+23. **Plan**: `src/config/plan.ts` (30 días de prueba, precio 19 €/19 USD **provisional**). La web pública y el panel leen de ahí. No hay cobro real: la pantalla de plan solo informa.
+24. **Web pública** (`/`): portada, cómo funciona, ventajas, vista previa con capturas reales (`public/landing/*.webp`, se regeneran con `scripts/dev/landing-shots.mjs`), precio, preguntas, `/legal/*` (borradores sin revisión legal), `robots`, `sitemap`, imagen Open Graph y JSON-LD. Los textos con listas se guardan como objetos `i1, i2…` (las listas rompen el tipado de next-intl) y se leen con `getMessages()`.
+25. Enumeraciones como `text` + `check` (más fáciles de evolucionar que los `enum` de Postgres).
 
 ## Estructura
 
@@ -71,7 +78,7 @@ tests/unit, tests/e2e
 
 ## Datos de demostración (seed)
 
-- Dueño: `demo@repite.app` / `repite-demo` → Café Aurora (`/c/cafe-aurora`), Madrid, EUR, 8 sellos = «Un café gratis».
+- Dueño: `demo@repite.app` / `repite-demo` (entra en `/entrar`) → Café Aurora (`/c/cafe-aurora`), Madrid, EUR, 8 sellos = «Un café gratis».
 - Segunda cuenta para probar aislamiento: `sol@repite.app` / `repite-demo` → Panadería Sol (Caracas, USD).
 - Equipo Café Aurora: Lucía (PIN 1234, manager), Mateo (PIN 5678). Vincula la tablet en local abriendo `/equipo/vincular?t=dev-device-cafe-aurora`.
 - Clientes con casos para el motor: María (cumpleaños hoy), Javier (le falta 1 sello), Lucía F. (ausente 21 días), Daniel (premio listo, sin consentimiento), Andreína (es-VE, historia pendiente de validar).
@@ -81,7 +88,7 @@ tests/unit, tests/e2e
 - [x] Corte 0: base y diseño
 - [x] Corte 1: registro y tarjeta del cliente
 - [x] Corte 2: panel del equipo
-- [ ] Corte 3: panel del dueño
+- [x] Corte 3: panel del dueño y web pública
 - [ ] Corte 4: motor de oportunidades
 - [ ] Corte 5: métricas
 - [ ] Corte 6: pulido y pruebas

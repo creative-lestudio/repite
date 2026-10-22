@@ -1,0 +1,71 @@
+import { z } from "zod";
+
+export const businessSchema = z.object({
+  businessName: z.string().trim().min(2, "businessNameRequired").max(120),
+  country: z.enum(["ES", "VE"]),
+  locationName: z.string().trim().min(2, "locationNameRequired").max(120),
+  slug: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .regex(/^[a-z0-9]([a-z0-9-]{1,48}[a-z0-9])$/, "slugInvalid"),
+  stamps: z.coerce.number().int().min(3, "stampsRange").max(30, "stampsRange"),
+  rewardName: z.string().trim().min(2, "rewardRequired").max(80),
+});
+
+export const programSchema = z.object({
+  stamps: z.coerce.number().int().min(3, "stampsRange").max(30, "stampsRange"),
+  rewardName: z.string().trim().min(2, "rewardRequired").max(80),
+  rewardDescription: z
+    .string()
+    .trim()
+    .max(200)
+    .optional()
+    .transform((v) => v || null),
+  expiryDays: z
+    .union([z.literal(""), z.coerce.number().int().min(1, "expiryRange").max(730, "expiryRange")])
+    .transform((v) => (v === "" ? null : v)),
+  bonusStory: z.preprocess((v) => v === "on", z.boolean()),
+  bonusReview: z.preprocess((v) => v === "on", z.boolean()),
+});
+
+const optionalUrl = z
+  .string()
+  .trim()
+  .max(300)
+  .transform((v) => v || null)
+  .refine((v) => v === null || /^https:\/\/.+\..+/i.test(v), "urlInvalid");
+
+export const settingsSchema = z.object({
+  name: z.string().trim().min(2, "locationNameRequired").max(120),
+  address: z
+    .string()
+    .trim()
+    .max(200)
+    .transform((v) => v || null),
+  openingHours: z
+    .string()
+    .trim()
+    .max(200)
+    .transform((v) => v || null),
+  locale: z.enum(["es-ES", "es-VE"]),
+  timezone: z.enum(["Europe/Madrid", "Atlantic/Canary", "America/Caracas"]),
+  cooldownHours: z.coerce.number().min(0, "hoursRange").max(72, "hoursRange"),
+  messageGapDays: z.coerce.number().int().min(1, "daysRange").max(90, "daysRange"),
+  whatsapp: z
+    .string()
+    .trim()
+    .max(30)
+    .transform((v) => v || null),
+  instagram: z
+    .string()
+    .trim()
+    .max(60)
+    .transform((v) => (v ? (v.startsWith("@") ? v : `@${v}`) : null)),
+  reviewUrl: optionalUrl,
+  brandColor: z
+    .string()
+    .trim()
+    .transform((v) => v || null)
+    .refine((v) => v === null || /^#[0-9a-fA-F]{6}$/.test(v), "colorInvalid"),
+});
