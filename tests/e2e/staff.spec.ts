@@ -100,7 +100,8 @@ test.describe("equipo", () => {
   test("no abre fichas de otra cuenta", async ({ page }) => {
     const { data } = await admin.from("customers").select("id").eq("name", "Cliente de Sol").single();
     await signIn(page);
-    const res = await page.goto(`/equipo/clientes/${data!.id}`);
-    expect(res?.status()).toBe(404);
+    await page.goto(`/equipo/clientes/${data!.id}`);
+    await expect(page.getByText("No encontramos esta página")).toBeVisible();
+    await expect(page.getByText("Cliente de Sol")).toHaveCount(0);
   });
 });

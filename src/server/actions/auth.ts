@@ -1,10 +1,10 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { env } from "@/lib/env";
 import { loginSchema, magicLinkSchema, safeNext } from "@/lib/schemas/auth";
 import { createUserClient } from "@/lib/supabase/server";
 import { rateLimit } from "../rate-limit";
+import { appUrl } from "@/server/app-url";
 
 export type AuthState = { ok: false; error: string; fields?: Record<string, string> } | { ok: true; sent: true } | null;
 
@@ -34,7 +34,7 @@ export async function signUpOwnerAction(_prev: AuthState, formData: FormData): P
     email: parsed.data.email,
     options: {
       shouldCreateUser: true,
-      emailRedirectTo: `${env().NEXT_PUBLIC_APP_URL}/auth/callback?siguiente=/app/empezar`,
+      emailRedirectTo: `${await appUrl()}/auth/callback?siguiente=/app/empezar`,
     },
   });
   if (error) {
@@ -55,7 +55,7 @@ export async function magicLinkAction(next: string, _prev: AuthState, formData: 
     email: parsed.data.email,
     options: {
       shouldCreateUser: true,
-      emailRedirectTo: `${env().NEXT_PUBLIC_APP_URL}/auth/callback?siguiente=${encodeURIComponent(safeNext(next))}`,
+      emailRedirectTo: `${await appUrl()}/auth/callback?siguiente=${encodeURIComponent(safeNext(next))}`,
     },
   });
   return { ok: true, sent: true };
@@ -67,7 +67,7 @@ export async function googleSignInAction(next: string) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: `${env().NEXT_PUBLIC_APP_URL}/auth/callback?siguiente=${encodeURIComponent(safeNext(next))}`,
+      redirectTo: `${await appUrl()}/auth/callback?siguiente=${encodeURIComponent(safeNext(next))}`,
     },
   });
   if (error || !data.url) redirect("/entrar?error=enlace");

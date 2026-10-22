@@ -1,13 +1,13 @@
 import { Download, FileText } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Alert, Button, Card } from "@/components/ui";
-import { env } from "@/lib/env";
 import { requireOwner } from "@/server/auth/owner";
 import { qrSvg } from "@/server/qr";
+import { appUrl } from "@/server/app-url";
 
 export default async function QrPage() {
   const ctx = await requireOwner();
-  const url = `${env().NEXT_PUBLIC_APP_URL}/c/${ctx.location.slug}`;
+  const url = `${await appUrl()}/c/${ctx.location.slug}`;
   const [t, svg] = await Promise.all([getTranslations("owner.qr"), qrSvg(url)]);
 
   return (

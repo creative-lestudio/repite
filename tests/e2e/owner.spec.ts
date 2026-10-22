@@ -99,11 +99,12 @@ test.describe("dueño: cuenta nueva", () => {
     await expect(page.getByText(/te quedan 30 días|Te quedan 3\d días/i)).toBeVisible();
     await expect(page.getByText("Todavía no tienes clientes")).toBeVisible();
 
-    // Aislamiento: no hay clientes y la ficha de otra cuenta da 404
+    // Aislamiento: no hay clientes y la ficha de otra cuenta no se muestra
     await go(page, "Clientes");
     await expect(page.getByText("Aún no hay clientes")).toBeVisible();
-    const res = await page.goto("/app/clientes/a0000000-0000-4000-8000-0000000000e1");
-    expect(res?.status()).toBe(404);
+    await page.goto("/app/clientes/a0000000-0000-4000-8000-0000000000e1");
+    await expect(page.getByText("No encontramos esta página")).toBeVisible();
+    await expect(page.getByText("María López")).toHaveCount(0);
 
     // Equipo: alta con PIN y tablet
     await page.goto("/app/equipo");

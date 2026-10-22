@@ -33,37 +33,32 @@ export interface OwnerContext {
 /** Sesión del dueño o null. Todo pasa por RLS con el JWT del usuario. */
 export const getOwnerContext = cache(async (): Promise<OwnerContext | null> => {
   const supabase = await createUserClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) return null;
+  // getClaims valida el JWT en local cuando es posible: evita un viaje a Supabase Auth por petición
+  const { data: auth } = await supabase.auth.getClaims();
+  const claims = auth?.claims;
+  if (!claims?.sub) return null;
 
+  // Membresía, organización y locales en una sola consulta
   const { data: membership } = await supabase
     .from("memberships")
     .select(
-      "role, organization_id, location_id, organizations!inner(id, name, country, currency, plan, trial_ends_at, onboarding)",
+      "role, organization_id, location_id, organizations!inner(id, name, country, currency, plan, trial_ends_at, onboarding, locations(id, name, slug, timezone, locale, address, brand_color, business_type, settings, created_at, deleted_at))",
     )
-    .eq("user_id", user.id)
+    .eq("user_id", claims.sub)
     .is("deleted_at", null)
     .limit(1)
     .maybeSingle();
   if (!membership) return null;
 
-  let q = supabase
-    .from("locations")
-    .select("id, name, slug, timezone, locale, address, brand_color, business_type, settings")
-    .eq("organization_id", membership.organization_id)
-    .is("deleted_at", null)
-    .order("created_at")
-    .limit(1);
-  if (membership.location_id) q = q.eq("id", membership.location_id);
-  const { data: location } = await q.maybeSingle();
+  const location = [...(membership.organizations.locations ?? [])]
+    .filter((l) => !l.deleted_at && (!membership.location_id || l.id === membership.location_id))
+    .sort((x, y) => x.created_at.localeCompare(y.created_at))[0];
   if (!location) return null;
 
   const org = membership.organizations;
   return {
-    userId: user.id,
-    email: user.email ?? "",
+    userId: claims.sub,
+    email: typeof claims.email === "string" ? claims.email : "",
     role: membership.role as OwnerContext["role"],
     organization: {
       id: org.id,

@@ -27,9 +27,9 @@ export async function middleware(request: NextRequest) {
       },
     },
   );
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // Refresca la sesión y la valida (en local si las claves de Supabase lo permiten)
+  const { data: auth } = await supabase.auth.getClaims();
+  const user = auth?.claims?.sub ? auth.claims : null;
 
   const path = request.nextUrl.pathname;
   if (path.startsWith("/app") && !user) {

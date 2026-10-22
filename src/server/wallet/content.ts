@@ -1,9 +1,9 @@
 import "server-only";
-import { env } from "@/lib/env";
 import { passSerial, type PassContent } from "@/domain/wallet";
 import { createServiceClient } from "@/lib/supabase/server";
 import { firstName } from "@/domain/templates";
 import { getCardState } from "../repositories/customers";
+import { appUrl } from "@/server/app-url";
 
 /** Reúne lo que muestra la tarjeta de Wallet de un cliente en un local. null si no hay programa activo. */
 export async function loadPassContent(customerId: string, locationId: string): Promise<PassContent | null> {
@@ -23,7 +23,7 @@ export async function loadPassContent(customerId: string, locationId: string): P
     total: state.program.stamps_required,
     filled: state.balance,
     rewardsReady: state.rewards.length,
-    qrUrl: `${env().NEXT_PUBLIC_APP_URL}/equipo/q/${customer.qr_token}`,
+    qrUrl: `${await appUrl()}/equipo/q/${customer.qr_token}`,
     brandColor: /^#[0-9a-f]{6}$/i.test(location.brand_color ?? "") ? location.brand_color! : "#FF3B2E",
   };
 }

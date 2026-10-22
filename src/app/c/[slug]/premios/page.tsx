@@ -1,12 +1,12 @@
 import { Gift } from "lucide-react";
 import { getFormatter, getTranslations } from "next-intl/server";
-import { env } from "@/lib/env";
 import { firstName } from "@/domain/templates";
 import { EmptyState } from "@/components/ui";
 import { RedeemButton } from "@/components/customer/redeem-button";
 import { requireCustomer } from "@/server/auth/require-customer";
 import { getCardState } from "@/server/repositories/customers";
 import { qrSvg } from "@/server/qr";
+import { appUrl } from "@/server/app-url";
 
 export default async function RewardsPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -15,7 +15,7 @@ export default async function RewardsPage({ params }: { params: Promise<{ slug: 
     getTranslations("customer.rewards"),
     getFormatter(),
     getCardState(customer.id, location.id),
-    qrSvg(`${env().NEXT_PUBLIC_APP_URL}/equipo/q/${customer.qr_token}`),
+    qrSvg(`${await appUrl()}/equipo/q/${customer.qr_token}`),
   ]);
 
   return (

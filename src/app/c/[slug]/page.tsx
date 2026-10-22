@@ -1,6 +1,5 @@
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { env } from "@/lib/env";
 import { firstName } from "@/domain/templates";
 import { LiveCard } from "@/components/customer/live-card";
 import { SignupForm } from "@/components/customer/signup-form";
@@ -9,6 +8,7 @@ import { getCardState } from "@/server/repositories/customers";
 import { getActiveProgram, getLocationBySlug } from "@/server/repositories/locations";
 import { qrSvg } from "@/server/qr";
 import { walletAvailability } from "@/server/wallet/config";
+import { appUrl } from "@/server/app-url";
 
 export default async function CustomerHome({
   params,
@@ -40,7 +40,7 @@ export default async function CustomerHome({
 
   const [state, svg] = await Promise.all([
     getCardState(customer.id, location.id),
-    qrSvg(`${env().NEXT_PUBLIC_APP_URL}/equipo/q/${customer.qr_token}`),
+    qrSvg(`${await appUrl()}/equipo/q/${customer.qr_token}`),
   ]);
   const { bienvenida } = await searchParams;
 

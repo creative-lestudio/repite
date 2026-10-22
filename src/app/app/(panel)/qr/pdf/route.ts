@@ -1,9 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { env } from "@/lib/env";
 import { createUserClient } from "@/lib/supabase/server";
 import { getOwnerContext } from "@/server/auth/owner";
 import { buildMaterialPdf } from "@/server/pdf";
 import { getProgram } from "@/server/repositories/owner";
+import { appUrl } from "@/server/app-url";
 
 export const dynamic = "force-dynamic";
 
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
   const format = request.nextUrl.searchParams.get("formato") === "a6" ? "a6" : "a4";
   const program = await getProgram();
   const bytes = await buildMaterialPdf({
-    url: `${env().NEXT_PUBLIC_APP_URL}/c/${ctx.location.slug}`,
+    url: `${await appUrl()}/c/${ctx.location.slug}`,
     locationName: ctx.location.name,
     rewardName: program?.reward_name ?? null,
     stamps: program?.stamps_required ?? null,

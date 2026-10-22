@@ -2,7 +2,6 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { env } from "@/lib/env";
 import { LOCALE_COOKIE, isLocale } from "@/i18n/config";
 import { normalizePhone } from "@/domain/phone";
 import { firstName, renderTemplate } from "@/domain/templates";
@@ -25,6 +24,7 @@ import {
 import { ledger } from "../repositories/ledger";
 import { getLocationBySlug } from "../repositories/locations";
 import { getTemplate } from "../repositories/templates";
+import { appUrl } from "@/server/app-url";
 
 export type SignupState = ActionResult | { ok: false; error: "phoneExists"; masked?: string } | null;
 
@@ -41,7 +41,7 @@ async function sendAccessLink(
 ) {
   const location = (await getLocationBySlug(slug))!;
   const token = await createMagicLink(location.organizationId, customer.id);
-  const link = `${env().NEXT_PUBLIC_APP_URL}/c/${slug}/acceso?t=${token}`;
+  const link = `${await appUrl()}/c/${slug}/acceso?t=${token}`;
   const template = await getTemplate(location.organizationId, "magic_link", customer.locale);
   await sendTransactional({
     organizationId: location.organizationId,

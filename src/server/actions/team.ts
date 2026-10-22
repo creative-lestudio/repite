@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { env } from "@/lib/env";
 import { deviceSchema, idSchema, pinOnlySchema, staffSchema } from "@/lib/schemas/team";
 import { createUserClient } from "@/lib/supabase/server";
 import { requireManager } from "../auth/owner";
@@ -9,6 +8,7 @@ import { qrSvg } from "../qr";
 import { addStaff, changeStaffPin, createDevice, setStaffActive } from "../repositories/team";
 import { zodFields } from "@/lib/schemas/zod-fields";
 import type { FormState } from "./owner";
+import { appUrl } from "@/server/app-url";
 
 async function audit(ctx: Awaited<ReturnType<typeof requireManager>>, action: string, entityId?: string) {
   const supabase = await createUserClient();
@@ -64,7 +64,7 @@ export async function createDeviceAction(name: string) {
   const parsed = deviceSchema.safeParse({ name });
   if (!parsed.success) return { ok: false as const, error: "generic" };
   const token = await createDevice(ctx.organization.id, ctx.location.id, parsed.data.name);
-  const link = `${env().NEXT_PUBLIC_APP_URL}/equipo/vincular?t=${token}`;
+  const link = `${await appUrl()}/equipo/vincular?t=${token}`;
   await audit(ctx, "device.create");
   revalidatePath("/app/equipo");
   return { ok: true as const, link, qr: await qrSvg(link) };
