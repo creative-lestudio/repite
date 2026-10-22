@@ -15,6 +15,15 @@ const schema = z.object({
   AI_PROVIDER: z.enum(["template", "claude"]).default("template"),
   ANTHROPIC_API_KEY: z.string().optional(),
   ANTHROPIC_MODEL: z.string().default("claude-sonnet-5-5"),
+  // Tarjetas en Wallet (opcional: si faltan, el botón no aparece). Ver docs/WALLET.md
+  APPLE_WALLET_PASS_TYPE_ID: z.string().optional(),
+  APPLE_WALLET_TEAM_ID: z.string().optional(),
+  APPLE_WALLET_CERT_PEM: z.string().optional(), // certificado del Pass Type ID, PEM en base64
+  APPLE_WALLET_KEY_PEM: z.string().optional(), // clave privada, PEM en base64
+  APPLE_WALLET_KEY_PASSPHRASE: z.string().optional(),
+  APPLE_WALLET_WWDR_PEM: z.string().optional(), // certificado intermedio de Apple (WWDR), PEM en base64
+  GOOGLE_WALLET_ISSUER_ID: z.string().optional(),
+  GOOGLE_WALLET_SERVICE_ACCOUNT: z.string().optional(), // JSON de la cuenta de servicio en base64
 });
 
 export type Env = z.infer<typeof schema>;

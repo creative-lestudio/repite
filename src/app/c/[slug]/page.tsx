@@ -8,6 +8,7 @@ import { getCustomerFromSession } from "@/server/auth/customer-session";
 import { getCardState } from "@/server/repositories/customers";
 import { getActiveProgram, getLocationBySlug } from "@/server/repositories/locations";
 import { qrSvg } from "@/server/qr";
+import { walletAvailability } from "@/server/wallet/config";
 
 export default async function CustomerHome({
   params,
@@ -51,6 +52,7 @@ export default async function CustomerHome({
       qrSvg={svg}
       initial={state}
       welcome={bienvenida === "1"}
+      wallet={walletAvailability()}
     />
   );
 }

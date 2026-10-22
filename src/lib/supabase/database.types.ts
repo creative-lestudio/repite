@@ -661,6 +661,44 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"wallet_registrations": {
+                  Row: {
+                    "created_at": string,"customer_id": string,"device_library_id": string,"id": string,"location_id": string,"organization_id": string,"push_token": string,"updated_at": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"customer_id": string,"device_library_id": string,"id"?: string,"location_id": string,"organization_id": string,"push_token": string,"updated_at"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"customer_id"?: string,"device_library_id"?: string,"id"?: string,"location_id"?: string,"organization_id"?: string,"push_token"?: string,"updated_at"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "wallet_registrations_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
+      referencedRelation: "customer_stats"
+      referencedColumns: ["customer_id"]
+    },{
+      foreignKeyName: "wallet_registrations_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
+      referencedRelation: "customers"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "wallet_registrations_location_id_fkey"
+      columns: ["location_id"]
+isOneToOne: false
+      referencedRelation: "locations"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "wallet_registrations_organization_id_fkey"
+      columns: ["organization_id"]
+isOneToOne: false
+      referencedRelation: "organizations"
+      referencedColumns: ["id"]
+    }
+                  ]
                 }
           }
           Views: {

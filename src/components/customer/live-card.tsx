@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { StampCard } from "@/components/stamp-card/stamp-card";
 import { Alert, Button } from "@/components/ui";
+import { WalletButtons } from "./wallet-buttons";
 import { getCardStateAction } from "@/server/actions/customer";
 import type { CardState } from "@/server/repositories/customers";
 
@@ -18,6 +19,7 @@ interface Props {
   qrSvg: string;
   initial: CardState;
   welcome: boolean;
+  wallet: { apple: boolean; google: boolean };
 }
 
 type Snapshot = { balance: number; rewards: number };
@@ -40,7 +42,7 @@ function writeSnapshot(key: string, s: Snapshot) {
 }
 
 /** Tarjeta que se refresca sola: cuando el equipo suma un sello, aparece estampado al momento. */
-export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome }: Props) {
+export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome, wallet }: Props) {
   const t = useTranslations("customer.card");
   const [state, setState] = useState(initial);
   const [newStamp, setNewStamp] = useState<number | null>(null);
@@ -140,6 +142,7 @@ export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome }
         <QrCode aria-hidden />
         {showCode ? t("hideCode") : t("showCode")}
       </Button>
+      <WalletButtons slug={slug} apple={wallet.apple} google={wallet.google} />
       {showCode && (
         <div
           id="my-code"

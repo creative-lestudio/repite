@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { after } from "next/server";
 import { redirect } from "next/navigation";
 import { noteSchema, pinSchema, usualOrderSchema, uuid } from "@/lib/schemas/staff";
 import { createServiceClient } from "@/lib/supabase/server";
@@ -13,6 +14,7 @@ import {
 } from "../auth/staff-session";
 import { BusinessError } from "../errors";
 import { rateLimit } from "../rate-limit";
+import { refreshWalletForEvent, refreshWalletForReward, refreshWalletPass } from "../wallet/refresh";
 import { ledger, type CardSnapshot } from "../repositories/ledger";
 import {
   addCustomerNote,
@@ -106,6 +108,7 @@ export async function registerVisitAction(customerId: string, idempotencyKey: st
     const id = uuid.parse(customerId);
     const key = `visit:${s.device.id}:${uuid.parse(idempotencyKey)}`;
     const data = await ledger.registerVisit(s.device.location.id, id, s.staffId, key);
+    after(() => refreshWalletPass(id, s.device.location.id));
     revalidatePath("/equipo", "layout");
     return { ok: true, data };
   });
@@ -116,6 +119,7 @@ export async function undoVisitAction(eventId: string) {
     const id = uuid.parse(eventId);
     if (!(await eventBelongsToLocation(id, s.device.location.id))) return { ok: false, error: "event_not_found" };
     const data = await ledger.undoVisit(id, s.staffId);
+    after(() => refreshWalletForEvent(id, s.device.location.id));
     revalidatePath("/equipo", "layout");
     return { ok: true, data };
   });
@@ -127,6 +131,7 @@ export async function redeemRewardAction(rewardId: string, idempotencyKey: strin
     if (!(await rewardBelongsToOrganization(id, s.device.organizationId)))
       return { ok: false, error: "reward_not_found" };
     const data = await ledger.redeemReward(id, s.device.location.id, s.staffId, `redeem:${uuid.parse(idempotencyKey)}`);
+    after(() => refreshWalletForReward(id, s.device.location.id));
     revalidatePath("/equipo", "layout");
     return { ok: true, data };
   });
@@ -137,6 +142,7 @@ export async function validateBonusAction(eventId: string, approve: boolean) {
     const id = uuid.parse(eventId);
     if (!(await eventBelongsToLocation(id, s.device.location.id))) return { ok: false, error: "event_not_found" };
     const data = await ledger.validateBonus(id, s.staffId, approve === true);
+    after(() => refreshWalletForEvent(id, s.device.location.id));
     revalidatePath("/equipo", "layout");
     return { ok: true, data };
   });
