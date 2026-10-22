@@ -2,7 +2,7 @@
 
 import { redirect } from "next/navigation";
 import { env } from "@/lib/env";
-import { loginSchema, magicLinkSchema, safeNext, signupSchema } from "@/lib/schemas/auth";
+import { loginSchema, magicLinkSchema, safeNext } from "@/lib/schemas/auth";
 import { createUserClient } from "@/lib/supabase/server";
 import { rateLimit } from "../rate-limit";
 
@@ -26,19 +26,19 @@ export async function loginAction(next: string, _prev: AuthState, formData: Form
 
 export async function signUpOwnerAction(_prev: AuthState, formData: FormData): Promise<AuthState> {
   if (!(await rateLimit("owner-signup", 3600, 10))) return { ok: false, error: "rateLimited" };
-  const parsed = signupSchema.safeParse(Object.fromEntries(formData));
+  const parsed = magicLinkSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { ok: false, error: "form", fields: fieldErrors(parsed.error) };
   const supabase = await createUserClient();
-  const { data, error } = await supabase.auth.signUp({
-    ...parsed.data,
-    options: { emailRedirectTo: `${env().NEXT_PUBLIC_APP_URL}/auth/callback?siguiente=/app/empezar` },
+  // Sin contraseña: un enlace al correo crea la cuenta (o entra si ya existía)
+  const { error } = await supabase.auth.signInWithOtp({
+    email: parsed.data.email,
+    options: {
+      shouldCreateUser: true,
+      emailRedirectTo: `${env().NEXT_PUBLIC_APP_URL}/auth/callback?siguiente=/app/empezar`,
+    },
   });
-  if (error) {
-    return { ok: false, error: /registered|already/i.test(error.message) ? "emailTaken" : "generic" };
-  }
-  // Con la confirmación por correo activada (producción) no hay sesión todavía
-  if (!data.session) return { ok: true, sent: true };
-  redirect("/app/empezar");
+  if (error) return { ok: false, error: "generic" };
+  return { ok: true, sent: true };
 }
 
 export async function magicLinkAction(next: string, _prev: AuthState, formData: FormData): Promise<AuthState> {
@@ -46,11 +46,11 @@ export async function magicLinkAction(next: string, _prev: AuthState, formData: 
   const parsed = magicLinkSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { ok: false, error: "form", fields: fieldErrors(parsed.error) };
   const supabase = await createUserClient();
-  // shouldCreateUser: false → solo para cuentas existentes; misma respuesta exista o no
+  // Entrar y registrarse son lo mismo: si el correo no tiene cuenta, se crea al abrir el enlace
   await supabase.auth.signInWithOtp({
     email: parsed.data.email,
     options: {
-      shouldCreateUser: false,
+      shouldCreateUser: true,
       emailRedirectTo: `${env().NEXT_PUBLIC_APP_URL}/auth/callback?siguiente=${encodeURIComponent(safeNext(next))}`,
     },
   });

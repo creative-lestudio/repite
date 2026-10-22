@@ -319,6 +319,7 @@ declare const messages: {
     }
   },
   "auth": {
+    "email": "Tu correo",
     "login": {
       "title": "Entra en Repite",
       "subtitle": "Gestiona tu local, tus clientes y tus mensajes.",
@@ -328,11 +329,12 @@ declare const messages: {
       "or": "o",
       "google": "Continuar con Google",
       "orEmail": "o con tu correo",
-      "magic": "Enviarme un enlace al correo",
-      "magicSent": "Te hemos enviado un enlace a tu correo. Ábrelo desde este dispositivo para entrar.",
+      "magic": "Enviarme el enlace de acceso",
+      "withPassword": "Tengo contraseña",
+      "magicSent": "Revisa tu correo: te hemos enviado un enlace. Tócalo y entrarás directo, sin contraseña.",
       "noAccount": "¿Aún no tienes cuenta?",
       "create": "Crea tu cuenta gratis",
-      "linkError": "No pudimos abrir tu sesión con ese enlace. Si acabas de confirmar tu correo, entra con tu contraseña. Si no, pide un enlace nuevo.",
+      "linkError": "Ese enlace ya no vale (caduca a la hora y solo se usa una vez). Pide uno nuevo aquí abajo.",
       "forgot": "¿Sin contraseña? Usa el enlace al correo."
     },
     "signup": {
@@ -340,13 +342,10 @@ declare const messages: {
       "subtitle": "Gratis hasta 50 clientes. Te lleva menos de 5 minutos.",
       "google": "Registrarme con Google",
       "orEmail": "o con tu correo",
-      "email": "Tu correo",
-      "password": "Elige una contraseña",
-      "passwordHint": "Al menos 8 caracteres.",
-      "submit": "Crear mi cuenta",
+      "submit": "Recibir mi enlace de acceso",
       "haveAccount": "¿Ya tienes cuenta?",
       "enter": "Entra",
-      "sent": "Casi está. Te hemos enviado un correo: ábrelo y confirma tu cuenta para continuar.",
+      "sent": "Revisa tu correo: te hemos enviado un enlace. Tócalo y tu cuenta quedará creada, sin contraseña.",
       "terms": "Al crear tu cuenta aceptas los términos de uso y la política de privacidad."
     },
     "signOut": "Cerrar sesión"

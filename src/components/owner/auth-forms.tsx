@@ -59,53 +59,62 @@ function useErrors(state: AuthState) {
   };
 }
 
+function EmailLinkForm({
+  action,
+  label,
+  sentText,
+}: {
+  action: (prev: AuthState, formData: FormData) => Promise<AuthState>;
+  label: string;
+  sentText: string;
+}) {
+  const t = useTranslations("auth");
+  const [state, formAction, pending] = useActionState<AuthState, FormData>(action, null);
+  const e = useErrors(state);
+
+  if (state?.ok) return <Alert tone="success">{sentText}</Alert>;
+  return (
+    <form action={formAction} className="flex flex-col gap-4" noValidate>
+      {e.form && <Alert tone="danger">{e.form}</Alert>}
+      <Field id="email" label={t("email")} error={e.field("email")}>
+        <Input name="email" type="email" autoComplete="email" inputMode="email" required />
+      </Field>
+      <Button type="submit" size="lg" block loading={pending}>
+        {label}
+      </Button>
+    </form>
+  );
+}
+
 export function LoginForm({ next, linkError }: { next: string; linkError: boolean }) {
   const t = useTranslations("auth.login");
   const [state, action, pending] = useActionState<AuthState, FormData>(loginAction.bind(null, next), null);
-  const [magicState, magicAction, magicPending] = useActionState<AuthState, FormData>(
-    magicLinkAction.bind(null, next),
-    null,
-  );
   const e = useErrors(state);
-  const m = useErrors(magicState);
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       {linkError && <Alert tone="warning">{t("linkError")}</Alert>}
       <GoogleButton next={next} label={t("google")} />
       <Divider text={t("orEmail")} />
-      <form action={action} className="flex flex-col gap-4" noValidate>
-        {e.form && <Alert tone="danger">{e.form}</Alert>}
-        <Field id="email" label={t("email")} error={e.field("email")}>
-          <Input name="email" type="email" autoComplete="email" inputMode="email" required />
-        </Field>
-        <Field id="password" label={t("password")} error={e.field("password")}>
-          <Input name="password" type="password" autoComplete="current-password" required />
-        </Field>
-        <Button type="submit" size="lg" block loading={pending}>
-          {t("submit")}
-        </Button>
-      </form>
+      <EmailLinkForm action={magicLinkAction.bind(null, next)} label={t("magic")} sentText={t("magicSent")} />
 
-      <div className="text-muted flex items-center gap-3 text-sm" aria-hidden>
-        <span className="bg-cream-200 h-px flex-1" />
-        {t("or")}
-        <span className="bg-cream-200 h-px flex-1" />
-      </div>
-
-      {magicState?.ok ? (
-        <Alert tone="success">{t("magicSent")}</Alert>
-      ) : (
-        <form action={magicAction} className="flex flex-col gap-3" noValidate>
-          {m.form && <Alert tone="danger">{m.form}</Alert>}
-          <Field id="magic-email" label={t("email")} error={m.field("email")}>
+      <details className="group text-sm">
+        <summary className="text-muted min-h-11 cursor-pointer py-3 text-center font-medium underline-offset-4 hover:underline">
+          {t("withPassword")}
+        </summary>
+        <form action={action} className="mt-2 flex flex-col gap-4" noValidate>
+          {e.form && <Alert tone="danger">{e.form}</Alert>}
+          <Field id="pw-email" label={t("email")} error={e.field("email")}>
             <Input name="email" type="email" autoComplete="email" inputMode="email" required />
           </Field>
-          <Button type="submit" variant="secondary" block loading={magicPending}>
-            {t("magic")}
+          <Field id="password" label={t("password")} error={e.field("password")}>
+            <Input name="password" type="password" autoComplete="current-password" required />
+          </Field>
+          <Button type="submit" variant="secondary" block loading={pending}>
+            {t("submit")}
           </Button>
         </form>
-      )}
+      </details>
 
       <p className="text-center text-sm">
         <span className="text-muted">{t("noAccount")} </span>
@@ -119,34 +128,18 @@ export function LoginForm({ next, linkError }: { next: string; linkError: boolea
 
 export function SignupForm() {
   const t = useTranslations("auth.signup");
-  const [state, action, pending] = useActionState<AuthState, FormData>(signUpOwnerAction, null);
-  const e = useErrors(state);
-
-  if (state?.ok) return <Alert tone="success">{t("sent")}</Alert>;
-
   return (
     <div className="flex flex-col gap-5">
       <GoogleButton next="/app/empezar" label={t("google")} />
       <Divider text={t("orEmail")} />
-      <form action={action} className="flex flex-col gap-4" noValidate>
-        {e.form && <Alert tone="danger">{e.form}</Alert>}
-        <Field id="email" label={t("email")} error={e.field("email")}>
-          <Input name="email" type="email" autoComplete="email" inputMode="email" required />
-        </Field>
-        <Field id="password" label={t("password")} hint={t("passwordHint")} error={e.field("password")}>
-          <Input name="password" type="password" autoComplete="new-password" required minLength={8} />
-        </Field>
-        <Button type="submit" size="lg" block loading={pending}>
-          {t("submit")}
-        </Button>
-        <p className="text-muted text-xs">{t("terms")}</p>
-        <p className="text-center text-sm">
-          <span className="text-muted">{t("haveAccount")} </span>
-          <Link href="/entrar" className="text-primary font-semibold underline-offset-4 hover:underline">
-            {t("enter")}
-          </Link>
-        </p>
-      </form>
+      <EmailLinkForm action={signUpOwnerAction} label={t("submit")} sentText={t("sent")} />
+      <p className="text-muted text-xs">{t("terms")}</p>
+      <p className="text-center text-sm">
+        <span className="text-muted">{t("haveAccount")} </span>
+        <Link href="/entrar" className="text-primary font-semibold underline-offset-4 hover:underline">
+          {t("enter")}
+        </Link>
+      </p>
     </div>
   );
 }

@@ -3,6 +3,15 @@ import { NextResponse, type NextRequest } from "next/server";
 
 // Refresca la sesión del dueño en cada petición a /app y /auth, y manda a /entrar si no hay sesión.
 export async function middleware(request: NextRequest) {
+  // Si el enlace del correo cae en la portada (URL no permitida en Supabase), lo reenviamos al callback
+  if (request.nextUrl.pathname === "/") {
+    const code = request.nextUrl.searchParams.get("code");
+    if (!code) return NextResponse.next();
+    const url = request.nextUrl.clone();
+    url.pathname = "/auth/callback";
+    url.search = `?code=${encodeURIComponent(code)}&siguiente=/app/empezar`;
+    return NextResponse.redirect(url);
+  }
   let response = NextResponse.next({ request });
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -35,4 +44,4 @@ export async function middleware(request: NextRequest) {
   return response;
 }
 
-export const config = { matcher: ["/app/:path*", "/entrar", "/registro"] };
+export const config = { matcher: ["/", "/app/:path*", "/entrar", "/registro"] };

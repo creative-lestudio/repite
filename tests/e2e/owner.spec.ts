@@ -3,7 +3,8 @@ import { admin, AURORA } from "./helpers";
 
 async function login(page: Page, email: string, password: string) {
   await page.goto("/entrar");
-  await page.getByLabel("Tu correo").first().fill(email);
+  await page.getByText("Tengo contraseña").click();
+  await page.getByLabel("Tu correo").last().fill(email);
   await page.getByLabel("Contraseña").fill(password);
   await page.getByRole("button", { name: "Entrar", exact: true }).click();
   await expect(page).toHaveURL(/\/app/);
@@ -30,7 +31,12 @@ test.describe("dueño: cuenta demo", () => {
     await expect(page.getByText("flat white con avena")).toBeVisible();
 
     const note = `Nota del dueño ${Date.now()}`;
-    await page.getByLabel("Nueva nota").fill(note);
+    // El campo es controlado: si se rellena antes de hidratar, se reintenta
+    await expect(async () => {
+      await page.getByLabel("Nueva nota").fill("");
+      await page.getByLabel("Nueva nota").fill(note);
+      await expect(page.getByRole("button", { name: "Añadir nota" })).toBeEnabled({ timeout: 1000 });
+    }).toPass();
     await page.getByRole("button", { name: "Añadir nota" }).click();
     await expect(page.getByText(note)).toBeVisible();
 
@@ -49,7 +55,8 @@ test.describe("dueño: cuenta demo", () => {
 
   test("contraseña incorrecta explica qué hacer", async ({ page }) => {
     await page.goto("/entrar");
-    await page.getByLabel("Tu correo").first().fill("demo@repite.app");
+    await page.getByText("Tengo contraseña").click();
+    await page.getByLabel("Tu correo").last().fill("demo@repite.app");
     await page.getByLabel("Contraseña").fill("incorrecta");
     await page.getByRole("button", { name: "Entrar", exact: true }).click();
     await expect(page.getByText(/no coinciden/)).toBeVisible();
@@ -64,8 +71,14 @@ test.describe("dueño: cuenta nueva", () => {
 
     await page.goto("/registro");
     await page.getByLabel("Tu correo").fill(email);
-    await page.getByLabel("Elige una contraseña").fill("una-clave-segura-1");
-    await page.getByRole("button", { name: "Crear mi cuenta" }).click();
+    await page.getByRole("button", { name: "Recibir mi enlace de acceso" }).click();
+    await expect(page.getByText("Revisa tu correo")).toBeVisible();
+    // Abrimos el enlace del correo (generado como lo haría Supabase) desde otro contexto: no hace falta el mismo navegador
+    const { data: signupLink, error } = await admin.auth.admin.generateLink({ type: "magiclink", email });
+    expect(error).toBeNull();
+    await page.goto(
+      `/auth/callback?token_hash=${signupLink!.properties!.hashed_token}&type=magiclink&siguiente=/app/empezar`,
+    );
 
     // Asistente: negocio, local y premio en una pantalla
     await expect(page.getByRole("heading", { name: "Vamos a crear tu tarjeta de sellos" })).toBeVisible();
