@@ -285,6 +285,79 @@ export async function PreviewSection() {
   );
 }
 
+export async function WalletSection() {
+  const t = await getTranslations("landing.wallet");
+  const { landing } = await getMessages();
+  const points = Object.values(landing.wallet.points);
+  return (
+    <section
+      id="wallet"
+      aria-labelledby="wallet-title"
+      className="bg-ink-950 text-cream-50 scroll-mt-16 px-4 py-20 md:py-28"
+    >
+      <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2">
+        <div>
+          <p className="font-semibold tracking-wide text-red-500 uppercase">{t("eyebrow")}</p>
+          <h2 id="wallet-title" className="mt-3 text-3xl font-extrabold md:text-5xl">
+            {t("title")}
+          </h2>
+          <p className="text-cream-200 mt-4 text-lg">{t("subtitle")}</p>
+          <ul className="mt-8 flex flex-col gap-4">
+            {points.map((p) => (
+              <li key={p.title} className="flex items-start gap-3">
+                <Check className="mt-1 size-5 shrink-0 text-red-500" aria-hidden />
+                <span>
+                  <strong className="block">{p.title}</strong>
+                  <span className="text-cream-200">{p.body}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <Button asChild size="lg" className="mt-8">
+            <Link href="/registro">{t("cta")}</Link>
+          </Button>
+        </div>
+
+        <div aria-hidden className="relative mx-auto flex w-full max-w-md flex-col gap-4">
+          <div className="rounded-3xl bg-white/5 p-3 ring-1 ring-white/10">
+            <p className="text-cream-200 px-2 pb-2 text-xs font-semibold">{t("lockScreen")}</p>
+            <div className="text-ink-950 flex items-start gap-3 rounded-2xl bg-white/95 p-3">
+              <span className="bg-brand flex size-10 shrink-0 items-center justify-center rounded-xl font-bold text-white">
+                C
+              </span>
+              <span className="text-left text-sm leading-snug">
+                <strong className="block">{t("nearTitle")}</strong>
+                {t("nearBody")}
+              </span>
+            </div>
+          </div>
+          <div className="bg-brand flex flex-col gap-4 rounded-3xl p-5 text-white shadow-2xl">
+            <div className="flex items-center justify-between">
+              <span className="font-display text-lg font-extrabold">Café Aurora</span>
+              <span className="rounded-full bg-black/20 px-3 py-1 text-xs font-semibold">{t("passLevel")}</span>
+            </div>
+            <div className="flex gap-1.5 text-2xl tracking-widest">
+              <span>●●●●●</span>
+              <span className="opacity-50">○○○</span>
+            </div>
+            <div className="flex items-end justify-between gap-3">
+              <div>
+                <p className="text-xs font-semibold uppercase opacity-80">{t("passReward")}</p>
+                <p className="font-bold">{t("passRewardValue")}</p>
+                <p className="mt-2 text-xs font-semibold uppercase opacity-80">{t("passCoupon")}</p>
+                <p className="font-bold">{t("passCouponValue")}</p>
+              </div>
+              <span className="flex size-16 items-center justify-center rounded-lg bg-white text-black">
+                <QrCode className="size-12" />
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 export function BrandSection() {
   return <BrandDemo />;
 }

@@ -3,7 +3,7 @@
 
 declare const messages: {
   "meta": {
-    "description": "Repite convierte cada visita a tu local en una relación: tarjeta de sellos por QR, memoria de cada cliente y mensajes listos para que vuelvan."
+    "description": "Repite convierte cada visita a tu local en una relación: tarjeta de sellos por QR, memoria de cada cliente, tu tarjeta en el Wallet del móvil, cupones, niveles y resultados medibles."
   },
   "common": {
     "appName": "Repite",
@@ -332,7 +332,7 @@ declare const messages: {
     "email": "Tu correo",
     "login": {
       "title": "Entra en Repite",
-      "subtitle": "Gestiona tu local, tus clientes y tus mensajes.",
+      "subtitle": "Gestiona tu local, tus clientes y tus resultados.",
       "email": "Tu correo",
       "password": "Contraseña",
       "submit": "Entrar",
@@ -795,25 +795,28 @@ declare const messages: {
       "cta": "Empezar gratis",
       "label": "Navegación principal",
       "home": "Repite, inicio",
-      "sectors": "Para quién"
+      "sectors": "Para quién",
+      "wallet": "Wallet",
+      "google": "Registrarme con Google"
     },
     "hero": {
       "eyebrow": "Sistema de fidelización para tu negocio",
       "titleA": "Hacemos que tus clientes",
       "titleB": "vuelvan",
-      "subtitle": "Un sistema de fidelización con tu marca para cafeterías, restaurantes, heladerías y cualquier negocio con clientes que repiten. Tu tarjeta de sellos con QR, sin apps y sin contraseñas.",
+      "subtitle": "Un sistema de fidelización con tu marca para cafeterías, restaurantes, heladerías y cualquier negocio con clientes que repiten. Tu tarjeta se guarda en el Apple Wallet y el Google Wallet de tus clientes. Sin apps y sin contraseñas.",
       "cta": "Empezar gratis",
       "demo": "Ver una tarjeta de ejemplo",
+      "google": "Registrarme con Google",
       "note": "Sin tarjeta de crédito · Listo en menos de 5 minutos",
       "tabsLabel": "Elige tu tipo de negocio",
       "chipStamp": "¡Sello nuevo!",
       "chipStampBody": "María ya tiene 4 de 8",
-      "chipMessage": "Mensaje listo para aprobar",
-      "chipMessageBody": "«Hola, Javier, te falta un solo sello…»",
+      "chipMessage": "Ya está en su Wallet",
+      "chipMessageBody": "Se actualiza sola con cada sello",
       "phoneLabel": "Ejemplo de tarjeta de sellos en el móvil de un cliente"
     },
     "strip": {
-      "i1": "Sin descargar ninguna app",
+      "i1": "En Apple Wallet y Google Wallet",
       "i2": "Sin contraseñas",
       "i3": "Registro en menos de 20 segundos",
       "i4": "Starter gratis hasta 50 clientes"
@@ -824,23 +827,23 @@ declare const messages: {
       "steps": {
         "i1": {
           "title": "El cliente escanea tu QR",
-          "body": "Pon el QR en el mostrador y en las mesas. En 20 segundos tiene su tarjeta en el móvil, sin descargar nada."
+          "body": "Pon el QR en el mostrador y en las mesas. En 20 segundos tiene su tarjeta y la guarda en su Wallet con un toque."
         },
         "i2": {
           "title": "Tu equipo suma el sello",
           "body": "Con una tablet en la barra y un PIN para cada empleado, registrar una visita es un toque. Nada de sellos duplicados."
         },
         "i3": {
-          "title": "Repite te dice cuándo escribirle",
-          "body": "Cumpleaños, clientes que llevan días sin venir, un sello que falta… Te preparamos el mensaje y tú decides si se envía."
+          "title": "Vuelve a por sus premios y cupones",
+          "body": "Premios, cupones y niveles VIP le dan motivos para volver, y tú ves en tu panel cuántos vuelven de verdad."
         }
       },
       "visual": {
         "qr": "Escanea y listo",
         "pin": "PIN personal",
-        "message": "Mensaje listo",
-        "approve": "Aprobar y enviar",
-        "hello": "Hola, María. Hace tiempo que no te vemos…"
+        "message": "Cupón nuevo",
+        "approve": "Canjear cupón",
+        "hello": "15 % en tu próxima compra"
       }
     },
     "features": {
@@ -856,12 +859,12 @@ declare const messages: {
           "body": "Su pedido de siempre, sus gustos, notas del equipo y todo su historial. Que nadie vuelva a tener que repetir «lo de siempre»."
         },
         "i3": {
-          "title": "Oportunidades para que vuelvan",
-          "body": "Detectamos cumpleaños, ausencias largas y premios a punto de caer, y te dejamos el mensaje redactado en el tono de tu local."
+          "title": "Cupones y niveles VIP",
+          "body": "Regala un 15 % en la próxima compra, premia a tus mejores clientes con niveles y controla cada cupón canjeado desde la tablet."
         },
         "i4": {
-          "title": "Tú apruebas cada mensaje",
-          "body": "Nada se envía solo. Revisas, editas si quieres y pulsas «Aprobar y enviar». Y solo escribimos a quien ha dado su permiso."
+          "title": "Resultados que se miden",
+          "body": "Visitas, clientes que vuelven e ingresos estimados que Repite te trae, con tu propio ticket medio. Sabrás si te compensa."
         },
         "i5": {
           "title": "Equipo con PIN, sin líos",
@@ -887,7 +890,7 @@ declare const messages: {
         },
         "i3": {
           "who": "Tú, el dueño",
-          "body": "Ves quién viene, quién vuelve y a quién le toca un mensaje, desde el móvil o el ordenador."
+          "body": "Ves quién viene, quién vuelve y cuánto te aporta, desde el móvil o el ordenador."
         }
       }
     },
@@ -898,6 +901,38 @@ declare const messages: {
       "phoneCaption": "Lo que ve tu cliente",
       "alt": "Panel de Repite con la lista de clientes",
       "altPhone": "Tarjeta de sellos de Repite en el móvil"
+    },
+    "wallet": {
+      "eyebrow": "Wallet",
+      "title": "Tu tarjeta, siempre en el bolsillo de tus clientes",
+      "subtitle": "Se guarda en el Apple Wallet y el Google Wallet con un toque. Sin descargar nada y sin buscar el QR cada vez.",
+      "cta": "Probar gratis",
+      "points": {
+        "i1": {
+          "title": "Un toque y está guardada",
+          "body": "Tu cliente escanea el QR, crea su tarjeta y la añade a su Wallet."
+        },
+        "i2": {
+          "title": "Se actualiza sola",
+          "body": "Cada sello, cupón o cambio de nivel aparece al instante, sin que tu cliente haga nada."
+        },
+        "i3": {
+          "title": "Te recuerda cuando está cerca",
+          "body": "Con Plus, la tarjeta aparece en la pantalla de bloqueo al pasar cerca de tu local."
+        },
+        "i4": {
+          "title": "Con tu marca",
+          "body": "Tu color, tu nombre y tu logotipo en cada tarjeta."
+        }
+      },
+      "lockScreen": "Pantalla de bloqueo",
+      "nearTitle": "Estás cerca de Café Aurora",
+      "nearBody": "Te falta 1 sello para tu café gratis.",
+      "passLevel": "Nivel Plata",
+      "passReward": "Premio",
+      "passRewardValue": "Un café gratis",
+      "passCoupon": "Cupón",
+      "passCouponValue": "15 % en tu próxima compra"
     },
     "brandDemo": {
       "title": "Que tu tarjeta se vea como tu local",
@@ -954,12 +989,12 @@ declare const messages: {
           "a": "Menos de 5 minutos: creas la cuenta, eliges tu premio, descargas el QR y vinculas la tablet. Te acompañamos paso a paso."
         },
         "i4": {
-          "q": "¿Y si mis clientes no quieren recibir mensajes?",
-          "a": "Solo escribimos a quien marca la casilla de permiso al registrarse, que viene sin marcar. Cada cliente puede darse de baja cuando quiera desde su tarjeta."
+          "q": "¿Cómo se guarda la tarjeta en el Wallet?",
+          "a": "El cliente escanea tu QR, crea su tarjeta y toca «Añadir a Apple Wallet» o «Añadir a Google Wallet». Desde ese momento la tarjeta vive en su móvil y se actualiza sola cada vez que suma un sello. Wallet está incluido desde el plan Basic."
         },
         "i5": {
-          "q": "¿Se envían mensajes sin que yo lo sepa?",
-          "a": "Nunca. Repite te prepara el mensaje y tú lo revisas, lo editas si quieres y lo apruebas. Sin tu visto bueno, no sale nada."
+          "q": "¿Cómo sé si Repite me está dando resultados?",
+          "a": "En tu panel ves cuántos clientes nuevos llegan, cuántos vuelven y cuántos ingresos estimados suponen, calculados con tu ticket medio. Sin letra pequeña: son tus propios datos."
         },
         "i6": {
           "q": "¿Qué pasa cuando llegue al límite de clientes?",
@@ -1042,8 +1077,8 @@ declare const messages: {
           "body": "Anota «cortado con avena» una vez y todo el equipo lo sabrá la próxima vez."
         },
         "i3": {
-          "title": "Un mensaje cuando llevan días sin venir",
-          "body": "Te preparamos el aviso y tú decides si se envía. Ni una palabra sin tu permiso."
+          "title": "Cupones para los que llevan días sin venir",
+          "body": "Crea un cupón y tus clientes lo ven en su tarjeta. Lo canjea el equipo desde la tablet."
         }
       },
       "rewards": {
@@ -1077,7 +1112,7 @@ declare const messages: {
         },
         "i3": {
           "title": "Cumpleaños que llenan mesas",
-          "body": "Un mensaje el día de su cumpleaños (que tú apruebas) es un motivo para reservar contigo."
+          "body": "Un cupón el día de su cumpleaños es un motivo para reservar contigo."
         }
       },
       "rewards": {
@@ -1144,8 +1179,8 @@ declare const messages: {
           "body": "Notas y preferencias de cada cliente, a mano en la tablet."
         },
         "i3": {
-          "title": "Mensajes que tú apruebas",
-          "body": "Repite los prepara; tú decides."
+          "title": "Cupones y resultados",
+          "body": "Tú los creas y ves cuánto te aportan."
         }
       },
       "rewards": {

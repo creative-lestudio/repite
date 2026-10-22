@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Logo } from "@/components/brand/logo";
+import { GoogleButton } from "@/components/auth/google-button";
 import { Button } from "@/components/ui";
 
 export async function SiteHeader() {
@@ -14,6 +15,7 @@ export async function SiteHeader() {
         <nav aria-label={t("label")} className="hidden items-center gap-6 md:flex">
           {[
             ["/#como-funciona", t("how")],
+            ["/#wallet", t("wallet")],
             ["/#negocios", t("sectors")],
             ["/#ventajas", t("features")],
             ["/#precio", t("pricing")],
@@ -32,6 +34,9 @@ export async function SiteHeader() {
           <Button asChild variant="ghost" size="sm">
             <Link href="/entrar">{t("login")}</Link>
           </Button>
+          <span className="hidden lg:block">
+            <GoogleButton next="/app/empezar" label={t("google")} size="sm" block={false} />
+          </span>
           <Button asChild size="sm">
             <Link href="/registro">{t("cta")}</Link>
           </Button>

@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { HeroDemo } from "@/components/landing/hero-demo";
+import { GoogleButton } from "@/components/auth/google-button";
 import { Button } from "@/components/ui";
 import type { LandingSector } from "@/domain/business-types";
 
@@ -58,6 +59,7 @@ export async function Hero({
                 <ArrowRight aria-hidden />
               </Link>
             </Button>
+            <GoogleButton next="/app/empezar" label={t("google")} block={false} />
             <Button asChild size="lg" variant="secondary">
               <Link href="/c/cafe-aurora">{t("demo")}</Link>
             </Button>

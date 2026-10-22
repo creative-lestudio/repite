@@ -15,6 +15,7 @@ import {
   PromiseStrip,
   SectorsSection,
   WhoSection,
+  WalletSection,
 } from "@/components/landing/sections";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -73,6 +74,7 @@ export default async function LandingPage() {
         <Hero />
         <PromiseStrip />
         <HowSection />
+        <WalletSection />
         <SectorsSection />
         <FeaturesSection />
         <WhoSection />

@@ -135,6 +135,7 @@ export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome, 
         <p className="text-muted text-sm">{t("pendingBonus", { count: state.pending_bonuses.length })}</p>
       )}
 
+      <WalletButtons slug={slug} apple={wallet.apple} google={wallet.google} />
       <Button
         variant={showCode ? "secondary" : "primary"}
         size="lg"
@@ -146,7 +147,6 @@ export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome, 
         <QrCode aria-hidden />
         {showCode ? t("hideCode") : t("showCode")}
       </Button>
-      <WalletButtons slug={slug} apple={wallet.apple} google={wallet.google} />
       {showCode && (
         <div
           id="my-code"

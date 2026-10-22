@@ -3,42 +3,10 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { useTranslations } from "next-intl";
+import { GoogleButton } from "@/components/auth/google-button";
+import { googleAuthEnabled } from "@/lib/google-auth";
 import { Alert, Button, Field, Input } from "@/components/ui";
-import {
-  googleSignInAction,
-  loginAction,
-  magicLinkAction,
-  signUpOwnerAction,
-  type AuthState,
-} from "@/server/actions/auth";
-
-function GoogleIcon() {
-  return (
-    <svg viewBox="0 0 24 24" className="size-5" aria-hidden>
-      <path
-        fill="#4285F4"
-        d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5a5.6 5.6 0 0 1-2.4 3.7v3h3.9c2.3-2.1 3.5-5.2 3.5-8.9Z"
-      />
-      <path
-        fill="#34A853"
-        d="M12 24c3.2 0 6-1.1 8-2.9l-3.9-3c-1.1.7-2.5 1.2-4.1 1.2-3.1 0-5.8-2.1-6.7-5H1.3v3.1A12 12 0 0 0 12 24Z"
-      />
-      <path fill="#FBBC05" d="M5.3 14.3a7.2 7.2 0 0 1 0-4.6V6.6H1.3a12 12 0 0 0 0 10.8l4-3.1Z" />
-      <path fill="#EA4335" d="M12 4.8c1.8 0 3.3.6 4.6 1.8l3.4-3.4A12 12 0 0 0 1.3 6.6l4 3.1c.9-2.8 3.6-4.9 6.7-4.9Z" />
-    </svg>
-  );
-}
-
-function GoogleButton({ next, label }: { next: string; label: string }) {
-  return (
-    <form action={googleSignInAction.bind(null, next)}>
-      <Button type="submit" variant="secondary" size="lg" block>
-        <GoogleIcon />
-        {label}
-      </Button>
-    </form>
-  );
-}
+import { loginAction, magicLinkAction, signUpOwnerAction, type AuthState } from "@/server/actions/auth";
 
 function Divider({ text }: { text: string }) {
   return (
@@ -95,7 +63,7 @@ export function LoginForm({ next, linkError }: { next: string; linkError: boolea
     <div className="flex flex-col gap-5">
       {linkError && <Alert tone="warning">{t("linkError")}</Alert>}
       <GoogleButton next={next} label={t("google")} />
-      <Divider text={t("orEmail")} />
+      {googleAuthEnabled && <Divider text={t("orEmail")} />}
       <EmailLinkForm action={magicLinkAction.bind(null, next)} label={t("magic")} sentText={t("magicSent")} />
 
       <details className="group text-sm">
@@ -131,7 +99,7 @@ export function SignupForm() {
   return (
     <div className="flex flex-col gap-5">
       <GoogleButton next="/app/empezar" label={t("google")} />
-      <Divider text={t("orEmail")} />
+      {googleAuthEnabled && <Divider text={t("orEmail")} />}
       <EmailLinkForm action={signUpOwnerAction} label={t("submit")} sentText={t("sent")} />
       <p className="text-muted text-xs">{t("terms")}</p>
       <p className="text-center text-sm">

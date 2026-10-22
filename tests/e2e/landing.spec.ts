@@ -34,7 +34,7 @@ test.describe("web pública", () => {
   test("tiene metadatos para buscadores y para compartir", async ({ page, request }) => {
     await page.goto("/");
     await expect(page).toHaveTitle(/Repite/);
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /sellos/);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Wallet/);
     await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(1);
     expect((await request.get("/robots.txt")).status()).toBe(200);
     expect((await request.get("/sitemap.xml")).status()).toBe(200);

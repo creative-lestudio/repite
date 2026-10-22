@@ -1,6 +1,6 @@
 "use client";
 
-import { MessageCircle, Stamp } from "lucide-react";
+import { Stamp, Wallet } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { SectorIcon } from "@/components/sector-icon";
@@ -95,7 +95,7 @@ export function HeroDemo({ initial = "cafeteria", locked = false }: { initial?: 
           className="bg-surface shadow-card ring-cream-100 absolute -bottom-12 -left-2 flex max-w-[15rem] items-center gap-2 rounded-xl px-3 py-2 ring-1 sm:-left-12"
         >
           <span className="bg-success/10 text-success flex size-8 shrink-0 items-center justify-center rounded-full">
-            <MessageCircle className="size-4" />
+            <Wallet className="size-4" />
           </span>
           <span className="text-left leading-tight">
             <span className="block text-sm font-bold">{t("chipMessage")}</span>
