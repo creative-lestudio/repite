@@ -1,28 +1,45 @@
-/** Iconos simplificados de Apple Wallet y Google Wallet (para mostrar dónde se guarda la tarjeta). */
+/** Iconos de Apple Wallet y Google Wallet (redibujados en vectorial a partir de los iconos de las apps). */
 export function AppleWalletIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" className={className} role="img" aria-label="Apple Wallet">
-      <rect width="64" height="64" rx="14" fill="#111" />
-      <rect x="10" y="12" width="44" height="9" rx="3" fill="#ff453a" />
-      <rect x="10" y="19" width="44" height="9" rx="3" fill="#ff9f0a" />
-      <rect x="10" y="26" width="44" height="9" rx="3" fill="#ffd60a" />
-      <rect x="10" y="33" width="44" height="9" rx="3" fill="#30d158" />
-      <rect x="10" y="40" width="44" height="9" rx="3" fill="#0a84ff" />
-      <path d="M8 40h48v10a5 5 0 0 1-5 5H13a5 5 0 0 1-5-5V40Z" fill="#2c2c2e" />
-      <rect x="40" y="44" width="10" height="6" rx="2" fill="#111" />
+    <svg viewBox="0 0 300 300" className={className} role="img" aria-label="Apple Wallet">
+      <rect width="300" height="300" rx="68" fill="#1c1c1e" />
+      <rect x="64" y="84" width="172" height="70" rx="14" fill="#3b95e8" />
+      <rect x="64" y="100" width="172" height="70" rx="14" fill="#f9b21e" />
+      <rect x="64" y="116" width="172" height="70" rx="14" fill="#56bf4d" />
+      <rect x="64" y="132" width="172" height="70" rx="14" fill="#f4766b" />
+      <path
+        d="M64 160c0-8 6-14 14-14h46c9 0 14 6 18 14 5 10 12 18 22 18h14c10 0 17-8 22-18 4-8 9-14 18-14h4c8 0 14 6 14 14v50c0 9-7 16-16 16H80c-9 0-16-7-16-16v-50Z"
+        fill="#dcd9cf"
+      />
     </svg>
   );
 }
 
 export function GoogleWalletIcon({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 64 64" className={className} role="img" aria-label="Google Wallet">
-      <rect width="64" height="64" rx="14" fill="#fff" />
-      <path d="M12 22a6 6 0 0 1 6-6h28a6 6 0 0 1 6 6v3H12v-3Z" fill="#ea4335" />
-      <path d="M12 25h40v17a6 6 0 0 1-6 6H18a6 6 0 0 1-6-6V25Z" fill="#4285f4" />
-      <path d="M12 38h14v10H18a6 6 0 0 1-6-6v-4Z" fill="#34a853" />
-      <path d="M40 31h12v11a6 6 0 0 1-6 6h-6V31Z" fill="#fbbc04" />
-      <circle cx="44" cy="36" r="3.2" fill="#fff" />
+    <svg viewBox="0 0 2000 1730" className={className} role="img" aria-label="Google Wallet">
+      <defs>
+        <linearGradient id="gw-blue" x1="0.2" y1="0.2" x2="0.8" y2="1">
+          <stop offset="0" stopColor="#4f8bff" />
+          <stop offset="0.35" stopColor="#3084ff" />
+          <stop offset="1" stopColor="#3084ff" />
+        </linearGradient>
+        <radialGradient id="gw-glow" cx="0.68" cy="0.5" r="0.4">
+          <stop offset="0" stopColor="#7a8bff" stopOpacity="0.85" />
+          <stop offset="1" stopColor="#7a8bff" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+      <path d="M0 385C0 172 172 0 385 0h1230c213 0 385 172 385 385v1000H0V385Z" fill="#00b058" />
+      <path d="M0 635C0 422 172 250 385 250h1230c213 0 385 172 385 385v900H0V635Z" fill="#fcc900" />
+      <path d="M0 885c0-213 172-385 385-385h1230c213 0 385 172 385 385v600H0V885Z" fill="#fa4341" />
+      <path
+        d="M0 727l1250 308c200 45 370 25 490-95l260-225v645c0 200-170 370-370 370H370c-205 0-370-170-370-370V727Z"
+        fill="url(#gw-blue)"
+      />
+      <path
+        d="M0 727l1250 308c200 45 370 25 490-95l260-225v645c0 200-170 370-370 370H370c-205 0-370-170-370-370V727Z"
+        fill="url(#gw-glow)"
+      />
     </svg>
   );
 }

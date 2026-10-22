@@ -1,5 +1,6 @@
 "use server";
 
+import { z } from "zod";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { LOCALE_COOKIE, isLocale } from "@/i18n/config";
@@ -22,6 +23,7 @@ import {
   updateCustomerPreferences,
 } from "../repositories/customers";
 import { ledger } from "../repositories/ledger";
+import { deletePushSubscription, savePushSubscription } from "../repositories/notifications";
 import { getLocationBySlug } from "../repositories/locations";
 import { getTemplate } from "../repositories/templates";
 import { planSpec, type EffectivePlan } from "@/domain/plan";
@@ -180,4 +182,36 @@ export async function getCardStateAction(slug: string) {
   const customer = await getCustomerFromSession(location.organizationId);
   if (!customer) return null;
   return forPlan(await getCardState(customer.id, location.id), location.plan);
+}
+
+const pushSub = z.object({
+  endpoint: z.string().url().max(600),
+  keys: z.object({ p256dh: z.string().min(10).max(200), auth: z.string().min(5).max(100) }),
+});
+
+/** Guarda la suscripción de avisos web de este móvil. */
+export async function subscribePushAction(slug: string, subscription: unknown) {
+  const location = await getLocationBySlug(slug);
+  if (!location) return { ok: false as const, error: "location_not_found" };
+  const customer = await getCustomerFromSession(location.organizationId);
+  if (!customer) return { ok: false as const, error: "sessionExpired" };
+  if (planSpec(location.plan).notifications === 0) return { ok: false as const, error: "generic" };
+  const parsed = pushSub.safeParse(subscription);
+  if (!parsed.success) return { ok: false as const, error: "generic" };
+  if (!(await rateLimit("push-sub", 3600, 20, customer.id))) return { ok: false as const, error: "rateLimited" };
+  await savePushSubscription(location.organizationId, customer.id, {
+    endpoint: parsed.data.endpoint,
+    p256dh: parsed.data.keys.p256dh,
+    auth: parsed.data.keys.auth,
+  });
+  return { ok: true as const };
+}
+
+export async function unsubscribePushAction(slug: string, endpoint: string) {
+  const location = await getLocationBySlug(slug);
+  if (!location) return { ok: false as const };
+  const customer = await getCustomerFromSession(location.organizationId);
+  if (!customer) return { ok: false as const };
+  await deletePushSubscription(customer.id, String(endpoint).slice(0, 600));
+  return { ok: true as const };
 }

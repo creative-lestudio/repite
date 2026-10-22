@@ -36,6 +36,8 @@ export interface PassContent {
   levelName?: string | null;
   couponsReady?: number;
   couponTitle?: string | null;
+  /** Último aviso enviado por el local (se muestra en el reverso del pase y avisa al cambiar). */
+  notice?: { title: string; body: string } | null;
   /** Coordenadas del local para el aviso por cercanía (null si no aplica). */
   coords?: { latitude: number; longitude: number } | null;
 }

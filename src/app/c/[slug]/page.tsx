@@ -8,6 +8,7 @@ import { getCardState } from "@/server/repositories/customers";
 import { getActiveProgram, getLocationBySlug } from "@/server/repositories/locations";
 import { qrSvg } from "@/server/qr";
 import { planSpec } from "@/domain/plan";
+import { getLatestNotice } from "@/server/repositories/notifications";
 import { brandAssets } from "@/server/brand-assets";
 import { walletAvailability } from "@/server/wallet/config";
 import { appUrl } from "@/server/app-url";
@@ -45,6 +46,7 @@ export default async function CustomerHome({
     qrSvg(`${await appUrl()}/equipo/q/${customer.qr_token}`),
   ]);
   const { bienvenida } = await searchParams;
+  const notice = await getLatestNotice(customer.id);
 
   return (
     <LiveCard
@@ -55,6 +57,7 @@ export default async function CustomerHome({
       initial={planSpec(location.plan).levels ? state : { ...state, levels: [] }}
       welcome={bienvenida === "1"}
       wallet={walletAvailability(location.plan)}
+      notice={notice}
       cardTone={location.brand.cardStyle}
       cardBrand={{
         stampShape: location.brand.stampShape,

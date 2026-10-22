@@ -417,6 +417,90 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"notification_deliveries": {
+                  Row: {
+                    "body": string,"channel": string,"created_at": string,"customer_id": string,"error": string | null,"id": string,"notification_id": string,"organization_id": string,"status": string,"title": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "body": string,"channel": string,"created_at"?: string,"customer_id": string,"error"?: string | null,"id"?: string,"notification_id": string,"organization_id": string,"status"?: string,"title": string
+                  }
+                  Update: {
+                    "body"?: string,"channel"?: string,"created_at"?: string,"customer_id"?: string,"error"?: string | null,"id"?: string,"notification_id"?: string,"organization_id"?: string,"status"?: string,"title"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "notification_deliveries_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
+      referencedRelation: "customer_stats"
+      referencedColumns: ["customer_id"]
+    },{
+      foreignKeyName: "notification_deliveries_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
+      referencedRelation: "customers"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notification_deliveries_notification_id_fkey"
+      columns: ["notification_id"]
+isOneToOne: false
+      referencedRelation: "notifications"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notification_deliveries_organization_id_fkey"
+      columns: ["organization_id"]
+isOneToOne: false
+      referencedRelation: "organizations"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"notification_templates": {
+                  Row: {
+                    "body": string,"created_at": string,"deleted_at": string | null,"id": string,"name": string,"organization_id": string,"title": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "body": string,"created_at"?: string,"deleted_at"?: string | null,"id"?: string,"name": string,"organization_id": string,"title": string
+                  }
+                  Update: {
+                    "body"?: string,"created_at"?: string,"deleted_at"?: string | null,"id"?: string,"name"?: string,"organization_id"?: string,"title"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "notification_templates_organization_id_fkey"
+      columns: ["organization_id"]
+isOneToOne: false
+      referencedRelation: "organizations"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"notifications": {
+                  Row: {
+                    "body": string,"created_at": string,"created_by": string | null,"failed": number,"id": string,"location_id": string,"organization_id": string,"push_sent": number,"recipients": number,"segment": NonNullable<Json>,"sent_at": string | null,"status": string,"title": string,"wallet_sent": number
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "body": string,"created_at"?: string,"created_by"?: string | null,"failed"?: number,"id"?: string,"location_id": string,"organization_id": string,"push_sent"?: number,"recipients"?: number,"segment": NonNullable<Json>,"sent_at"?: string | null,"status"?: string,"title": string,"wallet_sent"?: number
+                  }
+                  Update: {
+                    "body"?: string,"created_at"?: string,"created_by"?: string | null,"failed"?: number,"id"?: string,"location_id"?: string,"organization_id"?: string,"push_sent"?: number,"recipients"?: number,"segment"?: NonNullable<Json>,"sent_at"?: string | null,"status"?: string,"title"?: string,"wallet_sent"?: number
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "notifications_location_id_fkey"
+      columns: ["location_id"]
+isOneToOne: false
+      referencedRelation: "locations"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "notifications_organization_id_fkey"
+      columns: ["organization_id"]
+isOneToOne: false
+      referencedRelation: "organizations"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"opportunities": {
                   Row: {
                     "context": NonNullable<Json>,"created_at": string,"customer_id": string,"decided_at": string | null,"decided_by": string | null,"dedupe_key": string,"detected_for": string,"id": string,"location_id": string,"organization_id": string,"rule_id": string,"status": string,"type": string,"updated_at": string
@@ -514,6 +598,38 @@ isOneToOne: false
                   }
                   Relationships: [
                     
+                  ]
+                },"push_subscriptions": {
+                  Row: {
+                    "auth": string,"created_at": string,"customer_id": string,"endpoint": string,"id": string,"last_seen_at": string,"organization_id": string,"p256dh": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "auth": string,"created_at"?: string,"customer_id": string,"endpoint": string,"id"?: string,"last_seen_at"?: string,"organization_id": string,"p256dh": string
+                  }
+                  Update: {
+                    "auth"?: string,"created_at"?: string,"customer_id"?: string,"endpoint"?: string,"id"?: string,"last_seen_at"?: string,"organization_id"?: string,"p256dh"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "push_subscriptions_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
+      referencedRelation: "customer_stats"
+      referencedColumns: ["customer_id"]
+    },{
+      foreignKeyName: "push_subscriptions_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
+      referencedRelation: "customers"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "push_subscriptions_organization_id_fkey"
+      columns: ["organization_id"]
+isOneToOne: false
+      referencedRelation: "organizations"
+      referencedColumns: ["id"]
+    }
                   ]
                 },"rate_limits": {
                   Row: {
@@ -733,14 +849,14 @@ isOneToOne: false
                   ]
                 },"wallet_registrations": {
                   Row: {
-                    "created_at": string,"customer_id": string,"device_library_id": string,"id": string,"location_id": string,"organization_id": string,"push_token": string,"updated_at": string
+                    "created_at": string,"customer_id": string,"device_library_id": string,"id": string,"location_id": string,"organization_id": string,"platform": string,"push_token": string,"updated_at": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "created_at"?: string,"customer_id": string,"device_library_id": string,"id"?: string,"location_id": string,"organization_id": string,"push_token": string,"updated_at"?: string
+                    "created_at"?: string,"customer_id": string,"device_library_id": string,"id"?: string,"location_id": string,"organization_id": string,"platform"?: string,"push_token": string,"updated_at"?: string
                   }
                   Update: {
-                    "created_at"?: string,"customer_id"?: string,"device_library_id"?: string,"id"?: string,"location_id"?: string,"organization_id"?: string,"push_token"?: string,"updated_at"?: string
+                    "created_at"?: string,"customer_id"?: string,"device_library_id"?: string,"id"?: string,"location_id"?: string,"organization_id"?: string,"platform"?: string,"push_token"?: string,"updated_at"?: string
                   }
                   Relationships: [
                     {
@@ -797,6 +913,11 @@ isOneToOne: false
                            },
 "issue_coupons":
 { Args: { "p_customer": string }; Returns: number
+                           },
+"notification_audience":
+{ Args: { "p_gap_days": number,"p_location": string,"p_org": string,"p_segment": Json }; Returns: {
+              "balance": number,"customer_id": string,"has_apple": boolean,"has_google": boolean,"has_push": boolean,"name": string,"reward_name": string,"stamps_required": number
+            }[]
                            },
 "owner_customer_card":
 { Args: { "p_customer": string,"p_location": string }; Returns: Json

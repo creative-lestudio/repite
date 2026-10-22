@@ -22,6 +22,15 @@ export async function loadPassContent(customerId: string, locationId: string): P
   if (!customer || !location || customer.organization_id !== location.organizationId) return null;
   const state = await getCardState(customerId, locationId);
   if (!state.program) return null;
+  const { data: notice } = await createServiceClient()
+    .from("notification_deliveries")
+    .select("title, body")
+    .eq("customer_id", customerId)
+    .eq("channel", "apple_wallet")
+    .gte("created_at", new Date(Date.now() - 14 * 86_400_000).toISOString())
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
   const level = planSpec(location.plan).levels ? currentLevel(state.levels, state.visits_total) : null;
   return {
     serial: passSerial(locationId, customerId),
@@ -37,6 +46,7 @@ export async function loadPassContent(customerId: string, locationId: string): P
     levelName: level?.name ?? null,
     couponsReady: state.coupons.length,
     couponTitle: state.coupons[0]?.title ?? null,
+    notice: notice ?? null,
     coords: planSpec(location.plan).proximity ? location.coords : null,
   };
 }

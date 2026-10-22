@@ -1,6 +1,6 @@
 "use client";
 
-import { Crown, Gift, QrCode, Ticket } from "lucide-react";
+import { Bell, Crown, Gift, QrCode, Ticket } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
@@ -21,6 +21,7 @@ interface Props {
   initial: CardState;
   welcome: boolean;
   wallet: { apple: boolean; google: boolean };
+  notice: { id: string; title: string; body: string } | null;
   cardTone: "light" | "dark" | "brand";
   cardBrand: StampCardBrand;
 }
@@ -45,13 +46,33 @@ function writeSnapshot(key: string, s: Snapshot) {
 }
 
 /** Tarjeta que se refresca sola: cuando el equipo suma un sello, aparece estampado al momento. */
-export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome, wallet, cardTone, cardBrand }: Props) {
+export function LiveCard({
+  slug,
+  customerName,
+  sector,
+  qrSvg,
+  initial,
+  welcome,
+  wallet,
+  notice,
+  cardTone,
+  cardBrand,
+}: Props) {
   const t = useTranslations("customer.card");
   const [state, setState] = useState(initial);
   const [newStamp, setNewStamp] = useState<number | null>(null);
   const [rewardWon, setRewardWon] = useState(false);
   const [showCode, setShowCode] = useState(welcome);
+  const [noticeHidden, setNoticeHidden] = useState(true);
   const key = `repite:card:${slug}`;
+  // El aviso se oculta si ya lo cerró en este móvil (se decide en el cliente para no depender de cookies)
+  useEffect(() => {
+    try {
+      setNoticeHidden(!notice || localStorage.getItem(`repite:notice:${slug}`) === notice.id);
+    } catch {
+      setNoticeHidden(!notice);
+    }
+  }, [notice, slug]);
   const prev = useRef<Snapshot | null>(null);
 
   const apply = useCallback(
@@ -108,6 +129,33 @@ export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome, 
   return (
     <div className="flex flex-col gap-4">
       <h1 className="text-2xl font-extrabold">{t("hello", { name: customerName })}</h1>
+      {notice && !noticeHidden && (
+        <section
+          aria-label={t("noticeLabel")}
+          className="bg-ink-950 text-cream-50 relative flex items-start gap-3 rounded-xl p-4"
+        >
+          <Bell className="mt-0.5 size-5 shrink-0 text-red-500" aria-hidden />
+          <div className="min-w-0 flex-1 text-sm">
+            <p className="font-bold">{notice.title}</p>
+            <p className="text-cream-200 break-words">{notice.body}</p>
+          </div>
+          <button
+            type="button"
+            aria-label={t("noticeDismiss")}
+            onClick={() => {
+              try {
+                localStorage.setItem(`repite:notice:${slug}`, notice.id);
+              } catch {
+                /* sin almacenamiento */
+              }
+              setNoticeHidden(true);
+            }}
+            className="text-cream-200 min-h-9 min-w-9 text-xl leading-none"
+          >
+            ×
+          </button>
+        </section>
+      )}
       {welcome && <Alert tone="success">{t("welcome")}</Alert>}
       {rewardWon && <Alert tone="success" title={t("rewardWon")} className="animate-fade-in" />}
 

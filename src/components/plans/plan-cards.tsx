@@ -9,8 +9,8 @@ import { CellValue } from "./cell";
 // Funciones que se destacan en cada tarjeta (el resto está en la comparativa completa)
 const HIGHLIGHTS: Record<PlanId, string[]> = {
   starter: ["customers", "staff", "devices", "nameColor", "qr", "csv"],
-  basic: ["customers", "staff", "devices", "logo", "icon", "noBadge", "wallet", "coupons", "bonuses"],
-  plus: ["customers", "staff", "devices", "coupons", "levels", "proximity", "font", "shapes", "customCard"],
+  basic: ["customers", "staff", "devices", "logo", "icon", "noBadge", "wallet", "notifications", "coupons", "bonuses"],
+  plus: ["customers", "staff", "devices", "notifications", "segments", "coupons", "levels", "proximity", "customCard"],
 };
 const INHERITS: Partial<Record<PlanId, PlanId>> = { basic: "starter", plus: "basic" };
 const ROWS = Object.fromEntries(MATRIX.flatMap((g) => g.rows.map((r) => [r.key, r])));

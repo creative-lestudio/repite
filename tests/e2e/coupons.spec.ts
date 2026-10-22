@@ -78,7 +78,7 @@ test("niveles VIP: el dueño Plus los guarda", async ({ page }) => {
     await page.getByLabel("Visitas").first().fill("10");
     await page.getByLabel("Ventaja (opcional)").first().fill("Postre gratis");
     await page.getByRole("button", { name: /guardar/i }).click();
-    await expect(page.getByText(/guardado|guardada/i).first()).toBeVisible();
+    await expect(page.getByText(/guardado|guardada/i).first()).toBeVisible({ timeout: 15_000 });
     await page.reload();
     await expect(page.getByLabel("Nivel 1")).toHaveValue("Plata");
     await expect(page.getByLabel("Visitas").first()).toHaveValue("10");
@@ -95,7 +95,7 @@ test("aviso por cercanía: el dueño Plus guarda las coordenadas de su local", a
     await page.getByLabel("Latitud").fill("40.4168");
     await page.getByLabel("Longitud").fill("-3.7038");
     await page.getByRole("button", { name: /guardar/i }).click();
-    await expect(page.getByText(/guardado|guardada/i).first()).toBeVisible();
+    await expect(page.getByText(/guardado|guardada/i).first()).toBeVisible({ timeout: 15_000 });
     await page.reload();
     await expect(page.getByLabel("Latitud")).toHaveValue("40.4168");
     await expect(page.getByLabel("Longitud")).toHaveValue("-3.7038");

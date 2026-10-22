@@ -22,6 +22,12 @@ export interface PlanSpec {
   levels: boolean;
   /** Aviso en la pantalla de bloqueo al estar cerca del local. */
   proximity: boolean;
+  /** Notificaciones al móvil: envíos al mes (0 = no incluidas; null = sin límite). */
+  notifications: number | null;
+  /** Segmentos avanzados (premio a punto, nivel VIP, frecuentes…). */
+  advancedSegments: boolean;
+  /** Guardar plantillas propias. */
+  customTemplates: boolean;
   /** Muestra «Creado con Repite» en la tarjeta del cliente. */
   poweredBy: boolean;
 }
@@ -39,6 +45,9 @@ export const PLANS: Record<PlanId, PlanSpec> = {
     coupons: 0,
     levels: false,
     proximity: false,
+    notifications: 0,
+    advancedSegments: false,
+    customTemplates: false,
     poweredBy: true,
   },
   basic: {
@@ -53,6 +62,9 @@ export const PLANS: Record<PlanId, PlanSpec> = {
     coupons: 1,
     levels: false,
     proximity: false,
+    notifications: 4,
+    advancedSegments: false,
+    customTemplates: false,
     poweredBy: false,
   },
   plus: {
@@ -67,6 +79,9 @@ export const PLANS: Record<PlanId, PlanSpec> = {
     coupons: null,
     levels: true,
     proximity: true,
+    notifications: null,
+    advancedSegments: true,
+    customTemplates: true,
     poweredBy: false,
   },
 };
@@ -135,6 +150,9 @@ export const MATRIX: MatrixGroup[] = [
       { key: "coupons", starter: false, basic: 1, plus: "unlimited" },
       { key: "levels", starter: false, basic: false, plus: true },
       { key: "proximity", starter: false, basic: false, plus: true },
+      { key: "notifications", starter: false, basic: 4, plus: "unlimited" },
+      { key: "segments", starter: false, basic: "basic", plus: "all" },
+      { key: "templates", starter: false, basic: "repite", plus: "custom" },
       { key: "metrics", starter: "summary", basic: "summary", plus: "full" },
     ],
   },

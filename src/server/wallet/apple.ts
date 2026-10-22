@@ -101,6 +101,15 @@ export async function buildApplePass(content: PassContent, cfg: AppleConfig = ap
       relevantText: proximityText(content),
     });
   }
+  if (content.notice) {
+    // Wallet muestra «changeMessage» en la pantalla de bloqueo cuando cambia el valor del campo
+    pass.backFields.push({
+      key: "notice",
+      label: content.notice.title,
+      value: content.notice.body,
+      changeMessage: `${content.notice.title.replace(/%/g, "%%")}: %@`,
+    });
+  }
   pass.setBarcodes({
     message: content.qrUrl,
     format: "PKBarcodeFormatQR",
@@ -120,6 +129,7 @@ export async function pushApplePassUpdate(customerId: string, locationId: string
     .update({ updated_at: new Date().toISOString() })
     .eq("customer_id", customerId)
     .eq("location_id", locationId)
+    .eq("platform", "apple")
     .select("push_token");
   if (!regs?.length) return;
 

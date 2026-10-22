@@ -22,6 +22,10 @@ const schema = z.object({
   APPLE_WALLET_KEY_PEM: z.string().optional(), // clave privada, PEM en base64
   APPLE_WALLET_KEY_PASSPHRASE: z.string().optional(),
   APPLE_WALLET_WWDR_PEM: z.string().optional(), // certificado intermedio de Apple (WWDR), PEM en base64
+  // Avisos al móvil por Web Push (opcional): npx web-push generate-vapid-keys
+  NEXT_PUBLIC_VAPID_PUBLIC_KEY: z.string().optional(),
+  VAPID_PRIVATE_KEY: z.string().optional(),
+  VAPID_SUBJECT: z.string().optional(), // mailto:tu@correo
   GOOGLE_WALLET_ISSUER_ID: z.string().optional(),
   GOOGLE_WALLET_SERVICE_ACCOUNT: z.string().optional(), // JSON de la cuenta de servicio en base64
 });

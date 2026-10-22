@@ -339,3 +339,52 @@ export async function listCoupons(): Promise<CouponRow[]> {
     redeemed: stats.get(c.id)?.redeemed ?? 0,
   }));
 }
+
+// ───────────── Notificaciones ─────────────
+
+export interface NotificationRow {
+  id: string;
+  title: string;
+  body: string;
+  segment: { type: string; value: number | null };
+  status: "sending" | "sent" | "failed";
+  recipients: number;
+  wallet_sent: number;
+  push_sent: number;
+  created_at: string;
+}
+
+export async function listNotifications(limit = 20): Promise<NotificationRow[]> {
+  const { data, error } = await (
+    await createUserClient()
+  )
+    .from("notifications")
+    .select("id, title, body, segment, status, recipients, wallet_sent, push_sent, created_at")
+    .order("created_at", { ascending: false })
+    .limit(limit);
+  if (error) throw error;
+  return (data ?? []) as unknown as NotificationRow[];
+}
+
+export async function listNotificationTemplates() {
+  const { data, error } = await (
+    await createUserClient()
+  )
+    .from("notification_templates")
+    .select("id, name, title, body")
+    .is("deleted_at", null)
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data ?? [];
+}
+
+export async function countNotificationsSince(sinceISO: string): Promise<number> {
+  const { count } = await (
+    await createUserClient()
+  )
+    .from("notifications")
+    .select("id", { count: "exact", head: true })
+    .gte("created_at", sinceISO)
+    .in("status", ["sending", "sent"]);
+  return count ?? 0;
+}

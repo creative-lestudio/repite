@@ -118,3 +118,20 @@ export async function updateGoogleObject(c: PassContent, locationId: string): Pr
     }),
   });
 }
+
+/** Envía un mensaje con aviso al móvil a través de Google Wallet. Devuelve si Google lo aceptó. */
+export async function sendGoogleMessage(serial: string, title: string, body: string): Promise<boolean> {
+  const cfg = googleConfig();
+  if (!cfg) return false;
+  const token = await accessToken(cfg);
+  if (!token) return false;
+  const res = await fetch(
+    `https://walletobjects.googleapis.com/walletobjects/v1/loyaltyObject/${encodeURIComponent(googleObjectId(cfg, serial))}/addMessage`,
+    {
+      method: "POST",
+      headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
+      body: JSON.stringify({ message: { header: title, body, messageType: "TEXT_AND_NOTIFY" } }),
+    },
+  );
+  return res.ok;
+}

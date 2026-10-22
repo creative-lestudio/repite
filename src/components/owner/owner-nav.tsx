@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Bell,
   ChartColumn,
   Gift,
   House,
@@ -47,6 +48,7 @@ export function OwnerNav({
     { href: "/app/resultados", label: t("results"), Icon: ChartColumn },
     { href: "/app/programa", label: t("program"), Icon: Gift },
     { href: "/app/cupones", label: t("coupons"), Icon: Ticket },
+    { href: "/app/notificaciones", label: t("notifications"), Icon: Bell },
     { href: "/app/marca", label: t("brand"), Icon: Palette },
     { href: "/app/equipo", label: t("team"), Icon: UserRoundCog },
     { href: "/app/qr", label: t("qr"), Icon: QrCode },

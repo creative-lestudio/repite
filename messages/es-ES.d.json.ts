@@ -36,6 +36,10 @@ declare const messages: {
     "coupon_not_found": "No encontramos ese cupón.",
     "coupon_already_redeemed": "Ese cupón ya se ha canjeado.",
     "coupon_expired": "Ese cupón ha caducado.",
+    "notificationsLimit": "Has usado todos los envíos de este mes con tu plan. Con Plus son ilimitados.",
+    "notifTitleRequired": "Escribe un título.",
+    "notifBodyRequired": "Escribe el mensaje.",
+    "templateNameRequired": "Ponle un nombre a la plantilla.",
     "couponTitleRequired": "Escribe qué regalas.",
     "dateInvalid": "Revisa la fecha.",
     "couponPlanLimit": "Tu plan no permite más cupones activos. Puedes cambiarlo en Plan y facturación.",
@@ -163,6 +167,8 @@ declare const messages: {
       "rewardReady": "{count, plural, one {Tienes un premio listo} other {Tienes # premios listos}}",
       "rewardReadyAction": "Ver mis premios",
       "rewardWon": "¡Premio conseguido! Ya puedes canjearlo.",
+      "noticeLabel": "Aviso del local",
+      "noticeDismiss": "Cerrar el aviso",
       "levelTitle": "Tu nivel",
       "levelNow": "Nivel {name}",
       "levelNone": "Aún no tienes nivel",
@@ -234,6 +240,14 @@ declare const messages: {
       "saved": "Cambios guardados",
       "signOut": "Cerrar la tarjeta en este móvil",
       "signOutHint": "Podrás recuperarla con un enlace a tu WhatsApp.",
+      "pushTitle": "Avisos en este móvil",
+      "pushBody": "Recibe un aviso cuando {location} tenga algo para ti: premios, cupones o novedades.",
+      "pushOn": "Activar avisos",
+      "pushOff": "Desactivar avisos",
+      "pushDenied": "Has bloqueado los avisos en este navegador. Puedes activarlos desde sus ajustes.",
+      "pushError": "No pudimos activar los avisos. Inténtalo de nuevo.",
+      "pushIos": "En iPhone los avisos web solo funcionan si añades antes esta página a la pantalla de inicio. Si prefieres, guarda tu tarjeta en Apple Wallet y los recibirás ahí.",
+      "pushUnsupported": "Este navegador no permite avisos. Guarda tu tarjeta en tu Wallet para recibirlos.",
       "install": "Añadir a la pantalla de inicio",
       "installHint": "Tendrás tu tarjeta a un toque, como una app.",
       "installIos": "En iPhone: pulsa Compartir y después «Añadir a pantalla de inicio»."
@@ -386,12 +400,7 @@ declare const messages: {
     "signOut": "Cerrar sesión"
   },
   "plans": {
-    "names": {
-      "starter": "Starter",
-      "basic": "Basic",
-      "plus": "Plus",
-      "trial": "Prueba gratuita"
-    },
+    "names": { "starter": "Starter", "basic": "Basic", "plus": "Plus", "trial": "Prueba gratuita" },
     "taglines": {
       "starter": "Para probar con tu primer local",
       "basic": "Para locales con clientela fija",
@@ -399,8 +408,8 @@ declare const messages: {
     },
     "pitch": {
       "starter": "Tu tarjeta de sellos funcionando hoy, sin pagar nada.",
-      "basic": "Tu logotipo y tu icono en la tarjeta, y tu tarjeta en el Wallet del móvil de tus clientes.",
-      "plus": "Tarjeta con tu propio diseño, sin límite de clientes ni de equipo."
+      "basic": "Tu logotipo y tu icono en la tarjeta, tu tarjeta en el Wallet del móvil de tus clientes y notificaciones para que vuelvan.",
+      "plus": "Tarjeta con tu propio diseño, notificaciones ilimitadas con segmentos y plantillas propias, sin límite de clientes."
     },
     "free": "Gratis",
     "forever": "para siempre",
@@ -433,13 +442,20 @@ declare const messages: {
       "coupons": "Cupones activos",
       "levels": "Niveles VIP",
       "proximity": "Aviso en el móvil al pasar cerca del local",
+      "notifications": "Notificaciones al móvil (envíos al mes)",
+      "segments": "Segmentos de clientes",
+      "templates": "Plantillas de mensajes",
       "metrics": "Métricas",
       "support": "Soporte"
     },
     "values": {
       "unlimited": "Sin límite",
       "summary": "Resumen",
+      "repite": "De Repite",
+      "custom": "De Repite y propias",
       "full": "Completas, con ingresos estimados",
+      "basic": "Básicos (todos, nuevos, sin venir, cumpleaños)",
+      "all": "Todos: premio a punto, nivel VIP, frecuentes…",
       "guides": "Guías",
       "email": "Por correo",
       "priority": "Prioritario por WhatsApp",
@@ -455,6 +471,76 @@ declare const messages: {
     }
   },
   "owner": {
+    "notifications": {
+      "pageTitle": "Notificaciones",
+      "intro": "Envía un aviso al móvil de tus clientes: les llega a la tarjeta, a su Wallet y, si lo han activado, a su móvil. Solo a quien ha dado permiso para recibir comunicaciones.",
+      "lockedTitle": "Las notificaciones están incluidas desde Basic",
+      "lockedBody": "Avisa a tus clientes de una promoción, de que les falta poco para el premio o de que es su cumpleaños, directamente en su móvil.",
+      "seePlans": "Ver planes",
+      "templatesTitle": "Empieza con una plantilla",
+      "builtin": {
+        "miss": "Te echamos de menos",
+        "birthday": "Cumpleaños",
+        "almost": "Te falta poco",
+        "reward": "Premio listo",
+        "welcome": "Bienvenida",
+        "promo": "Promoción del día"
+      },
+      "customTemplatesPlus": "Con Plus puedes guardar tus propias plantillas.",
+      "deleteTemplate": "Borrar la plantilla {name}",
+      "messageTitle": "Mensaje",
+      "titleLabel": "Título",
+      "titlePlaceholder": "Hoy en tu local",
+      "bodyLabel": "Texto",
+      "bodyPlaceholder": "Escribe tu mensaje. Puedes usar los datos de cada cliente.",
+      "variables": "Datos del cliente:",
+      "audienceTitle": "¿A quién se lo envías?",
+      "segmentLabel": "Segmento",
+      "plusOnly": "Plus",
+      "segments": {
+        "all": "Todos mis clientes",
+        "new": "Clientes nuevos",
+        "inactive": "Clientes que llevan tiempo sin venir",
+        "birthday_month": "Cumpleaños de este mes",
+        "near_reward": "A pocos sellos del premio",
+        "reward_ready": "Con un premio por canjear",
+        "frequent": "Clientes frecuentes",
+        "level": "Por nivel VIP",
+        "has_coupon": "Con un cupón sin usar"
+      },
+      "segmentValue": {
+        "new": "Se apuntaron en los últimos (días)",
+        "inactive": "Sin venir desde hace (días)",
+        "near_reward": "Les faltan como máximo (sellos)",
+        "frequent": "Con al menos (visitas)",
+        "level": "Nivel"
+      },
+      "calculating": "Calculando…",
+      "audienceCount": "{count, plural, =0 {Ningún cliente cumple este segmento ahora} one {1 cliente cumple este segmento} other {# clientes cumplen este segmento}}",
+      "reach": "{reach, plural, =0 {Ninguno tiene aún la tarjeta en el Wallet o avisos activados} one {1 lo recibirá en el móvil} other {# lo recibirán en el móvil}}",
+      "reachDetail": "Apple Wallet {apple, number} · Google Wallet {google, number} · Avisos web {push, number}",
+      "audienceUnavailable": "No se pudo calcular la audiencia.",
+      "audienceHint": "Todos los del segmento verán el aviso al abrir su tarjeta. Solo se escribe a quien dio permiso y no se repite a la misma persona antes del intervalo de tus Ajustes.",
+      "channelCard": "Aviso en la tarjeta",
+      "channelPush": "Avisos web",
+      "limitReached": "Has usado todos los envíos de este mes con tu plan. Con Plus son ilimitados.",
+      "send": "Enviar",
+      "confirmTitle": "¿Enviar a {count, plural, one {# cliente} other {# clientes}}?",
+      "confirmSend": "Sí, enviar",
+      "cancel": "Cancelar",
+      "sent": "Notificación enviada. Verás el resultado en el historial.",
+      "templateName": "Nombre de la plantilla",
+      "saveTemplate": "Guardar plantilla",
+      "templateSaved": "Plantilla guardada.",
+      "preview": "Así lo verá tu cliente",
+      "previewHint": "Con datos de ejemplo; cada cliente verá los suyos.",
+      "now": "ahora",
+      "remaining": "Te quedan {count, plural, one {# envío} other {# envíos}} este mes.",
+      "historyTitle": "Enviadas",
+      "historyEmpty": "Todavía no has enviado ninguna notificación.",
+      "historyStats": "{recipients, plural, one {1 cliente} other {# clientes}} · {wallet, number} en Wallet · {push, number} en el móvil",
+      "status": { "sending": "Enviando", "sent": "Enviada", "failed": "Con errores" }
+    },
     "coupons": {
       "pageTitle": "Cupones",
       "intro": "Regala un descuento o un detalle: tus clientes lo ven en su tarjeta y tu equipo lo canjea desde la tablet.",
@@ -547,26 +633,13 @@ declare const messages: {
       "fontTitle": "Tipografía",
       "stampsTitle": "Sellos",
       "shape": "Forma",
-      "shapes": {
-        "circle": "Círculo",
-        "square": "Cuadrado",
-        "hex": "Hexágono",
-        "star": "Estrella"
-      },
+      "shapes": { "circle": "Círculo", "square": "Cuadrado", "hex": "Hexágono", "star": "Estrella" },
       "content": "Dentro del sello",
-      "modes": {
-        "icon": "Icono",
-        "number": "Número",
-        "image": "Tu imagen"
-      },
+      "modes": { "icon": "Icono", "number": "Número", "image": "Tu imagen" },
       "stampImage": "Imagen del sello",
       "stampImageHint": "Se recorta en cuadrado. Mejor una imagen sencilla.",
       "cardTitle": "Tarjeta",
-      "cardStyles": {
-        "light": "Clara",
-        "dark": "Oscura",
-        "brand": "Color de marca"
-      },
+      "cardStyles": { "light": "Clara", "dark": "Oscura", "brand": "Color de marca" },
       "cardBg": "Tu propio diseño de tarjeta",
       "cardBgHint": "Una imagen apaisada (por ejemplo 1200×750). Se oscurece un poco para que se lean los sellos.",
       "save": "Guardar mi marca",
@@ -581,6 +654,7 @@ declare const messages: {
       "brand": "Mi marca",
       "results": "Resultados",
       "coupons": "Cupones",
+      "notifications": "Notificaciones",
       "team": "Equipo",
       "qr": "QR y material",
       "bonuses": "Reseñas e historias",
@@ -1018,9 +1092,10 @@ declare const messages: {
           "body": "Con Plus, la tarjeta aparece en la pantalla de bloqueo al pasar cerca de tu local."
         },
         "i4": {
-          "title": "Con tu marca",
-          "body": "Tu color, tu nombre y tu logotipo en cada tarjeta."
-        }
+          "title": "Avisos cuando tú quieras",
+          "body": "Envía una promoción, un cumpleaños o un «te falta poco» al móvil de tus clientes, a quien tú elijas."
+        },
+        "i5": { "title": "Con tu marca", "body": "Tu color, tu nombre y tu logotipo en cada tarjeta." }
       },
       "availableOn": "Disponible en",
       "passStamps": "Sellos 5/8",
