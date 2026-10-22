@@ -4,6 +4,7 @@ import { EmptyState } from "@/components/ui";
 import { StaffHeader } from "@/components/staff/staff-header";
 import { StaffNav } from "@/components/staff/staff-nav";
 import { StaffSignIn } from "@/components/staff/staff-sign-in";
+import { Toaster } from "@/components/staff/toaster";
 import { getDevice, getStaffSession, listStaffForDevice } from "@/server/auth/staff-session";
 import { getPendingBonuses } from "@/server/repositories/staff";
 
@@ -43,10 +44,12 @@ export default async function StaffLayout({ children }: { children: React.ReactN
 
   const pending = await getPendingBonuses(device.location.id);
   return (
-    <div className="mx-auto flex min-h-dvh max-w-3xl flex-col">
-      <StaffHeader locationName={device.location.name} staffName={session.staffName} />
-      <main className="flex-1 px-4 pt-4 pb-28">{children}</main>
-      <StaffNav pendingCount={pending.length} />
-    </div>
+    <Toaster>
+      <div className="mx-auto flex min-h-dvh max-w-3xl flex-col">
+        <StaffHeader locationName={device.location.name} staffName={session.staffName} />
+        <main className="flex-1 px-4 pt-4 pb-28">{children}</main>
+        <StaffNav pendingCount={pending.length} />
+      </div>
+    </Toaster>
   );
 }

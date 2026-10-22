@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { Alert, Button } from "@/components/ui";
+import { Button } from "@/components/ui";
 import { validateBonusAction } from "@/server/actions/staff";
 import type { PendingBonus } from "@/server/repositories/staff";
 import { useStaffAction } from "./use-staff-action";
@@ -10,7 +10,7 @@ import { useStaffAction } from "./use-staff-action";
 export function BonusReview({ bonus, showCustomer }: { bonus: PendingBonus; showCustomer?: boolean }) {
   const t = useTranslations("staff.customer");
   const tp = useTranslations("staff.pending");
-  const { pending, feedback, run } = useStaffAction();
+  const { pending, run } = useStaffAction();
   const handle = bonus.evidence?.handle;
 
   return (
@@ -58,7 +58,6 @@ export function BonusReview({ bonus, showCustomer }: { bonus: PendingBonus; show
           {t("reject")}
         </Button>
       </div>
-      <div aria-live="polite">{feedback && <Alert tone={feedback.tone}>{feedback.text}</Alert>}</div>
     </li>
   );
 }

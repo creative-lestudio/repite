@@ -2,13 +2,13 @@
 
 import { Stamp } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Alert, Button } from "@/components/ui";
+import { Button } from "@/components/ui";
 import { registerVisitAction } from "@/server/actions/staff";
 import { useStaffAction } from "./use-staff-action";
 
 export function RegisterVisit({ customerId, customerName }: { customerId: string; customerName: string }) {
   const t = useTranslations("staff.customer");
-  const { pending, feedback, run } = useStaffAction();
+  const { pending, run } = useStaffAction();
 
   return (
     <div className="flex flex-col gap-3">
@@ -31,7 +31,6 @@ export function RegisterVisit({ customerId, customerName }: { customerId: string
         <Stamp aria-hidden className="size-6!" />
         {t("registerVisit")}
       </Button>
-      <div aria-live="polite">{feedback && <Alert tone={feedback.tone}>{feedback.text}</Alert>}</div>
     </div>
   );
 }

@@ -3,14 +3,14 @@
 import { Gift } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Alert, Button } from "@/components/ui";
+import { Button } from "@/components/ui";
 import { redeemRewardAction } from "@/server/actions/staff";
 import { useStaffAction } from "./use-staff-action";
 
 export function RewardsList({ rewards }: { rewards: { id: string; reward_name: string }[] }) {
   const t = useTranslations("staff.customer");
   const tc = useTranslations("common");
-  const { pending, feedback, run } = useStaffAction();
+  const { pending, run } = useStaffAction();
   const [confirming, setConfirming] = useState<string | null>(null);
 
   return (
@@ -53,7 +53,6 @@ export function RewardsList({ rewards }: { rewards: { id: string; reward_name: s
           </li>
         ))}
       </ul>
-      <div aria-live="polite">{feedback && <Alert tone={feedback.tone}>{feedback.text}</Alert>}</div>
     </section>
   );
 }

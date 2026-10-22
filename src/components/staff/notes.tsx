@@ -3,7 +3,7 @@
 import { Pin } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Alert, Badge, Button, Checkbox, Field, Textarea } from "@/components/ui";
+import { Badge, Button, Checkbox, Field, Textarea } from "@/components/ui";
 import { addNoteAction } from "@/server/actions/staff";
 import type { Note } from "@/server/repositories/staff";
 import { useStaffAction } from "./use-staff-action";
@@ -11,7 +11,7 @@ import { useStaffAction } from "./use-staff-action";
 export function Notes({ customerId, notes }: { customerId: string; notes: Note[] }) {
   const t = useTranslations("staff.customer");
   const tc = useTranslations("common");
-  const { pending, feedback, run } = useStaffAction();
+  const { pending, run } = useStaffAction();
   const [open, setOpen] = useState(false);
   const [text, setText] = useState("");
   const [pinned, setPinned] = useState(false);
@@ -64,7 +64,6 @@ export function Notes({ customerId, notes }: { customerId: string; notes: Note[]
           </div>
         </form>
       )}
-      {feedback && <Alert tone={feedback.tone}>{feedback.text}</Alert>}
       {notes.length === 0 ? (
         <p className="text-muted text-sm">{t("notesEmpty")}</p>
       ) : (

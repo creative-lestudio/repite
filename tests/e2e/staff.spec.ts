@@ -30,10 +30,11 @@ test.describe("equipo", () => {
   });
 
   test("registra visita, impide duplicarla y la deshace", async ({ page }) => {
-    const c = await seedCustomer("Visita Equipo E2E", 2);
+    const name = `Visita ${Date.now().toString(36)}`;
+    const c = await seedCustomer(name, 2);
     await signIn(page);
-    await page.getByLabel("Buscar cliente").fill("Visita Equipo");
-    await page.getByRole("link", { name: /visita equipo e2e/i }).click();
+    await page.getByLabel("Buscar cliente").fill(name);
+    await page.getByRole("link", { name }).click();
 
     await page.getByRole("button", { name: "Registrar visita" }).click();
     await expect(page.getByText("Visita registrada: 3 de 8 sellos")).toBeVisible();
@@ -42,7 +43,7 @@ test.describe("equipo", () => {
     await expect(page.getByText(/ya sumó un sello hace poco/)).toBeVisible();
 
     await page.getByRole("link", { name: "Volver al inicio" }).click();
-    const row = page.getByRole("listitem").filter({ hasText: "Visita Equipo E2E" });
+    const row = page.getByRole("listitem").filter({ hasText: name });
     await row.getByRole("button", { name: "Deshacer" }).click();
     await expect(page.getByText("Visita deshecha")).toBeVisible();
     await expect(row.getByText("Deshecha")).toBeVisible();
@@ -71,7 +72,8 @@ test.describe("equipo", () => {
   });
 
   test("valida un sello extra y añade una nota", async ({ page }) => {
-    const c = await seedCustomer("Extra Equipo E2E", 1);
+    const name = `Extra ${Date.now().toString(36)}`;
+    const c = await seedCustomer(name, 1);
     const { error } = await admin.rpc("request_bonus", {
       p_location: AURORA.locationId,
       p_customer: c.id,
@@ -82,7 +84,7 @@ test.describe("equipo", () => {
     expect(error).toBeNull();
     await signIn(page);
     await page.getByRole("link", { name: /pendientes/i }).click();
-    const item = page.getByRole("listitem").filter({ hasText: "Extra Equipo E2E" });
+    const item = page.getByRole("listitem").filter({ hasText: name });
     await expect(item.getByText("Usuario: @extra_e2e")).toBeVisible();
     await item.getByRole("button", { name: "Aprobar" }).click();
     await expect(page.getByText("Sello extra aprobado")).toBeVisible();
