@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { planSpec } from "@/domain/plan";
 import { COUNTRY_DEFAULTS } from "@/domain/slug";
 import { businessSchema, programSchema, settingsSchema } from "@/lib/schemas/owner";
 import { createUserClient } from "@/lib/supabase/server";
@@ -72,14 +73,15 @@ export async function saveProgramAction(_prev: FormState, formData: FormData): P
   if (!parsed.success) return { ok: false, error: "form", fields: zodFields(parsed.error) };
   const v = parsed.data;
   const supabase = await createUserClient();
+  const bonuses = planSpec(ctx.organization.effectivePlan).bonuses;
 
   const row = {
     stamps_required: v.stamps,
     reward_name: v.rewardName,
     reward_description: v.rewardDescription,
     reward_expiry_days: v.expiryDays,
-    bonus_story_enabled: v.bonusStory,
-    bonus_review_enabled: v.bonusReview,
+    bonus_story_enabled: bonuses && v.bonusStory,
+    bonus_review_enabled: bonuses && v.bonusReview,
   };
   const { data: existing } = await supabase
     .from("loyalty_programs")

@@ -1,4 +1,5 @@
 import "server-only";
+import { planSpec, type EffectivePlan } from "@/domain/plan";
 import { env } from "@/lib/env";
 
 const b64 = (v: string) => Buffer.from(v, "base64").toString("utf8");
@@ -51,6 +52,8 @@ export function googleConfig(): GoogleConfig | null {
   }
 }
 
-export function walletAvailability() {
-  return { apple: appleConfig() !== null, google: googleConfig() !== null };
+/** Wallet disponible para un local: claves configuradas y plan que lo incluye. */
+export function walletAvailability(plan: EffectivePlan) {
+  const included = planSpec(plan).wallet;
+  return { apple: included && appleConfig() !== null, google: included && googleConfig() !== null };
 }

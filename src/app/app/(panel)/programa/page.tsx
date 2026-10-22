@@ -1,5 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { ProgramForm } from "@/components/owner/program-form";
+import { planSpec } from "@/domain/plan";
+import { brandAssets } from "@/server/brand-assets";
 import { requireManager } from "@/server/auth/owner";
 import { getProgram } from "@/server/repositories/owner";
 
@@ -15,6 +17,15 @@ export default async function ProgramPage() {
       <ProgramForm
         locationName={ctx.location.name}
         sector={ctx.location.businessType}
+        bonusesAllowed={planSpec(ctx.organization.effectivePlan).bonuses}
+        cardTone={ctx.location.brandApplied.cardStyle}
+        cardBrand={{
+          stampShape: ctx.location.brandApplied.stampShape,
+          stampMode: ctx.location.brandApplied.stampMode,
+          stampIcon: ctx.location.brandApplied.stampIcon,
+          stampImageUrl: brandAssets(ctx.location.brandApplied).stampImageUrl,
+          cardBgUrl: brandAssets(ctx.location.brandApplied).cardBgUrl,
+        }}
         program={
           program ?? {
             stamps_required: 8,

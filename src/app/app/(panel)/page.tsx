@@ -47,7 +47,7 @@ export default async function OwnerHome() {
             </Badge>
           </Link>
         )}
-        {usage.plan === "free" && (
+        {usage.plan === "starter" && (
           <Link href="/app/plan">
             <Badge tone="blue" className="px-3 py-1.5 text-sm">
               {t("planFree")}

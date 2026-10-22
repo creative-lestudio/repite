@@ -15,11 +15,11 @@ export default async function PanelLayout({ children }: { children: React.ReactN
   const t = await getTranslations("auth");
   return (
     <Toaster>
-      <BrandTheme brand={ctx.location.brand} className="flex min-h-dvh flex-col md:flex-row">
+      <BrandTheme brand={ctx.location.brandApplied} className="flex min-h-dvh flex-col md:flex-row">
         <OwnerNav
           locationName={ctx.location.name}
           slug={ctx.location.slug}
-          logoUrl={brandAssets(ctx.location.brand).logoUrl}
+          logoUrl={brandAssets(ctx.location.brandApplied).logoUrl}
           email={ctx.email}
           signOut={
             <form action={signOutOwnerAction}>

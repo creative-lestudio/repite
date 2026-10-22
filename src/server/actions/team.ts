@@ -8,6 +8,8 @@ import { qrSvg } from "../qr";
 import { addStaff, changeStaffPin, createDevice, setStaffActive } from "../repositories/team";
 import { zodFields } from "@/lib/schemas/zod-fields";
 import type { FormState } from "./owner";
+import { hasRoom, planSpec } from "@/domain/plan";
+import { getPlanUsage } from "../repositories/owner";
 import { appUrl } from "@/server/app-url";
 
 async function audit(ctx: Awaited<ReturnType<typeof requireManager>>, action: string, entityId?: string) {
@@ -32,6 +34,8 @@ export async function addStaffAction(_prev: FormState, formData: FormData): Prom
   const ctx = await requireManager();
   const parsed = staffSchema.safeParse(Object.fromEntries(formData));
   if (!parsed.success) return { ok: false, error: "form", fields: zodFields(parsed.error) };
+  const usage = await getPlanUsage(ctx.organization.id);
+  if (!hasRoom(usage.staff, planSpec(usage.plan).staff)) return { ok: false, error: "planLimit" };
   const id = await addStaff(ctx.organization.id, ctx.location.id, parsed.data.name, parsed.data.role, parsed.data.pin);
   await audit(ctx, "staff.add", id);
   revalidatePath("/app", "layout");
@@ -52,6 +56,10 @@ export async function changePinAction(staffId: string, pin: string) {
 export async function setStaffActiveAction(staffId: string, active: boolean) {
   const ctx = await requireManager();
   if (!idSchema.safeParse(staffId).success) return { ok: false as const, error: "generic" };
+  if (active) {
+    const usage = await getPlanUsage(ctx.organization.id);
+    if (!hasRoom(usage.staff, planSpec(usage.plan).staff)) return { ok: false as const, error: "planLimit" };
+  }
   const ok = await setStaffActive(ctx.organization.id, ctx.location.id, staffId, active);
   if (!ok) return { ok: false as const, error: "generic" };
   await audit(ctx, active ? "staff.reactivate" : "staff.deactivate", staffId);
@@ -63,6 +71,8 @@ export async function createDeviceAction(name: string) {
   const ctx = await requireManager();
   const parsed = deviceSchema.safeParse({ name });
   if (!parsed.success) return { ok: false as const, error: "generic" };
+  const usage = await getPlanUsage(ctx.organization.id);
+  if (!hasRoom(usage.devices, planSpec(usage.plan).devices)) return { ok: false as const, error: "planLimit" };
   const token = await createDevice(ctx.organization.id, ctx.location.id, parsed.data.name);
   const link = `${await appUrl()}/equipo/vincular?t=${token}`;
   await audit(ctx, "device.create");

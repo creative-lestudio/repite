@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import { CARD_STYLES, FONT_KEYS, STAMP_MODES, STAMP_SHAPES } from "@/domain/brand";
+import { CARD_STYLES, FONT_KEYS, STAMP_ICONS, STAMP_MODES, STAMP_SHAPES } from "@/domain/brand";
+import { allowsCustomization } from "@/domain/plan";
 import { createUserClient } from "@/lib/supabase/server";
 import { requireManager } from "../auth/owner";
 import { BrandImageError, deleteBrandImage, saveBrandImage, type BrandImageKind } from "../brand-images";
@@ -15,6 +16,7 @@ const brandSchema = z.object({
   stampShape: z.enum(STAMP_SHAPES),
   stampMode: z.enum(STAMP_MODES),
   cardStyle: z.enum(CARD_STYLES),
+  stampIcon: z.enum(STAMP_ICONS).nullable(),
 });
 
 function refresh(slug: string) {
@@ -30,6 +32,10 @@ export async function saveBrandAction(input: z.input<typeof brandSchema>): Promi
   if (!parsed.success) return { ok: false, error: "form" };
   const v = parsed.data;
   const b = ctx.location.brand;
+  const plan = ctx.organization.effectivePlan;
+  const logoLevel = allowsCustomization(plan, "logo");
+  const full = allowsCustomization(plan, "full");
+  // Lo que el plan no incluye se queda como estaba guardado (al subir de plan, vuelve a estar disponible)
   const { error } = await (
     await createUserClient()
   )
@@ -37,10 +43,11 @@ export async function saveBrandAction(input: z.input<typeof brandSchema>): Promi
     .update({
       brand_color: v.primary.toUpperCase(),
       brand: {
-        font: v.font,
-        stampShape: v.stampShape,
-        stampMode: v.stampMode,
-        cardStyle: v.cardStyle,
+        font: full ? v.font : b.font,
+        stampShape: full ? v.stampShape : b.stampShape,
+        stampMode: full ? v.stampMode : b.stampMode,
+        cardStyle: full ? v.cardStyle : b.cardStyle,
+        stampIcon: logoLevel ? v.stampIcon : b.stampIcon,
         stampImage: b.stampImage,
         cardBg: b.cardBg,
       },
@@ -71,6 +78,7 @@ async function setImage(
 }
 
 const rawBrand = (b: Awaited<ReturnType<typeof requireManager>>["location"]["brand"]) => ({
+  stampIcon: b.stampIcon,
   font: b.font,
   stampShape: b.stampShape,
   stampMode: b.stampMode,
@@ -85,6 +93,8 @@ export async function uploadBrandImageAction(kind: string, formData: FormData): 
   const k = kindSchema.safeParse(kind);
   const file = formData.get("file");
   if (!k.success || !(file instanceof File) || file.size === 0) return { ok: false, error: "imageInvalid" };
+  if (!allowsCustomization(ctx.organization.effectivePlan, k.data === "logo" ? "logo" : "full"))
+    return { ok: false, error: "planRequired" };
   try {
     const path = await saveBrandImage(ctx.organization.id, ctx.location.id, k.data, file);
     const previous = await setImage(ctx, k.data, path);

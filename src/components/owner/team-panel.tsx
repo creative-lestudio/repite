@@ -1,6 +1,7 @@
 "use client";
 
 import { Copy, Tablet, UserPlus } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
@@ -36,8 +37,18 @@ export function AddStaffForm() {
   const fields = state && !state.ok ? (state.fields ?? {}) : {};
   const err = (n: string) => (fields[n] ? te(fields[n] as never) : undefined);
 
+  const planLimit = state && !state.ok && state.error === "planLimit";
+
   return (
     <form key={key} action={action} className="grid gap-4 sm:grid-cols-2" noValidate>
+      {planLimit && (
+        <Alert tone="warning" className="sm:col-span-2">
+          {te("planLimit")}{" "}
+          <Link href="/app/plan" className="font-semibold underline">
+            {t("seePlans")}
+          </Link>
+        </Alert>
+      )}
       <Field id="staff-name" label={t("name")} error={err("name")}>
         <Input name="name" maxLength={60} autoComplete="off" required />
       </Field>
@@ -164,7 +175,7 @@ export function DevicesPanel({
               setCreated({ link: r.link, qr: r.qr });
               setName("");
               router.refresh();
-            } else toast({ tone: "danger", text: te("generic") });
+            } else toast({ tone: "danger", text: te((r.error === "planLimit" ? "planLimit" : "generic") as never) });
           });
         }}
       >

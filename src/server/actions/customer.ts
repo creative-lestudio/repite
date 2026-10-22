@@ -24,6 +24,7 @@ import {
 import { ledger } from "../repositories/ledger";
 import { getLocationBySlug } from "../repositories/locations";
 import { getTemplate } from "../repositories/templates";
+import { planSpec } from "@/domain/plan";
 import { appUrl } from "@/server/app-url";
 
 export type SignupState = ActionResult | { ok: false; error: "phoneExists"; masked?: string } | null;
@@ -119,6 +120,7 @@ export async function requestBonusAction(slug: string, _prev: BonusState, formDa
   if (!location) return { ok: false, error: "location_not_found" };
   const customer = await getCustomerFromSession(location.organizationId);
   if (!customer) return { ok: false, error: "sessionExpired" };
+  if (!planSpec(location.plan).bonuses) return { ok: false, error: "generic" };
   if (!(await rateLimit("bonus", 3600, 10, customer.id))) return { ok: false, error: "rateLimited" };
 
   const parsed = bonusSchema.safeParse(Object.fromEntries(formData));

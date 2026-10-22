@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { planSpec } from "@/domain/plan";
 import { getCustomerFromSession } from "@/server/auth/customer-session";
 import { getLocationBySlug } from "@/server/repositories/locations";
 import { googleConfig } from "@/server/wallet/config";
@@ -10,7 +11,7 @@ export async function GET(req: Request, { params }: { params: Promise<{ slug: st
   const { slug } = await params;
   const cfg = googleConfig();
   const location = await getLocationBySlug(slug);
-  if (!cfg || !location) return new NextResponse(null, { status: 404 });
+  if (!cfg || !location || !planSpec(location.plan).wallet) return new NextResponse(null, { status: 404 });
   const customer = await getCustomerFromSession(location.organizationId);
   if (!customer) return NextResponse.redirect(new URL(`/c/${slug}`, req.url));
 

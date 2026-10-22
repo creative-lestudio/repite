@@ -2,7 +2,8 @@
 
 import { useActionState, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
-import { StampCard } from "@/components/stamp-card/stamp-card";
+import Link from "next/link";
+import { StampCard, type StampCardBrand } from "@/components/stamp-card/stamp-card";
 import { Alert, Button, Checkbox, Field, Input, Textarea } from "@/components/ui";
 import { saveProgramAction, type FormState } from "@/server/actions/owner";
 import { useToast } from "@/components/staff/toaster";
@@ -20,12 +21,19 @@ export function ProgramForm({
   program,
   locationName,
   sector,
+  bonusesAllowed,
+  cardTone,
+  cardBrand,
 }: {
   program: Program;
   locationName: string;
   sector: string;
+  bonusesAllowed: boolean;
+  cardTone: "light" | "dark" | "brand";
+  cardBrand: StampCardBrand;
 }) {
   const t = useTranslations("owner.program");
+  const tp = useTranslations("owner.plan");
   const te = useTranslations("errors");
   const toast = useToast();
   const [state, action, pending] = useActionState<FormState, FormData>(saveProgramAction, null);
@@ -84,16 +92,26 @@ export function ProgramForm({
         <fieldset className="flex flex-col gap-1">
           <legend className="font-display text-lg font-bold">{t("bonusTitle")}</legend>
           <p className="text-muted mb-1 text-sm">{t("bonusHint")}</p>
+          {!bonusesAllowed && (
+            <p className="bg-cream-100 mb-2 flex flex-wrap items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-semibold">
+              {tp("locked", { plan: "basic" })}
+              <Link href="/app/plan" className="text-primary underline underline-offset-4">
+                {tp("upgradeLink")}
+              </Link>
+            </p>
+          )}
           <Checkbox
             id="bonusStory"
             name="bonusStory"
-            defaultChecked={program.bonus_story_enabled}
+            disabled={!bonusesAllowed}
+            defaultChecked={bonusesAllowed && program.bonus_story_enabled}
             label={t("bonusStory")}
           />
           <Checkbox
             id="bonusReview"
             name="bonusReview"
-            defaultChecked={program.bonus_review_enabled}
+            disabled={!bonusesAllowed}
+            defaultChecked={bonusesAllowed && program.bonus_review_enabled}
             label={t("bonusReview")}
           />
         </fieldset>
@@ -113,6 +131,8 @@ export function ProgramForm({
           rewardName={reward || "…"}
           locationName={locationName}
           sector={sector}
+          tone={cardTone}
+          brand={cardBrand}
         />
         <p className="text-muted text-sm">{t("previewFilled", { count: Math.min(3, safeStamps - 1) })}</p>
       </aside>

@@ -2,6 +2,7 @@ import { Camera, ExternalLink, Star } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { Alert, Badge, Button } from "@/components/ui";
 import { BonusForm } from "@/components/customer/bonus-form";
+import { planSpec } from "@/domain/plan";
 import { requireCustomer } from "@/server/auth/require-customer";
 import { getCardState } from "@/server/repositories/customers";
 
@@ -14,7 +15,7 @@ export default async function ExtraPage({ params }: { params: Promise<{ slug: st
   const handle = location.settings.instagram_handle;
   const reviewUrl = location.settings.google_review_url;
 
-  if (!program || (!program.bonus_story_enabled && !program.bonus_review_enabled)) {
+  if (!planSpec(location.plan).bonuses || !program || (!program.bonus_story_enabled && !program.bonus_review_enabled)) {
     return (
       <div className="flex flex-col gap-4">
         <h1 className="text-2xl font-extrabold">{t("title")}</h1>

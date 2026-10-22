@@ -6,14 +6,14 @@ import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 
-export function BottomNav({ slug }: { slug: string }) {
+export function BottomNav({ slug, showExtra = true }: { slug: string; showExtra?: boolean }) {
   const t = useTranslations("customer.nav");
   const pathname = usePathname();
   const base = `/c/${slug}`;
   const items = [
     { href: base, label: t("card"), Icon: Stamp },
     { href: `${base}/premios`, label: t("rewards"), Icon: Gift },
-    { href: `${base}/extra`, label: t("extra"), Icon: Sparkles },
+    ...(showExtra ? [{ href: `${base}/extra`, label: t("extra"), Icon: Sparkles }] : []),
     { href: `${base}/historial`, label: t("history"), Icon: History },
     { href: `${base}/ajustes`, label: t("settings"), Icon: Settings },
   ];
@@ -22,7 +22,7 @@ export function BottomNav({ slug }: { slug: string }) {
       aria-label={t("label")}
       className="bg-surface/95 border-cream-100 fixed inset-x-0 bottom-0 z-10 border-t pb-[env(safe-area-inset-bottom)] backdrop-blur"
     >
-      <ul className="mx-auto grid max-w-md grid-cols-5">
+      <ul className={cn("mx-auto grid max-w-md", items.length === 5 ? "grid-cols-5" : "grid-cols-4")}>
         {items.map(({ href, label, Icon }) => {
           const active = pathname === href;
           return (

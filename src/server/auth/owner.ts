@@ -2,7 +2,8 @@ import "server-only";
 import { redirect } from "next/navigation";
 import { cache } from "react";
 import { asBusinessType, type BusinessType } from "@/domain/business-types";
-import { parseBrand, type Brand } from "@/domain/brand";
+import { parseBrand, restrictBrand, type Brand } from "@/domain/brand";
+import { effectivePlan, planSpec, type EffectivePlan } from "@/domain/plan";
 import { createUserClient } from "@/lib/supabase/server";
 
 export interface OwnerContext {
@@ -15,6 +16,7 @@ export interface OwnerContext {
     country: "ES" | "VE";
     currency: "EUR" | "USD";
     plan: string;
+    effectivePlan: EffectivePlan;
     trialEndsAt: string | null;
     onboarding: Record<string, boolean>;
   };
@@ -26,7 +28,10 @@ export interface OwnerContext {
     locale: "es-ES" | "es-VE";
     address: string | null;
     brandColor: string | null;
+    /** Lo guardado (puede incluir cosas de un plan superior). */
     brand: Brand;
+    /** Lo que aplica con el plan actual. */
+    brandApplied: Brand;
     businessType: BusinessType;
     settings: Record<string, unknown>;
   };
@@ -58,6 +63,8 @@ export const getOwnerContext = cache(async (): Promise<OwnerContext | null> => {
   if (!location) return null;
 
   const org = membership.organizations;
+  const plan = effectivePlan({ plan: org.plan, trialEndsAt: org.trial_ends_at });
+  const stored = parseBrand(location.brand, location.brand_color, location.logo_path);
   return {
     userId: claims.sub,
     email: typeof claims.email === "string" ? claims.email : "",
@@ -68,6 +75,7 @@ export const getOwnerContext = cache(async (): Promise<OwnerContext | null> => {
       country: org.country as "ES" | "VE",
       currency: org.currency as "EUR" | "USD",
       plan: org.plan,
+      effectivePlan: effectivePlan({ plan: org.plan, trialEndsAt: org.trial_ends_at }),
       trialEndsAt: org.trial_ends_at,
       onboarding: (org.onboarding ?? {}) as Record<string, boolean>,
     },
@@ -79,7 +87,8 @@ export const getOwnerContext = cache(async (): Promise<OwnerContext | null> => {
       locale: location.locale as "es-ES" | "es-VE",
       address: location.address,
       brandColor: location.brand_color,
-      brand: parseBrand(location.brand, location.brand_color, location.logo_path),
+      brand: stored,
+      brandApplied: restrictBrand(stored, planSpec(plan).customization),
       businessType: asBusinessType(location.business_type),
       settings: (location.settings ?? {}) as Record<string, unknown>,
     },

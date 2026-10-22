@@ -22,6 +22,8 @@
     "generic": "Algo no ha salido bien. Inténtalo de nuevo en unos segundos.",
     "network": "No hay conexión. Revisa tu internet e inténtalo otra vez.",
     "rateLimited": "Demasiados intentos seguidos. Espera un minuto y vuelve a probar.",
+    "planRequired": "Esta opción no está incluida en tu plan. Puedes cambiarlo en Plan y facturación.",
+    "planLimit": "Has llegado al límite de tu plan. Puedes cambiarlo en Plan y facturación.",
     "imageInvalid": "No pudimos leer esa imagen. Prueba con un PNG, JPG o WEBP.",
     "imageTooBig": "La imagen pesa demasiado. El máximo son 4 MB.",
     "emailRateLimit": "Hemos enviado demasiados correos en poco tiempo. Espera unos minutos o entra con Google.",
@@ -86,6 +88,7 @@
     "reset": "Vaciar tarjeta"
   },
   "customer": {
+    "poweredBy": "Tarjeta creada con Repite · crea la tuya gratis",
     "nav": {
       "card": "Tarjeta",
       "rewards": "Premios",
@@ -353,6 +356,69 @@
     },
     "signOut": "Cerrar sesión"
   },
+  "plans": {
+    "names": { "starter": "Starter", "basic": "Basic", "plus": "Plus", "trial": "Prueba gratuita" },
+    "taglines": {
+      "starter": "Para probar con tu primer local",
+      "basic": "Para locales con clientela fija",
+      "plus": "Para marcas que quieren destacar"
+    },
+    "pitch": {
+      "starter": "Tu tarjeta de sellos funcionando hoy, sin pagar nada.",
+      "basic": "Tu logotipo y tu icono en la tarjeta, y tu tarjeta en el Wallet del móvil de tus clientes.",
+      "plus": "Tarjeta con tu propio diseño, sin límite de clientes ni de equipo."
+    },
+    "free": "Gratis",
+    "forever": "para siempre",
+    "perMonth": "al mes",
+    "popular": "El más elegido",
+    "includes": "Todo lo de {plan}, más:",
+    "current": "Tu plan",
+    "groups": {
+      "base": "Clientes y equipo",
+      "brand": "Tu marca en la tarjeta",
+      "loyalty": "Para que vuelvan",
+      "support": "Ayuda"
+    },
+    "features": {
+      "customers": "Clientes",
+      "staff": "Personas del equipo",
+      "devices": "Tablets en el local",
+      "qr": "Cartel y tarjetas de mesa con tu QR",
+      "csv": "Exportar tus clientes a Excel",
+      "nameColor": "Tu nombre y tu color",
+      "logo": "Tu logotipo",
+      "icon": "Icono del sello a elegir",
+      "noBadge": "Sin «Creado con Repite»",
+      "font": "Tipografía de tu marca",
+      "shapes": "Forma del sello (círculo, estrella…)",
+      "cardStyles": "Tarjeta clara, oscura o de tu color",
+      "customCard": "Sube tu propio diseño de tarjeta",
+      "wallet": "Tarjeta en Apple Wallet y Google Wallet",
+      "bonuses": "Sellos extra por reseña o historia",
+      "opportunities": "Mensajes para que vuelvan",
+      "metrics": "Métricas",
+      "support": "Soporte"
+    },
+    "values": {
+      "unlimited": "Sin límite",
+      "basic": "Cumpleaños y premio a punto",
+      "full": "Todos, con tus plantillas",
+      "summary": "Resumen",
+      "guides": "Guías",
+      "email": "Por correo",
+      "priority": "Prioritario por WhatsApp",
+      "yes": "Incluido",
+      "no": "No incluido"
+    },
+    "soon": "Próximamente",
+    "whyTitle": "Por qué cuesta lo que cuesta",
+    "why": {
+      "starter": "Gratis de verdad: es nuestra forma de que pruebes con clientes reales antes de decidir.",
+      "basic": "Con {visits, plural, one {# visita extra} other {# visitas extra}} al mes de clientes que habrían dejado de venir, el plan ya se ha pagado (ticket de {ticket}).",
+      "plus": "Con {visits, plural, one {# visita extra} other {# visitas extra}} al mes ya se ha pagado (ticket de {ticket}). Y tu tarjeta es tuya: tu diseño, sin límite de clientes."
+    }
+  },
   "owner": {
     "brand": {
       "title": "Mi marca",
@@ -368,6 +434,26 @@
       "presets": "Colores sugeridos",
       "colorInvalid": "Escribe un color con 6 cifras, por ejemplo #FF3B2E.",
       "colorNote": "Para que se lea bien, los botones y enlaces usarán este tono.",
+      "iconTitle": "Icono del sello",
+      "iconDefault": "El de mi tipo de negocio",
+      "icons": {
+        "coffee": "Café",
+        "ice": "Helado",
+        "utensils": "Cubiertos",
+        "pizza": "Pizza",
+        "croissant": "Croissant",
+        "cake": "Tarta",
+        "donut": "Donut",
+        "cookie": "Galleta",
+        "sandwich": "Sándwich",
+        "salad": "Ensalada",
+        "soup": "Sopa",
+        "beer": "Cerveza",
+        "wine": "Vino",
+        "flame": "Llama",
+        "star": "Estrella",
+        "heart": "Corazón"
+      },
       "fontTitle": "Tipografía",
       "stampsTitle": "Sellos",
       "shape": "Forma",
@@ -463,11 +549,11 @@
       "emptyBody": "Descarga tu QR y colócalo en el local. Cada persona que lo escanee aparecerá aquí.",
       "emptyAction": "Descargar el QR",
       "completeTitle": "¡Todo listo!",
-      "planFull": "Has llegado a {limit, number} clientes. Pasa a Pro para que tus nuevos clientes puedan crear su tarjeta.",
-      "planNear": "Llevas {count, number} de {limit, number} clientes del plan Gratis.",
+      "planFull": "Has llegado a {limit, number} clientes. Cambia de plan para que tus nuevos clientes puedan crear su tarjeta.",
+      "planNear": "Llevas {count, number} de {limit, number} clientes de tu plan.",
       "planAction": "Ver planes",
       "trial": "{count, plural, =0 {Hoy termina tu prueba} one {Te queda # día de prueba} other {Te quedan # días de prueba}}",
-      "planFree": "Plan Gratis"
+      "planFree": "Plan Starter"
     },
     "customers": {
       "title": "Clientes",
@@ -557,6 +643,7 @@
       "pin": "PIN",
       "pinHint": "De 4 a 6 números. Solo lo sabrá esa persona.",
       "add": "Añadir empleado",
+      "seePlans": "Ver planes",
       "added": "Empleado añadido",
       "changePin": "Cambiar PIN",
       "pinSaved": "PIN actualizado",
@@ -648,39 +735,32 @@
       "usage": "Clientes",
       "usageOf": "{count, number} de {limit, number} clientes",
       "usageUnlimited": "{count, number} clientes · sin límite",
+      "staffLabel": "Equipo",
+      "devicesLabel": "Tablets",
+      "of": "{count, number} de {limit, number}",
+      "noLimit": "{count, number} · sin límite",
       "usageHint": "Los clientes que ya tienes nunca se borran, aunque llegues al límite.",
       "current": "Tu plan ahora",
-      "names": {
-        "trial": "Prueba gratuita",
-        "free": "Gratis",
-        "pro": "Pro"
-      },
-      "trialBody": "{count, plural, =0 {Hoy termina tu prueba.} one {Te queda # día de prueba con todo incluido.} other {Te quedan # días de prueba con todo incluido.}} Después sigues gratis, hasta {limit, number} clientes, sin pagar nada.",
-      "freeBody": "Estás en el plan Gratis: hasta {limit, number} clientes, para siempre y sin tarjeta.",
-      "proBody": "Tienes el plan Pro: clientes sin límite.",
+      "trialBody": "{count, plural, =0 {Hoy termina tu prueba.} one {Te queda # día de prueba con todo incluido.} other {Te quedan # días de prueba con todo incluido.}} Después sigues gratis con Starter (hasta {limit, number} clientes) o eliges el plan que te encaje.",
+      "starterBody": "Estás en Starter: hasta {limit, number} clientes, para siempre y sin tarjeta. Pasa a Basic o Plus cuando quieras más clientes o más personalización.",
+      "basicBody": "Tienes Basic: hasta {limit, number} clientes, tu logotipo y tu tarjeta en el Wallet.",
+      "plusBody": "Tienes Plus: clientes ilimitados y toda la personalización.",
       "fullTitle": "Has llegado al límite de clientes",
-      "fullBody": "Tus clientes actuales siguen funcionando con normalidad, pero nadie nuevo podrá crear su tarjeta hasta que pases a Pro.",
+      "fullBody": "Tus clientes actuales siguen funcionando con normalidad, pero nadie nuevo podrá crear su tarjeta hasta que cambies de plan.",
       "nearTitle": "Te estás acercando al límite",
-      "nearBody": "Quedan {left, plural, one {# tarjeta} other {# tarjetas}} en el plan Gratis.",
-      "freeName": "Gratis",
-      "freeFeatures": {
-        "i1": "Hasta 50 clientes",
-        "i2": "Tarjeta de sellos con QR, sin apps",
-        "i3": "Panel del equipo con PIN",
-        "i4": "Cartel y tarjetas de mesa para imprimir"
-      },
-      "proName": "Pro",
-      "proFeatures": {
-        "i1": "Clientes sin límite",
-        "i2": "Todo lo del plan Gratis",
-        "i3": "Oportunidades y mensajes para que vuelvan",
-        "i4": "Soporte por correo"
-      },
-      "price": "{price} al mes",
-      "free": "0 €",
-      "upgrade": "Pasar a Pro",
-      "soon": "El pago online estará disponible muy pronto. Te avisaremos antes de que lo necesites.",
-      "endedTitle": "Tu prueba ha terminado"
+      "nearBody": "Quedan {left, plural, one {# tarjeta} other {# tarjetas}} en tu plan.",
+      "request": "Pedir {plan, select, basic {Basic} plus {Plus} other {el plan}}",
+      "currentPlan": "Es tu plan",
+      "freeAlways": "Siempre gratis",
+      "compare": "Ver la comparativa completa",
+      "mailSubject": "Quiero el plan {plan, select, basic {Basic} plus {Plus} other {nuevo}} de Repite",
+      "mailBody": "Hola, quiero cambiar mi local «{location}» al plan {plan, select, basic {Basic} plus {Plus} other {nuevo}}.",
+      "soon": "El pago online estará disponible muy pronto. Mientras tanto, escríbenos y lo activamos en el día.",
+      "endedTitle": "Tu prueba ha terminado",
+      "locked": "Incluido desde {plan, select, basic {Basic} plus {Plus} other {un plan superior}}",
+      "upgradeLink": "Ver planes",
+      "limitStaff": "Tu plan permite {limit, number} personas en el equipo. Pasa a un plan superior para añadir más.",
+      "limitDevices": "Tu plan permite {limit, number} {limit, plural, one {tablet} other {tablets}}. Pasa a un plan superior para añadir más."
     }
   },
   "landing": {
@@ -714,7 +794,7 @@
       "i1": "Sin descargar ninguna app",
       "i2": "Sin contraseñas",
       "i3": "Registro en menos de 20 segundos",
-      "i4": "Gratis hasta 50 clientes"
+      "i4": "Starter gratis hasta 50 clientes"
     },
     "how": {
       "title": "Así de fácil",
@@ -798,36 +878,29 @@
       "altPhone": "Tarjeta de sellos de Repite en el móvil"
     },
     "pricing": {
-      "title": "Empieza gratis, crece cuando quieras",
-      "subtitle": "Sin tarjeta de crédito y sin letra pequeña.",
-      "badge": "30 días con todo incluido",
-      "trialNote": "Todas las cuentas empiezan con 30 días de Pro completo. Después sigues gratis o pasas a Pro.",
-      "perMonth": "al mes",
-      "forever": "para siempre",
-      "free": {
-        "name": "Gratis",
-        "price": "0 €",
-        "tagline": "Para empezar y para locales pequeños.",
-        "cta": "Empezar gratis",
-        "features": {
-          "i1": "Hasta 50 clientes",
-          "i2": "Tarjeta de sellos con QR, sin apps",
-          "i3": "Panel del equipo con PIN",
-          "i4": "Cartel y tarjetas de mesa para imprimir"
-        }
+      "title": "Un plan para cada momento de tu local",
+      "subtitle": "Empieza gratis. Paga solo cuando tu tarjeta te dé más de lo que cuesta.",
+      "country": "Mi local está en",
+      "spain": "España · €",
+      "venezuela": "Venezuela · $",
+      "ctaFree": "Empezar gratis",
+      "ctaTrial": "Probar 30 días gratis",
+      "badge": "30 días de Plus gratis",
+      "trialNote": "Pruebas todo, sin tarjeta de crédito. Al terminar eliges un plan o te quedas en Starter, gratis para siempre.",
+      "compare": "Ver todas las diferencias entre planes",
+      "guarantees": {
+        "g1": "Sin permanencia: cambia o cancela cuando quieras",
+        "g2": "Tus clientes y datos siempre son tuyos",
+        "g3": "Si bajas de plan, no pierdes ningún cliente"
       },
-      "pro": {
-        "name": "Pro",
-        "tagline": "Para locales que crecen.",
-        "cta": "Probar Pro 30 días",
-        "popular": "El más completo",
-        "priceNote": "{eur} en España · {usd} en Venezuela",
-        "features": {
-          "i1": "Clientes sin límite",
-          "i2": "Todo lo del plan Gratis",
-          "i3": "Oportunidades y mensajes para que vuelvan",
-          "i4": "Soporte por correo"
-        }
+      "roi": {
+        "title": "¿Cuánto te devuelve Repite?",
+        "subtitle": "Pon tus propios números. Es una cuenta sencilla, sin promesas mágicas.",
+        "ticket": "Ticket medio por visita",
+        "visits": "Visitas extra al mes de clientes que vuelven",
+        "revenue": "Ingresos extra al mes",
+        "after": "Después de pagar {plan}",
+        "note": "Estimación orientativa: los resultados dependen de tu local y de tus clientes."
       }
     },
     "faq": {
@@ -839,7 +912,7 @@
         },
         "i2": {
           "q": "¿De verdad hay un plan gratis?",
-          "a": "Sí. El plan Gratis incluye hasta 50 clientes, la tarjeta de sellos, el panel del equipo y el material para imprimir, sin límite de tiempo y sin pedirte la tarjeta."
+          "a": "Sí. Starter incluye hasta 50 clientes, la tarjeta de sellos con tu nombre y tu color, el panel del equipo y el material para imprimir, sin límite de tiempo y sin pedirte la tarjeta de crédito. Cuando necesites más clientes o más personalización, pasas a Basic o a Plus."
         },
         "i3": {
           "q": "¿Cuánto tardo en ponerlo en marcha?",
@@ -854,8 +927,8 @@
           "a": "Nunca. Repite te prepara el mensaje y tú lo revisas, lo editas si quieres y lo apruebas. Sin tu visto bueno, no sale nada."
         },
         "i6": {
-          "q": "¿Qué pasa cuando llegue a 50 clientes?",
-          "a": "Tus clientes siguen funcionando con normalidad y no se borra nada. Para que se apunten más personas, pasas al plan Pro, que no tiene límite."
+          "q": "¿Qué pasa cuando llegue al límite de clientes?",
+          "a": "Tus clientes siguen funcionando con normalidad y no se borra nada. Para que se apunten más personas cambias de plan: Basic admite 100 clientes y Plus no tiene límite. Si algún día bajas de plan, tampoco pierdes ningún cliente."
         },
         "i7": {
           "q": "¿Puedo usarlo con varios empleados?",

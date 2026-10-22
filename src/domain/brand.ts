@@ -22,12 +22,34 @@ export type StampMode = (typeof STAMP_MODES)[number];
 export const CARD_STYLES = ["light", "dark", "brand"] as const;
 export type CardStyle = (typeof CARD_STYLES)[number];
 
+/** Iconos del sello que se pueden elegir (null = el del tipo de negocio). */
+export const STAMP_ICONS = [
+  "coffee",
+  "ice",
+  "utensils",
+  "pizza",
+  "croissant",
+  "cake",
+  "donut",
+  "cookie",
+  "sandwich",
+  "salad",
+  "soup",
+  "beer",
+  "wine",
+  "flame",
+  "star",
+  "heart",
+] as const;
+export type StampIconKey = (typeof STAMP_ICONS)[number];
+
 export interface Brand {
   primary: string;
   font: FontKey;
   stampShape: StampShape;
   stampMode: StampMode;
   cardStyle: CardStyle;
+  stampIcon: StampIconKey | null;
   /** Rutas en el bucket «brand» (o null). */
   logo: string | null;
   stampImage: string | null;
@@ -40,6 +62,7 @@ export const DEFAULT_BRAND: Brand = {
   stampShape: "circle",
   stampMode: "icon",
   cardStyle: "light",
+  stampIcon: null,
   logo: null,
   stampImage: null,
   cardBg: null,
@@ -59,10 +82,25 @@ export function parseBrand(json: unknown, primary?: string | null, logo?: string
     stampShape: pick(j.stampShape, STAMP_SHAPES, DEFAULT_BRAND.stampShape),
     stampMode: pick(j.stampMode, STAMP_MODES, DEFAULT_BRAND.stampMode),
     cardStyle: pick(j.cardStyle, CARD_STYLES, DEFAULT_BRAND.cardStyle),
+    stampIcon:
+      typeof j.stampIcon === "string" && (STAMP_ICONS as readonly string[]).includes(j.stampIcon)
+        ? (j.stampIcon as StampIconKey)
+        : null,
     logo: path(logo),
     stampImage: path(j.stampImage),
     cardBg: path(j.cardBg),
   };
+}
+
+/**
+ * Limita la marca a lo que incluye el plan (los datos guardados no se tocan: al subir de plan vuelven).
+ * color → solo color · logo → + logotipo e icono · full → todo.
+ */
+export function restrictBrand(brand: Brand, level: "color" | "logo" | "full"): Brand {
+  if (level === "full") return brand;
+  const base: Brand = { ...DEFAULT_BRAND, primary: brand.primary };
+  if (level === "color") return base;
+  return { ...base, logo: brand.logo, stampIcon: brand.stampIcon };
 }
 
 // ── Color ──

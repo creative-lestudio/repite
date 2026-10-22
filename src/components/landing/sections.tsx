@@ -3,11 +3,11 @@ import Link from "next/link";
 import { getMessages, getTranslations } from "next-intl/server";
 import { SectorIcon } from "@/components/sector-icon";
 import { StampRow } from "@/components/landing/stamp-row";
+import { Pricing } from "./pricing";
 import { StampCard } from "@/components/stamp-card/stamp-card";
 import { Reveal } from "@/components/landing/reveal";
 import { Button } from "@/components/ui";
 import { LANDING_SECTORS, SECTOR_SLUGS } from "@/domain/business-types";
-import { formatPrice } from "@/config/plan";
 import { cn } from "@/lib/utils";
 
 type Item = { title: string; body: string };
@@ -284,69 +284,8 @@ export async function PreviewSection() {
   );
 }
 
-export async function PricingSection() {
-  const [tp, { landing }] = await Promise.all([getTranslations("landing.pricing"), getMessages()]);
-  const freeFeatures = Object.values(landing.pricing.free.features);
-  const proFeatures = Object.values(landing.pricing.pro.features);
-  const list = (items: string[]) => (
-    <ul className="flex flex-1 flex-col gap-3">
-      {items.map((f) => (
-        <li key={f} className="flex items-start gap-2">
-          <Check className="text-success mt-0.5 size-5 shrink-0" aria-hidden />
-          {f}
-        </li>
-      ))}
-    </ul>
-  );
-  return (
-    <section id="precio" aria-labelledby="pricing-title" className="scroll-mt-16 px-4 py-20 md:py-28">
-      <div className="mx-auto max-w-4xl">
-        <SectionTitle id="pricing-title" title={tp("title")} subtitle={tp("subtitle")} />
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
-          <div className="bg-surface shadow-card ring-cream-100 flex flex-col gap-5 rounded-2xl p-8 ring-1">
-            <div>
-              <h3 className="font-display text-2xl font-extrabold">{tp("free.name")}</h3>
-              <p className="text-muted mt-1 text-sm">{tp("free.tagline")}</p>
-            </div>
-            <p className="font-display text-5xl font-extrabold">
-              {tp("free.price")} <span className="text-muted text-lg font-semibold">{tp("forever")}</span>
-            </p>
-            {list(freeFeatures)}
-            <Button asChild size="lg" variant="secondary" block>
-              <Link href="/registro">{tp("free.cta")}</Link>
-            </Button>
-          </div>
-
-          <div className="bg-surface shadow-card flex flex-col gap-5 rounded-2xl p-8 ring-2 ring-red-600">
-            <div className="flex items-start justify-between gap-2">
-              <div>
-                <h3 className="font-display text-2xl font-extrabold">{tp("pro.name")}</h3>
-                <p className="text-muted mt-1 text-sm">{tp("pro.tagline")}</p>
-              </div>
-              <span className="bg-primary rounded-full px-3 py-1 text-xs font-bold whitespace-nowrap text-white">
-                {tp("pro.popular")}
-              </span>
-            </div>
-            <div>
-              <p className="font-display text-5xl font-extrabold">
-                {formatPrice("EUR")} <span className="text-muted text-lg font-semibold">{tp("perMonth")}</span>
-              </p>
-              <p className="text-muted mt-1 text-sm">
-                {tp("pro.priceNote", { eur: formatPrice("EUR"), usd: formatPrice("USD") })}
-              </p>
-            </div>
-            {list(proFeatures)}
-            <Button asChild size="lg" block>
-              <Link href="/registro">{tp("pro.cta")}</Link>
-            </Button>
-          </div>
-        </div>
-        <p className="text-muted mx-auto mt-6 max-w-xl text-center text-sm">
-          <span className="text-primary font-semibold">{tp("badge")}.</span> {tp("trialNote")}
-        </p>
-      </div>
-    </section>
-  );
+export function PricingSection() {
+  return <Pricing />;
 }
 
 export async function FaqSection() {

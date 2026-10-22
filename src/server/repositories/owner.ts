@@ -1,4 +1,5 @@
 import "server-only";
+import type { EffectivePlan } from "@/domain/plan";
 import { createUserClient } from "@/lib/supabase/server";
 import type { OwnerContext } from "../auth/owner";
 import { startOfDayInZone } from "@/domain/time";
@@ -251,9 +252,11 @@ export async function listBonuses() {
 // ───────────── Plan ─────────────
 
 export interface PlanUsage {
-  plan: "trial" | "free" | "pro";
+  plan: EffectivePlan;
   customerLimit: number | null;
   customers: number;
+  staff: number;
+  devices: number;
 }
 
 export async function getPlanUsage(organizationId: string): Promise<PlanUsage> {
@@ -261,5 +264,24 @@ export async function getPlanUsage(organizationId: string): Promise<PlanUsage> {
   const { data, error } = await supabase.rpc("plan_usage", { p_org: organizationId });
   if (error) throw error;
   const d = data as { plan: PlanUsage["plan"]; customer_limit: number | null; customers: number };
-  return { plan: d.plan, customerLimit: d.customer_limit, customers: d.customers };
+  const [staff, devices] = await Promise.all([
+    supabase
+      .from("staff_members")
+      .select("id", { count: "exact", head: true })
+      .eq("organization_id", organizationId)
+      .eq("active", true)
+      .is("deleted_at", null),
+    supabase
+      .from("staff_devices")
+      .select("id", { count: "exact", head: true })
+      .eq("organization_id", organizationId)
+      .is("revoked_at", null),
+  ]);
+  return {
+    plan: d.plan,
+    customerLimit: d.customer_limit,
+    customers: d.customers,
+    staff: staff.count ?? 0,
+    devices: devices.count ?? 0,
+  };
 }

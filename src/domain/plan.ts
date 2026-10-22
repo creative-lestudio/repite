@@ -1,10 +1,29 @@
-export type EffectivePlan = "trial" | "free" | "pro";
+import { PLAN, PLANS, type Customization, type PlanId, type PlanSpec } from "@/config/plan";
+
+export type EffectivePlan = "trial" | PlanId;
 
 /** Plan que aplica ahora mismo. Igual que app.effective_plan en la base de datos. */
 export function effectivePlan(org: { plan: string; trialEndsAt: string | null }, now = new Date()): EffectivePlan {
-  if (org.plan === "pro") return "pro";
+  if (org.plan === "basic" || org.plan === "plus") return org.plan;
   if (org.plan === "trial" && (!org.trialEndsAt || new Date(org.trialEndsAt) > now)) return "trial";
-  return "free";
+  return "starter";
+}
+
+/** Funciones y límites del plan efectivo (la prueba equivale al plan completo). */
+export function planSpec(plan: EffectivePlan): PlanSpec {
+  return PLANS[plan === "trial" ? PLAN.trialPlan : plan];
+}
+
+const LEVELS: Customization[] = ["color", "logo", "full"];
+
+/** ¿El plan incluye al menos este nivel de personalización? */
+export function allowsCustomization(plan: EffectivePlan, level: Customization): boolean {
+  return LEVELS.indexOf(planSpec(plan).customization) >= LEVELS.indexOf(level);
+}
+
+/** Primer plan de pago que incluye un nivel de personalización (para sugerir la mejora). */
+export function planFor(level: Customization): PlanId {
+  return level === "full" ? "plus" : level === "logo" ? "basic" : "starter";
 }
 
 export function trialDaysLeft(trialEndsAt: string | null, now = new Date()): number {
@@ -15,8 +34,13 @@ export function trialDaysLeft(trialEndsAt: string | null, now = new Date()): num
 export type UsageLevel = "ok" | "near" | "full";
 
 /** «near» a partir del 80 % del límite; «full» al llegar. Sin límite siempre «ok». */
-export function usageLevel(customers: number, limit: number | null): UsageLevel {
+export function usageLevel(used: number, limit: number | null): UsageLevel {
   if (limit === null) return "ok";
-  if (customers >= limit) return "full";
-  return customers >= Math.floor(limit * 0.8) ? "near" : "ok";
+  if (used >= limit) return "full";
+  return used >= Math.floor(limit * 0.8) ? "near" : "ok";
+}
+
+/** ¿Cabe uno más? */
+export function hasRoom(used: number, limit: number | null): boolean {
+  return limit === null || used < limit;
 }

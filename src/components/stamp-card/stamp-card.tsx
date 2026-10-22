@@ -3,13 +3,15 @@
 import { Gift } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { SectorIcon } from "@/components/sector-icon";
-import type { StampMode, StampShape } from "@/domain/brand";
+import type { StampIconKey, StampMode, StampShape } from "@/domain/brand";
 import { cn } from "@/lib/utils";
 
 /** Personalización de la tarjeta de un local (ver domain/brand.ts). */
 export interface StampCardBrand {
   stampShape?: StampShape;
   stampMode?: StampMode;
+  /** Icono elegido para el sello (si no, el del tipo de negocio). */
+  stampIcon?: StampIconKey | null;
   /** URL pública de la imagen del sello propio. */
   stampImageUrl?: string | null;
   /** URL pública del diseño de fondo de la tarjeta. */
@@ -149,7 +151,13 @@ export function StampCard({
                       {n}
                     </span>
                   ) : (
-                    <SectorIcon sector={sector} className="size-1/2" aria-hidden strokeWidth={2.25} />
+                    <SectorIcon
+                      sector={sector}
+                      icon={brand?.stampIcon}
+                      className="size-1/2"
+                      aria-hidden
+                      strokeWidth={2.25}
+                    />
                   )
                 ) : isLast ? (
                   <Gift className="size-1/2" aria-hidden />

@@ -24,10 +24,10 @@ values
    '{"sub":"22222222-2222-4222-8222-222222222222","email":"sol@repite.app"}', 'email', now(), now(), now());
 
 -- Organizaciones y locales
-insert into public.organizations (id, name, country, currency, onboarding) values
-  ('a0000000-0000-4000-8000-000000000001', 'Café Aurora', 'ES', 'EUR',
+insert into public.organizations (id, name, country, currency, plan, onboarding) values
+  ('a0000000-0000-4000-8000-000000000001', 'Café Aurora', 'ES', 'EUR', 'plus',
    '{"account":true,"location":true,"program":true,"qr":true}'),
-  ('b0000000-0000-4000-8000-000000000001', 'Panadería Sol', 'VE', 'USD',
+  ('b0000000-0000-4000-8000-000000000001', 'Panadería Sol', 'VE', 'USD', 'starter',
    '{"account":true,"location":true,"program":true}');
 
 insert into public.locations (id, organization_id, name, slug, address, timezone, locale, business_type, settings) values

@@ -23,6 +23,7 @@ export default async function BrandPage() {
         logoUrl={assets.logoUrl}
         stampImageUrl={assets.stampImageUrl}
         cardBgUrl={assets.cardBgUrl}
+        plan={ctx.organization.effectivePlan}
       />
     </div>
   );

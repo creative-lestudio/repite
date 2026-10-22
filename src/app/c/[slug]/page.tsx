@@ -53,7 +53,7 @@ export default async function CustomerHome({
       qrSvg={svg}
       initial={state}
       welcome={bienvenida === "1"}
-      wallet={walletAvailability()}
+      wallet={walletAvailability(location.plan)}
       cardTone={location.brand.cardStyle}
       cardBrand={{
         stampShape: location.brand.stampShape,

@@ -1,82 +1,93 @@
-import { Check } from "lucide-react";
-import { getMessages, getTranslations } from "next-intl/server";
-import { Alert, Button, Card } from "@/components/ui";
-import { formatPrice, PLAN } from "@/config/plan";
-import { trialDaysLeft, usageLevel } from "@/domain/plan";
+import { getTranslations } from "next-intl/server";
+import { PlanPicker } from "@/components/owner/plan-picker";
+import { Alert, Card } from "@/components/ui";
+import { PLANS } from "@/config/plan";
+import { planSpec, trialDaysLeft, usageLevel } from "@/domain/plan";
 import { requireOwner } from "@/server/auth/owner";
 import { getPlanUsage } from "@/server/repositories/owner";
 import { cn } from "@/lib/utils";
 
+export const metadata = { title: "Plan y facturación" };
+
+function Meter({ label, used, limit, text }: { label: string; used: number; limit: number | null; text: string }) {
+  const level = usageLevel(used, limit);
+  const pct = limit ? Math.min(100, Math.round((used / limit) * 100)) : 0;
+  return (
+    <div className="flex flex-col gap-1">
+      <div className="flex items-baseline justify-between gap-2 text-sm">
+        <span className="font-semibold">{label}</span>
+        <span className="text-muted">{text}</span>
+      </div>
+      {limit !== null && (
+        <div
+          role="progressbar"
+          aria-label={label}
+          aria-valuemin={0}
+          aria-valuemax={limit}
+          aria-valuenow={used}
+          className="bg-cream-100 h-2.5 overflow-hidden rounded-full"
+        >
+          <div
+            className={cn(
+              "h-full rounded-full",
+              level === "full" ? "bg-danger" : level === "near" ? "bg-warning" : "bg-primary",
+            )}
+            style={{ width: `${pct}%` }}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default async function PlanPage() {
   const ctx = await requireOwner();
-  const [t, messages, usage] = await Promise.all([
+  const [t, tp, usage] = await Promise.all([
     getTranslations("owner.plan"),
-    getMessages(),
+    getTranslations("plans"),
     getPlanUsage(ctx.organization.id),
   ]);
+  const spec = planSpec(usage.plan);
   const level = usageLevel(usage.customers, usage.customerLimit);
-  const pct = usage.customerLimit ? Math.min(100, Math.round((usage.customers / usage.customerLimit) * 100)) : 0;
-  const freeFeatures = Object.values(messages.owner.plan.freeFeatures);
-  const proFeatures = Object.values(messages.owner.plan.proFeatures);
+  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hola@repite.app";
 
-  const plans = [
-    {
-      key: "free" as const,
-      name: t("freeName"),
-      price: t("free"),
-      features: freeFeatures,
-      active: usage.plan === "free",
-    },
-    {
-      key: "pro" as const,
-      name: t("proName"),
-      price: t("price", { price: formatPrice(ctx.organization.currency) }),
-      features: proFeatures,
-      active: usage.plan === "pro",
-    },
-  ];
+  const text = (used: number, limit: number | null) =>
+    limit === null ? t("noLimit", { count: used }) : t("of", { count: used, limit });
+
+  const body =
+    usage.plan === "trial"
+      ? t("trialBody", { count: trialDaysLeft(ctx.organization.trialEndsAt), limit: PLANS.starter.customers ?? 0 })
+      : usage.plan === "starter"
+        ? t("starterBody", { limit: PLANS.starter.customers ?? 0 })
+        : usage.plan === "basic"
+          ? t("basicBody", { limit: PLANS.basic.customers ?? 0 })
+          : t("plusBody");
 
   return (
-    <div className="flex max-w-3xl flex-col gap-6">
+    <div className="flex max-w-5xl flex-col gap-6">
       <h1 className="text-3xl font-extrabold">{t("title")}</h1>
 
-      <Card className="flex flex-col gap-3">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <div>
-            <p className="text-muted text-sm font-semibold">{t("current")}</p>
-            <h2 className="font-display text-2xl font-extrabold">{t(`names.${usage.plan}`)}</h2>
-          </div>
-          <p className="text-sm font-semibold">
-            {usage.customerLimit !== null
-              ? t("usageOf", { count: usage.customers, limit: usage.customerLimit })
-              : t("usageUnlimited", { count: usage.customers })}
-          </p>
+      <Card className="flex flex-col gap-4">
+        <div>
+          <p className="text-muted text-sm font-semibold">{t("current")}</p>
+          <h2 className="font-display text-2xl font-extrabold">{tp(`names.${usage.plan}`)}</h2>
+          <p className="text-muted mt-1 text-sm">{body}</p>
         </div>
-        {usage.customerLimit !== null && (
-          <div
-            role="progressbar"
-            aria-label={t("usage")}
-            aria-valuemin={0}
-            aria-valuemax={usage.customerLimit}
-            aria-valuenow={usage.customers}
-            className="bg-cream-100 h-3 overflow-hidden rounded-full"
-          >
-            <div
-              className={cn(
-                "h-full rounded-full",
-                level === "full" ? "bg-danger" : level === "near" ? "bg-warning" : "bg-primary",
-              )}
-              style={{ width: `${pct}%` }}
-            />
-          </div>
-        )}
-        <p className="text-muted text-sm">
-          {usage.plan === "trial"
-            ? t("trialBody", { count: trialDaysLeft(ctx.organization.trialEndsAt), limit: PLAN.freeCustomerLimit })
-            : usage.plan === "free"
-              ? t("freeBody", { limit: PLAN.freeCustomerLimit })
-              : t("proBody")}
-        </p>
+        <div className="grid gap-4 sm:grid-cols-3">
+          <Meter
+            label={t("usage")}
+            used={usage.customers}
+            limit={usage.customerLimit}
+            text={text(usage.customers, usage.customerLimit)}
+          />
+          <Meter label={t("staffLabel")} used={usage.staff} limit={spec.staff} text={text(usage.staff, spec.staff)} />
+          <Meter
+            label={t("devicesLabel")}
+            used={usage.devices}
+            limit={spec.devices}
+            text={text(usage.devices, spec.devices)}
+          />
+        </div>
         <p className="text-muted text-xs">{t("usageHint")}</p>
       </Card>
 
@@ -91,25 +102,12 @@ export default async function PlanPage() {
         </Alert>
       )}
 
-      <div className="grid gap-4 md:grid-cols-2">
-        {plans.map((p) => (
-          <Card key={p.key} className={cn("flex flex-col gap-4", p.key === "pro" && "ring-2 ring-red-600")}>
-            <div>
-              <h2 className="font-display text-xl font-extrabold">{p.name}</h2>
-              <p className="font-display text-primary text-3xl font-extrabold">{p.price}</p>
-            </div>
-            <ul className="flex flex-1 flex-col gap-2">
-              {p.features.map((f) => (
-                <li key={f} className="flex items-start gap-2">
-                  <Check className="text-success mt-0.5 size-5 shrink-0" aria-hidden />
-                  {f}
-                </li>
-              ))}
-            </ul>
-            {p.key === "pro" && !p.active && <Button disabled>{t("upgrade")}</Button>}
-          </Card>
-        ))}
-      </div>
+      <PlanPicker
+        currency={ctx.organization.currency}
+        current={usage.plan}
+        locationName={ctx.location.name}
+        contactEmail={contactEmail}
+      />
       <p className="text-muted text-sm">{t("soon")}</p>
     </div>
   );

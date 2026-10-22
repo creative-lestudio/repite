@@ -63,7 +63,10 @@ test.describe("dueño: cuenta demo", () => {
       await expect(page.getByRole("button", { name: "Cambiar" }).first()).toBeVisible({ timeout: 20_000 });
 
       await page.getByRole("button", { name: "#F28C28" }).click();
-      await page.getByRole("button", { name: /Estrella/ }).click();
+      await page
+        .getByRole("button", { name: /Estrella/ })
+        .last()
+        .click();
       await page.getByRole("button", { name: /Elegante/ }).click();
       await page.getByRole("button", { name: "Oscura" }).click();
       await page.getByRole("button", { name: "Guardar mi marca" }).click();
