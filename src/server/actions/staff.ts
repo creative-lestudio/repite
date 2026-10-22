@@ -137,6 +137,16 @@ export async function redeemRewardAction(rewardId: string, idempotencyKey: strin
   });
 }
 
+export async function redeemCouponAction(customerCouponId: string) {
+  return withStaff<{ title: string }>(async (s) => {
+    const id = uuid.parse(customerCouponId);
+    const data = await ledger.redeemCoupon(id, s.device.location.id, s.staffId);
+    after(() => refreshWalletPass(data.customer_id, s.device.location.id));
+    revalidatePath("/equipo", "layout");
+    return { ok: true, data: { title: data.title } };
+  });
+}
+
 export async function validateBonusAction(eventId: string, approve: boolean) {
   return withStaff<CardSnapshot & { rewards_issued: number }>(async (s) => {
     const id = uuid.parse(eventId);

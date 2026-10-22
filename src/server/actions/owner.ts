@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import type { Json } from "@/lib/supabase/database.types";
+import { parseLevels } from "@/domain/levels";
 import { planSpec } from "@/domain/plan";
 import { COUNTRY_DEFAULTS } from "@/domain/slug";
 import { businessSchema, programSchema, settingsSchema } from "@/lib/schemas/owner";
@@ -10,6 +12,8 @@ import { requireManager, requireOwner } from "../auth/owner";
 import { zodFields } from "@/lib/schemas/zod-fields";
 import { toBusinessError } from "../errors";
 import { addOwnerNote } from "../repositories/owner";
+
+const asJson = (v: unknown) => v as NonNullable<Json>;
 
 export type FormState =
   { ok: true; message?: string } | { ok: false; error: string; fields?: Record<string, string> } | null;
@@ -82,6 +86,20 @@ export async function saveProgramAction(_prev: FormState, formData: FormData): P
     reward_expiry_days: v.expiryDays,
     bonus_story_enabled: bonuses && v.bonusStory,
     bonus_review_enabled: bonuses && v.bonusReview,
+    // Los niveles VIP son de Plus: con otro plan se conservan los guardados
+    ...(planSpec(ctx.organization.effectivePlan).levels
+      ? {
+          levels: asJson(
+            parseLevels(
+              [1, 2, 3].map((n) => ({
+                name: v[`level${n}Name` as "level1Name"],
+                visits: Number(v[`level${n}Visits` as "level1Visits"]),
+                perk: v[`level${n}Perk` as "level1Perk"],
+              })),
+            ),
+          ),
+        }
+      : {}),
   };
   const { data: existing } = await supabase
     .from("loyalty_programs")

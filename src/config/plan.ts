@@ -16,6 +16,12 @@ export interface PlanSpec {
   customization: Customization;
   wallet: boolean;
   bonuses: boolean;
+  /** Cupones activos a la vez (0 = no hay; null = sin límite). */
+  coupons: number | null;
+  /** Niveles VIP. */
+  levels: boolean;
+  /** Aviso en la pantalla de bloqueo al estar cerca del local. */
+  proximity: boolean;
   /** Muestra «Creado con Repite» en la tarjeta del cliente. */
   poweredBy: boolean;
 }
@@ -30,6 +36,9 @@ export const PLANS: Record<PlanId, PlanSpec> = {
     customization: "color",
     wallet: false,
     bonuses: false,
+    coupons: 0,
+    levels: false,
+    proximity: false,
     poweredBy: true,
   },
   basic: {
@@ -41,6 +50,9 @@ export const PLANS: Record<PlanId, PlanSpec> = {
     customization: "logo",
     wallet: true,
     bonuses: true,
+    coupons: 1,
+    levels: false,
+    proximity: false,
     poweredBy: false,
   },
   plus: {
@@ -52,6 +64,9 @@ export const PLANS: Record<PlanId, PlanSpec> = {
     customization: "full",
     wallet: true,
     bonuses: true,
+    coupons: null,
+    levels: true,
+    proximity: true,
     poweredBy: false,
   },
 };
@@ -117,7 +132,9 @@ export const MATRIX: MatrixGroup[] = [
     rows: [
       { key: "wallet", starter: false, basic: true, plus: true },
       { key: "bonuses", starter: false, basic: true, plus: true },
-      { key: "opportunities", starter: false, basic: "basic", plus: "full", soon: true },
+      { key: "coupons", starter: false, basic: 1, plus: "unlimited" },
+      { key: "levels", starter: false, basic: false, plus: true },
+      { key: "proximity", starter: false, basic: false, plus: true },
       { key: "metrics", starter: "summary", basic: "summary", plus: "full" },
     ],
   },

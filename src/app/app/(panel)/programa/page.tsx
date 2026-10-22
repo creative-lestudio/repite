@@ -18,6 +18,7 @@ export default async function ProgramPage() {
         locationName={ctx.location.name}
         sector={ctx.location.businessType}
         bonusesAllowed={planSpec(ctx.organization.effectivePlan).bonuses}
+        levelsAllowed={planSpec(ctx.organization.effectivePlan).levels}
         cardTone={ctx.location.brandApplied.cardStyle}
         cardBrand={{
           stampShape: ctx.location.brandApplied.stampShape,

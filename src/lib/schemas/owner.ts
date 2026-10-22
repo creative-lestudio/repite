@@ -28,6 +28,15 @@ export const programSchema = z.object({
     .transform((v) => (v === "" ? null : v)),
   bonusStory: z.preprocess((v) => v === "on", z.boolean()),
   bonusReview: z.preprocess((v) => v === "on", z.boolean()),
+  level1Name: z.string().trim().max(24).default(""),
+  level1Visits: z.string().trim().max(5).default(""),
+  level1Perk: z.string().trim().max(80).default(""),
+  level2Name: z.string().trim().max(24).default(""),
+  level2Visits: z.string().trim().max(5).default(""),
+  level2Perk: z.string().trim().max(80).default(""),
+  level3Name: z.string().trim().max(24).default(""),
+  level3Visits: z.string().trim().max(5).default(""),
+  level3Perk: z.string().trim().max(80).default(""),
 });
 
 const optionalUrl = z

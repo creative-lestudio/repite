@@ -24,7 +24,7 @@ import {
 import { ledger } from "../repositories/ledger";
 import { getLocationBySlug } from "../repositories/locations";
 import { getTemplate } from "../repositories/templates";
-import { planSpec } from "@/domain/plan";
+import { planSpec, type EffectivePlan } from "@/domain/plan";
 import { appUrl } from "@/server/app-url";
 
 export type SignupState = ActionResult | { ok: false; error: "phoneExists"; masked?: string } | null;
@@ -168,11 +168,16 @@ export async function signOutAction(slug: string) {
   redirect(`/c/${slug}`);
 }
 
+/** Quita de la tarjeta lo que el plan del local no incluye (los datos siguen guardados). */
+function forPlan<T extends { levels: unknown[] }>(state: T, plan: EffectivePlan): T {
+  return planSpec(plan).levels ? state : { ...state, levels: [] };
+}
+
 /** Estado actual de la tarjeta (para refrescar la PWA y animar sellos nuevos). */
 export async function getCardStateAction(slug: string) {
   const location = await getLocationBySlug(slug);
   if (!location) return null;
   const customer = await getCustomerFromSession(location.organizationId);
   if (!customer) return null;
-  return getCardState(customer.id, location.id);
+  return forPlan(await getCardState(customer.id, location.id), location.plan);
 }

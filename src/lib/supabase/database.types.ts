@@ -43,6 +43,76 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"coupons": {
+                  Row: {
+                    "active": boolean,"audience": string,"created_at": string,"deleted_at": string | null,"description": string | null,"ends_at": string | null,"id": string,"organization_id": string,"starts_at": string,"title": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "active"?: boolean,"audience"?: string,"created_at"?: string,"deleted_at"?: string | null,"description"?: string | null,"ends_at"?: string | null,"id"?: string,"organization_id": string,"starts_at"?: string,"title": string
+                  }
+                  Update: {
+                    "active"?: boolean,"audience"?: string,"created_at"?: string,"deleted_at"?: string | null,"description"?: string | null,"ends_at"?: string | null,"id"?: string,"organization_id"?: string,"starts_at"?: string,"title"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "coupons_organization_id_fkey"
+      columns: ["organization_id"]
+isOneToOne: false
+      referencedRelation: "organizations"
+      referencedColumns: ["id"]
+    }
+                  ]
+                },"customer_coupons": {
+                  Row: {
+                    "coupon_id": string,"customer_id": string,"expires_at": string | null,"id": string,"issued_at": string,"organization_id": string,"period_key": string,"redeemed_at": string | null,"redeemed_by_staff": string | null,"redeemed_location": string | null,"status": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "coupon_id": string,"customer_id": string,"expires_at"?: string | null,"id"?: string,"issued_at"?: string,"organization_id": string,"period_key": string,"redeemed_at"?: string | null,"redeemed_by_staff"?: string | null,"redeemed_location"?: string | null,"status"?: string
+                  }
+                  Update: {
+                    "coupon_id"?: string,"customer_id"?: string,"expires_at"?: string | null,"id"?: string,"issued_at"?: string,"organization_id"?: string,"period_key"?: string,"redeemed_at"?: string | null,"redeemed_by_staff"?: string | null,"redeemed_location"?: string | null,"status"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "customer_coupons_coupon_id_fkey"
+      columns: ["coupon_id"]
+isOneToOne: false
+      referencedRelation: "coupons"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "customer_coupons_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
+      referencedRelation: "customer_stats"
+      referencedColumns: ["customer_id"]
+    },{
+      foreignKeyName: "customer_coupons_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
+      referencedRelation: "customers"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "customer_coupons_organization_id_fkey"
+      columns: ["organization_id"]
+isOneToOne: false
+      referencedRelation: "organizations"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "customer_coupons_redeemed_by_staff_fkey"
+      columns: ["redeemed_by_staff"]
+isOneToOne: false
+      referencedRelation: "staff_members"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "customer_coupons_redeemed_location_fkey"
+      columns: ["redeemed_location"]
+isOneToOne: false
+      referencedRelation: "locations"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"customer_notes": {
                   Row: {
                     "author_staff_id": string | null,"author_user_id": string | null,"created_at": string,"customer_id": string,"deleted_at": string | null,"id": string,"organization_id": string,"pinned": boolean,"text": string,"updated_at": string
@@ -201,14 +271,14 @@ isOneToOne: false
                   ]
                 },"loyalty_programs": {
                   Row: {
-                    "active": boolean,"bonus_review_enabled": boolean,"bonus_story_enabled": boolean,"created_at": string,"deleted_at": string | null,"id": string,"location_id": string | null,"organization_id": string,"reward_description": string | null,"reward_expiry_days": number | null,"reward_name": string,"stamps_required": number,"updated_at": string
+                    "active": boolean,"bonus_review_enabled": boolean,"bonus_story_enabled": boolean,"created_at": string,"deleted_at": string | null,"id": string,"levels": NonNullable<Json>,"location_id": string | null,"organization_id": string,"reward_description": string | null,"reward_expiry_days": number | null,"reward_name": string,"stamps_required": number,"updated_at": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "active"?: boolean,"bonus_review_enabled"?: boolean,"bonus_story_enabled"?: boolean,"created_at"?: string,"deleted_at"?: string | null,"id"?: string,"location_id"?: string | null,"organization_id": string,"reward_description"?: string | null,"reward_expiry_days"?: number | null,"reward_name": string,"stamps_required": number,"updated_at"?: string
+                    "active"?: boolean,"bonus_review_enabled"?: boolean,"bonus_story_enabled"?: boolean,"created_at"?: string,"deleted_at"?: string | null,"id"?: string,"levels"?: NonNullable<Json>,"location_id"?: string | null,"organization_id": string,"reward_description"?: string | null,"reward_expiry_days"?: number | null,"reward_name": string,"stamps_required": number,"updated_at"?: string
                   }
                   Update: {
-                    "active"?: boolean,"bonus_review_enabled"?: boolean,"bonus_story_enabled"?: boolean,"created_at"?: string,"deleted_at"?: string | null,"id"?: string,"location_id"?: string | null,"organization_id"?: string,"reward_description"?: string | null,"reward_expiry_days"?: number | null,"reward_name"?: string,"stamps_required"?: number,"updated_at"?: string
+                    "active"?: boolean,"bonus_review_enabled"?: boolean,"bonus_story_enabled"?: boolean,"created_at"?: string,"deleted_at"?: string | null,"id"?: string,"levels"?: NonNullable<Json>,"location_id"?: string | null,"organization_id"?: string,"reward_description"?: string | null,"reward_expiry_days"?: number | null,"reward_name"?: string,"stamps_required"?: number,"updated_at"?: string
                   }
                   Relationships: [
                     {
@@ -725,6 +795,9 @@ isOneToOne: false
 "customer_card":
 { Args: { "p_customer": string,"p_location": string }; Returns: Json
                            },
+"issue_coupons":
+{ Args: { "p_customer": string }; Returns: number
+                           },
 "owner_customer_card":
 { Args: { "p_customer": string,"p_location": string }; Returns: Json
                            },
@@ -736,6 +809,9 @@ isOneToOne: false
                            },
 "rate_limit_hit":
 { Args: { "p_key": string,"p_max": number,"p_window_seconds": number }; Returns: boolean
+                           },
+"redeem_coupon":
+{ Args: { "p_customer_coupon": string,"p_location": string,"p_staff": string }; Returns: Json
                            },
 "redeem_reward":
 { Args: { "p_idempotency_key": string,"p_location": string,"p_reward": string,"p_staff": string }; Returns: Json

@@ -54,7 +54,7 @@ export async function getProgram() {
   const { data, error } = await supabase
     .from("loyalty_programs")
     .select(
-      "id, stamps_required, reward_name, reward_description, reward_expiry_days, bonus_story_enabled, bonus_review_enabled",
+      "id, stamps_required, reward_name, reward_description, reward_expiry_days, bonus_story_enabled, bonus_review_enabled, levels",
     )
     .eq("active", true)
     .is("deleted_at", null)
@@ -299,4 +299,43 @@ export async function getMetrics(ctx: OwnerContext, days: number): Promise<Metri
   });
   if (error) throw error;
   return parseMetrics(data as Record<string, unknown>);
+}
+
+// ───────────── Cupones ─────────────
+
+export interface CouponRow {
+  id: string;
+  title: string;
+  description: string | null;
+  audience: "all" | "welcome" | "birthday";
+  ends_at: string | null;
+  active: boolean;
+  issued: number;
+  redeemed: number;
+}
+
+export async function listCoupons(): Promise<CouponRow[]> {
+  const supabase = await createUserClient();
+  const [coupons, issued] = await Promise.all([
+    supabase
+      .from("coupons")
+      .select("id, title, description, audience, ends_at, active")
+      .is("deleted_at", null)
+      .order("created_at", { ascending: false }),
+    supabase.from("customer_coupons").select("coupon_id, status").limit(20000),
+  ]);
+  if (coupons.error) throw coupons.error;
+  const stats = new Map<string, { issued: number; redeemed: number }>();
+  for (const r of issued.data ?? []) {
+    const s = stats.get(r.coupon_id) ?? { issued: 0, redeemed: 0 };
+    s.issued += 1;
+    if (r.status === "redeemed") s.redeemed += 1;
+    stats.set(r.coupon_id, s);
+  }
+  return (coupons.data ?? []).map((c) => ({
+    ...c,
+    audience: c.audience as CouponRow["audience"],
+    issued: stats.get(c.id)?.issued ?? 0,
+    redeemed: stats.get(c.id)?.redeemed ?? 0,
+  }));
 }

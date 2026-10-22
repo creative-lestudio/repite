@@ -42,7 +42,19 @@ export function googleLoyaltyObject(c: PassContent, cfg: GoogleConfig, locationI
     accountName: c.customerName,
     loyaltyPoints: { label: WALLET_TEXT.stamps, balance: { string: `${c.filled}/${c.total}` } },
     secondaryLoyaltyPoints: { label: WALLET_TEXT.reward, balance: { string: c.rewardName } },
-    textModulesData: [{ id: "row", header: statusLine(c), body: stampRow(c.filled, c.total) }],
+    textModulesData: [
+      { id: "row", header: statusLine(c), body: stampRow(c.filled, c.total) },
+      ...(c.levelName ? [{ id: "level", header: WALLET_TEXT.level, body: c.levelName }] : []),
+      ...(c.couponsReady
+        ? [
+            {
+              id: "coupons",
+              header: WALLET_TEXT.coupon,
+              body: c.couponsReady === 1 ? (c.couponTitle ?? "1") : WALLET_TEXT.coupons(c.couponsReady),
+            },
+          ]
+        : []),
+    ],
     barcode: { type: "QR_CODE", value: c.qrUrl, alternateText: WALLET_TEXT.scanHint },
   };
 }

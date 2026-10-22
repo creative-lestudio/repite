@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { getFormatter, getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui";
 import { StampCard } from "@/components/stamp-card/stamp-card";
+import { CouponsList } from "@/components/staff/coupons-list";
 import { BonusReview } from "@/components/staff/bonus-review";
 import { Notes } from "@/components/staff/notes";
 import { RegisterVisit } from "@/components/staff/register-visit";
@@ -30,7 +31,7 @@ export default async function StaffCustomerPage({ params }: { params: Promise<{ 
   const [t, format, card, notes, pending] = await Promise.all([
     getTranslations("staff.customer"),
     getFormatter(),
-    getCardState(customer.id, location.id),
+    getCardState(customer.id, location.id, { issueCoupons: true }),
     getCustomerNotes(organizationId, customer.id),
     getPendingBonuses(location.id),
   ]);
@@ -81,6 +82,7 @@ export default async function StaffCustomerPage({ params }: { params: Promise<{ 
 
         <div className="flex flex-col gap-5">
           {card.rewards.length > 0 && <RewardsList rewards={card.rewards} />}
+          {card.coupons.length > 0 && <CouponsList coupons={card.coupons} />}
 
           {myPending.length > 0 && (
             <section

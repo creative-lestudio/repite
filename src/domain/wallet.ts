@@ -5,6 +5,9 @@ export const WALLET_TEXT = {
   reward: "Premio",
   rewardReady: "¡Premio listo!",
   rewardReadyValue: "Enséñalo en el local",
+  level: "Nivel",
+  coupon: "Cupón",
+  coupons: (n: number) => `${n} cupones`,
   scanHint: "Enseña este código para sumar sellos",
   moreToGo: (n: number) => (n === 1 ? "Te falta 1 sello" : `Te faltan ${n} sellos`),
 } as const;
@@ -29,6 +32,10 @@ export interface PassContent {
   brandColor: string;
   /** URL del logotipo del local (null: el de Repite). */
   logoUrl?: string | null;
+  /** Nivel VIP actual (Plus). */
+  levelName?: string | null;
+  couponsReady?: number;
+  couponTitle?: string | null;
 }
 
 export function passSerial(locationId: string, customerId: string): string {

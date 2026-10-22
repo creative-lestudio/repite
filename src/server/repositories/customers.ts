@@ -1,6 +1,7 @@
 import "server-only";
 import { createServiceClient } from "@/lib/supabase/server";
 import type { Locale } from "@/i18n/config";
+import { parseLevels, type Level } from "@/domain/levels";
 import { toBusinessError } from "../errors";
 
 // Todas las funciones reciben organizationId de una sesión o local ya validados y filtran por él.
@@ -113,12 +114,25 @@ export interface CardState {
   } | null;
   balance: number;
   rewards: { id: string; reward_name: string; expires_at: string | null; created_at: string }[];
+  coupons: { id: string; title: string; description: string | null; expires_at: string | null }[];
+  levels: Level[];
+  visits_total: number;
   pending_bonuses: { id: string; type: "bonus_story" | "bonus_review"; created_at: string }[];
   review_bonus_given: boolean;
   last_visit_at: string | null;
 }
 
-export async function getCardState(customerId: string, locationId: string): Promise<CardState> {
+/** Emite al cliente los cupones que le tocan (se llama al abrir la tarjeta, no en cada refresco). */
+export async function issueCoupons(customerId: string): Promise<void> {
+  await createServiceClient().rpc("issue_coupons", { p_customer: customerId });
+}
+
+export async function getCardState(
+  customerId: string,
+  locationId: string,
+  opts: { issueCoupons?: boolean } = {},
+): Promise<CardState> {
+  if (opts.issueCoupons) await issueCoupons(customerId);
   const { data, error } = await createServiceClient().rpc("customer_card", {
     p_customer: customerId,
     p_location: locationId,
@@ -129,6 +143,9 @@ export async function getCardState(customerId: string, locationId: string): Prom
     program: state.program ?? null,
     balance: state.balance ?? 0,
     rewards: state.rewards ?? [],
+    coupons: state.coupons ?? [],
+    levels: parseLevels((state.program as { levels?: unknown } | null | undefined)?.levels),
+    visits_total: state.visits_total ?? 0,
     pending_bonuses: state.pending_bonuses ?? [],
     review_bonus_given: state.review_bonus_given ?? false,
     last_visit_at: state.last_visit_at ?? null,

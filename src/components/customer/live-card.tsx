@@ -1,12 +1,13 @@
 "use client";
 
-import { Gift, QrCode } from "lucide-react";
+import { Crown, Gift, QrCode, Ticket } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { StampCard, type StampCardBrand } from "@/components/stamp-card/stamp-card";
 import { Alert, Button } from "@/components/ui";
 import { WalletButtons } from "./wallet-buttons";
+import { currentLevel, nextLevel } from "@/domain/levels";
 import { getCardStateAction } from "@/server/actions/customer";
 import type { CardState } from "@/server/repositories/customers";
 
@@ -101,6 +102,8 @@ export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome, 
   }
 
   const rewards = state.rewards.length;
+  const level = currentLevel(state.levels, state.visits_total);
+  const upcoming = nextLevel(state.levels, state.visits_total);
 
   return (
     <div className="flex flex-col gap-4">
@@ -117,6 +120,35 @@ export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome, 
         brand={cardBrand}
         rewardName={state.program.reward_name}
       />
+
+      {state.levels.length > 0 && (
+        <section
+          aria-label={t("levelTitle")}
+          className="bg-ink-950 text-cream-50 flex items-start gap-3 rounded-xl p-4"
+        >
+          <Crown className="mt-0.5 size-6 shrink-0 text-red-500" aria-hidden />
+          <div className="text-sm">
+            <p className="font-display text-lg font-extrabold">
+              {level ? t("levelNow", { name: level.name }) : t("levelNone")}
+            </p>
+            {level?.perk && <p className="text-cream-200">{level.perk}</p>}
+            <p className="text-cream-200 mt-1">
+              {upcoming ? t("levelNext", { missing: upcoming.missing, next: upcoming.level.name }) : t("levelTop")}
+            </p>
+          </div>
+        </section>
+      )}
+
+      {state.coupons.length > 0 && (
+        <Link
+          href={`/c/${slug}/premios`}
+          className="bg-primary-soft text-ink-950 ring-cream-200 hover:bg-cream-200 flex min-h-14 items-center gap-3 rounded-xl px-4 ring-1"
+        >
+          <Ticket className="text-primary size-6 shrink-0" aria-hidden />
+          <span className="flex-1 font-semibold">{t("couponsReady", { count: state.coupons.length })}</span>
+          <span className="text-primary text-sm font-semibold underline underline-offset-4">{t("couponsAction")}</span>
+        </Link>
+      )}
 
       {rewards > 0 && (
         <Link

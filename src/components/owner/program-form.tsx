@@ -3,6 +3,7 @@
 import { useActionState, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { parseLevels } from "@/domain/levels";
 import { StampCard, type StampCardBrand } from "@/components/stamp-card/stamp-card";
 import { Alert, Button, Checkbox, Field, Input, Textarea } from "@/components/ui";
 import { saveProgramAction, type FormState } from "@/server/actions/owner";
@@ -15,6 +16,7 @@ interface Program {
   reward_expiry_days: number | null;
   bonus_story_enabled: boolean;
   bonus_review_enabled: boolean;
+  levels?: unknown;
 }
 
 export function ProgramForm({
@@ -22,6 +24,7 @@ export function ProgramForm({
   locationName,
   sector,
   bonusesAllowed,
+  levelsAllowed,
   cardTone,
   cardBrand,
 }: {
@@ -29,6 +32,7 @@ export function ProgramForm({
   locationName: string;
   sector: string;
   bonusesAllowed: boolean;
+  levelsAllowed: boolean;
   cardTone: "light" | "dark" | "brand";
   cardBrand: StampCardBrand;
 }) {
@@ -114,6 +118,40 @@ export function ProgramForm({
             defaultChecked={bonusesAllowed && program.bonus_review_enabled}
             label={t("bonusReview")}
           />
+        </fieldset>
+        <fieldset className="flex flex-col gap-3">
+          <legend className="font-display text-lg font-bold">{t("levelsTitle")}</legend>
+          <p className="text-muted text-sm">{t("levelsHint")}</p>
+          {!levelsAllowed && (
+            <p className="bg-cream-100 flex flex-wrap items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-semibold">
+              {tp("locked", { plan: "plus" })}
+              <Link href="/app/plan" className="text-primary underline underline-offset-4">
+                {tp("upgradeLink")}
+              </Link>
+            </p>
+          )}
+          {[1, 2, 3].map((n) => {
+            const l = parseLevels(program.levels)[n - 1];
+            return (
+              <div key={n} className="grid gap-3 sm:grid-cols-[1fr_6rem_1.5fr]">
+                <Field id={`level${n}Name`} label={t("levelName", { n })}>
+                  <Input name={`level${n}Name`} maxLength={24} disabled={!levelsAllowed} defaultValue={l?.name ?? ""} />
+                </Field>
+                <Field id={`level${n}Visits`} label={t("levelVisits")}>
+                  <Input
+                    name={`level${n}Visits`}
+                    inputMode="numeric"
+                    maxLength={5}
+                    disabled={!levelsAllowed}
+                    defaultValue={l?.visits ?? ""}
+                  />
+                </Field>
+                <Field id={`level${n}Perk`} label={t("levelPerk")}>
+                  <Input name={`level${n}Perk`} maxLength={80} disabled={!levelsAllowed} defaultValue={l?.perk ?? ""} />
+                </Field>
+              </div>
+            );
+          })}
         </fieldset>
         <Alert tone="info">{t("warning")}</Alert>
         <Button type="submit" size="lg" loading={pending}>

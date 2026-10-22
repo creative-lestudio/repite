@@ -47,6 +47,12 @@ export const ledger = {
       p_staff: staffId,
       p_approve: approve,
     }),
+  redeemCoupon: (customerCouponId: string, locationId: string, staffId: string) =>
+    call<{ customer_id: string; title: string }>("redeem_coupon", {
+      p_customer_coupon: customerCouponId,
+      p_location: locationId,
+      p_staff: staffId,
+    }),
   redeemReward: (rewardId: string, locationId: string, staffId: string, idempotencyKey: string) =>
     call<CardSnapshot>("redeem_reward", {
       p_reward: rewardId,

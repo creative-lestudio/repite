@@ -7,6 +7,7 @@ import { getCustomerFromSession } from "@/server/auth/customer-session";
 import { getCardState } from "@/server/repositories/customers";
 import { getActiveProgram, getLocationBySlug } from "@/server/repositories/locations";
 import { qrSvg } from "@/server/qr";
+import { planSpec } from "@/domain/plan";
 import { brandAssets } from "@/server/brand-assets";
 import { walletAvailability } from "@/server/wallet/config";
 import { appUrl } from "@/server/app-url";
@@ -40,7 +41,7 @@ export default async function CustomerHome({
   }
 
   const [state, svg] = await Promise.all([
-    getCardState(customer.id, location.id),
+    getCardState(customer.id, location.id, { issueCoupons: true }),
     qrSvg(`${await appUrl()}/equipo/q/${customer.qr_token}`),
   ]);
   const { bienvenida } = await searchParams;
@@ -51,7 +52,7 @@ export default async function CustomerHome({
       customerName={firstName(customer.name)}
       sector={location.businessType}
       qrSvg={svg}
-      initial={state}
+      initial={planSpec(location.plan).levels ? state : { ...state, levels: [] }}
       welcome={bienvenida === "1"}
       wallet={walletAvailability(location.plan)}
       cardTone={location.brand.cardStyle}

@@ -84,6 +84,16 @@ export async function buildApplePass(content: PassContent, cfg: AppleConfig = ap
     { key: "reward", label: WALLET_TEXT.reward, value: content.rewardName },
     { key: "name", label: "Cliente", value: content.customerName, textAlignment: "PKTextAlignmentRight" },
   );
+  if (content.levelName)
+    pass.auxiliaryFields.push({ key: "level", label: WALLET_TEXT.level, value: content.levelName });
+  if (content.couponsReady) {
+    pass.auxiliaryFields.push({
+      key: "coupon",
+      label: WALLET_TEXT.coupon,
+      value: content.couponsReady === 1 ? (content.couponTitle ?? "1") : WALLET_TEXT.coupons(content.couponsReady),
+      textAlignment: "PKTextAlignmentRight",
+    });
+  }
   pass.setBarcodes({
     message: content.qrUrl,
     format: "PKBarcodeFormatQR",

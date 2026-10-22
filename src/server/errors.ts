@@ -21,6 +21,9 @@ export const BUSINESS_ERRORS = [
   "already_has_organization",
   "not_authenticated",
   "customer_limit_reached",
+  "coupon_not_found",
+  "coupon_already_redeemed",
+  "coupon_expired",
 ] as const;
 export type BusinessErrorCode = (typeof BUSINESS_ERRORS)[number];
 
