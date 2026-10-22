@@ -1,6 +1,6 @@
 # Identidad visual de Repite
 
-Fuente: tablero de identidad (`docs/identidad/tablero.webp`). Lema: **«Buena comida, más veces.»**
+Fuente: tablero de identidad (`docs/identidad/tablero.webp`). Lema: **«Buen servicio + sistema = más recurrencia.»** (titular de la web: «Hacemos que tus clientes vuelvan.»)
 
 ## Paleta
 

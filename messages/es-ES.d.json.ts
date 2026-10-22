@@ -798,10 +798,10 @@ declare const messages: {
       "sectors": "Para quién"
     },
     "hero": {
-      "eyebrow": "Fidelización para negocios de barrio",
-      "titleA": "Que tus clientes",
+      "eyebrow": "Sistema de fidelización para tu negocio",
+      "titleA": "Hacemos que tus clientes",
       "titleB": "vuelvan",
-      "subtitle": "Tarjeta de sellos con QR para cafeterías, restaurantes, heladerías y cualquier local con clientes de siempre. Sin apps y sin contraseñas.",
+      "subtitle": "Un sistema de fidelización con tu marca para cafeterías, restaurantes, heladerías y cualquier negocio con clientes que repiten. Tu tarjeta de sellos con QR, sin apps y sin contraseñas.",
       "cta": "Empezar gratis",
       "demo": "Ver una tarjeta de ejemplo",
       "note": "Sin tarjeta de crédito · Listo en menos de 5 minutos",
@@ -985,14 +985,15 @@ declare const messages: {
       "cta": "Crear mi cuenta gratis"
     },
     "footer": {
-      "tagline": "Buena comida, más veces.",
+      "tagline": "Buen servicio + sistema = más recurrencia.",
       "product": "Producto",
       "account": "Cuenta",
       "legal": "Legal",
       "privacy": "Privacidad",
       "terms": "Términos de uso",
       "demo": "Tarjeta de demostración",
-      "rights": "© {year} Repite. Todos los derechos reservados."
+      "rights": "© {year} Repite. Todos los derechos reservados.",
+      "madeBy": "Desarrollado por"
     },
     "legal": {
       "draft": "Borrador pendiente de revisión legal antes del lanzamiento.",

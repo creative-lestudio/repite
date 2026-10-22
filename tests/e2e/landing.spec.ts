@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 test.describe("web pública", () => {
   test("presenta el producto y lleva a crear cuenta", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Que tus clientes");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Hacemos que tus clientes");
     await expect(page.getByRole("heading", { level: 1 })).toContainText("vuelvan");
     for (const id of ["como-funciona", "negocios", "ventajas", "precio", "preguntas"]) {
       await expect(page.locator(`#${id}`)).toBeAttached();

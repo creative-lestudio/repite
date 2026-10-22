@@ -20,11 +20,11 @@ import {
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("landing.hero");
   return {
-    title: { absolute: "Repite · Tarjeta de sellos y fidelización para tu local" },
+    title: { absolute: "Repite · Sistema de fidelización para tu negocio" },
     description: t("subtitle"),
     alternates: { canonical: "/" },
     openGraph: {
-      title: "Repite · Que tus clientes vuelvan",
+      title: "Repite · Hacemos que tus clientes vuelvan",
       description: t("subtitle"),
       type: "website",
       locale: "es_ES",

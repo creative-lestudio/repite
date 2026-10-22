@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import paths from "@/components/brand/paths.json";
 
-export const alt = "Repite · Buena comida, más veces";
+export const alt = "Repite · Buen servicio + sistema = más recurrencia";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -26,9 +26,11 @@ export default function OpengraphImage() {
           <path d={paths.wordmark.d} fill="#111111" fillRule="evenodd" />
         </svg>
         <div style={{ fontSize: 58, fontWeight: 800, color: "#111111", lineHeight: 1.05 }}>
-          Buena comida, más veces.
+          Hacemos que tus clientes vuelvan.
         </div>
-        <div style={{ fontSize: 28, color: "#6B655E" }}>Tarjeta de sellos con QR para tu local. Sin apps.</div>
+        <div style={{ fontSize: 28, color: "#6B655E" }}>
+          Sistema de fidelización para tu negocio. Buen servicio + sistema = más recurrencia.
+        </div>
       </div>
       <div
         style={{

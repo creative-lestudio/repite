@@ -68,9 +68,20 @@ export async function SiteFooter() {
           </ul>
         </nav>
       </div>
-      <p className="border-t border-white/10 px-4 py-4 text-center text-xs text-stone-400">
-        {f("rights", { year: String(new Date().getFullYear()) })}
-      </p>
+      <div className="flex flex-col items-center justify-between gap-2 border-t border-white/10 px-4 py-4 text-xs text-stone-400 sm:flex-row sm:px-8">
+        <p>{f("rights", { year: String(new Date().getFullYear()) })}</p>
+        <p className="flex items-center gap-1.5">
+          {f("madeBy")}
+          <a
+            href="https://lestudio-crea.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-display text-cream-50 inline-flex min-h-11 items-center font-extrabold tracking-wide hover:text-white hover:underline"
+          >
+            LE STUDIO
+          </a>
+        </p>
+      </div>
     </footer>
   );
 }
