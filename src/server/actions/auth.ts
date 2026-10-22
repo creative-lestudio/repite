@@ -37,7 +37,11 @@ export async function signUpOwnerAction(_prev: AuthState, formData: FormData): P
       emailRedirectTo: `${env().NEXT_PUBLIC_APP_URL}/auth/callback?siguiente=/app/empezar`,
     },
   });
-  if (error) return { ok: false, error: "generic" };
+  if (error) {
+    console.error("signUpOwner: signInWithOtp", error.status, error.code, error.message);
+    const limited = error.status === 429 || /rate.?limit/i.test(`${error.code} ${error.message}`);
+    return { ok: false, error: limited ? "emailRateLimit" : "generic" };
+  }
   return { ok: true, sent: true };
 }
 

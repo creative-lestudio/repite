@@ -67,12 +67,6 @@ export default async function LandingPage() {
 
   return (
     <>
-      <a
-        href="#contenido"
-        className="bg-primary sr-only z-50 rounded-lg px-4 py-2 text-white focus:not-sr-only focus:fixed focus:top-2 focus:left-2"
-      >
-        Saltar al contenido
-      </a>
       <SiteHeader />
       <main id="contenido">
         <Hero />

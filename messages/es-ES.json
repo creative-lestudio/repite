@@ -22,6 +22,7 @@
     "generic": "Algo no ha salido bien. Inténtalo de nuevo en unos segundos.",
     "network": "No hay conexión. Revisa tu internet e inténtalo otra vez.",
     "rateLimited": "Demasiados intentos seguidos. Espera un minuto y vuelve a probar.",
+    "emailRateLimit": "Hemos enviado demasiados correos en poco tiempo. Espera unos minutos o entra con Google.",
     "cooldown": "Este cliente ya sumó un sello hace poco. Podrá sumar otro a partir de las {time}.",
     "location_not_found": "No encontramos este local. Revisa el enlace o el QR.",
     "customer_not_found": "No encontramos a este cliente.",
