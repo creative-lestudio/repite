@@ -1,9 +1,11 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Alert, Button, Card, Field, Input } from "@/components/ui";
 import { useToast } from "@/components/staff/toaster";
+import { BusinessTypePicker } from "@/components/owner/business-type-picker";
+import type { BusinessType } from "@/domain/business-types";
 import { saveSettingsAction, type FormState } from "@/server/actions/owner";
 
 const selectClass =
@@ -23,6 +25,7 @@ export interface SettingsValues {
   brandColor: string;
   country: string;
   currency: string;
+  businessType: BusinessType;
 }
 
 export function SettingsForm({ v }: { v: SettingsValues }) {
@@ -30,6 +33,7 @@ export function SettingsForm({ v }: { v: SettingsValues }) {
   const te = useTranslations("errors");
   const ts = useTranslations("owner.start.countries");
   const toast = useToast();
+  const [type, setType] = useState<BusinessType>(v.businessType);
   const [state, action, pending] = useActionState<FormState, FormData>(saveSettingsAction, null);
   useEffect(() => {
     if (state?.ok) toast({ tone: "success", text: t("saved") });
@@ -50,6 +54,11 @@ export function SettingsForm({ v }: { v: SettingsValues }) {
         <Field id="name" label={t("name")} error={err("name")}>
           <Input name="name" defaultValue={v.name} maxLength={120} required />
         </Field>
+        <fieldset className="flex flex-col gap-2">
+          <legend className="text-sm font-semibold">{t("businessType")}</legend>
+          <p className="text-muted text-sm">{t("businessTypeHint")}</p>
+          <BusinessTypePicker value={type} onChange={setType} />
+        </fieldset>
         <Field id="address" label={t("address")}>
           <Input name="address" defaultValue={v.address} placeholder={t("addressPlaceholder")} maxLength={200} />
         </Field>

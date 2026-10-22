@@ -29,6 +29,7 @@ export async function createBusinessAction(_prev: FormState, formData: FormData)
     p_slug: v.slug,
     p_timezone: d.timezone,
     p_locale: d.locale,
+    p_business_type: v.businessType,
   });
   if (error) {
     const biz = toBusinessError(error);
@@ -147,6 +148,7 @@ export async function saveSettingsAction(_prev: FormState, formData: FormData): 
       locale: v.locale,
       timezone: v.timezone,
       brand_color: v.brandColor,
+      business_type: v.businessType,
       settings,
     })
     .eq("id", ctx.location.id);

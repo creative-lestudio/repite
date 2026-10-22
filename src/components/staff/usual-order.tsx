@@ -1,6 +1,6 @@
 "use client";
 
-import { Coffee } from "lucide-react";
+import { Heart } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button, Input } from "@/components/ui";
@@ -49,7 +49,7 @@ export function UsualOrder({ customerId, value }: { customerId: string; value: s
       ) : (
         <div className="flex items-center justify-between gap-2">
           <p className="flex items-center gap-2 text-lg font-semibold">
-            <Coffee className="text-primary size-5" aria-hidden />
+            <Heart className="text-primary size-5" aria-hidden />
             {value || <span className="text-muted font-normal">{t("usualOrderEmpty")}</span>}
           </p>
           <Button variant="ghost" size="sm" onClick={() => setEditing(true)}>

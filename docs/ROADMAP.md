@@ -1,6 +1,6 @@
 # Repite · dónde estamos y hacia dónde vamos
 
-Última revisión: 22 de octubre de 2026.
+Última revisión: 23 de octubre de 2026.
 
 ## 1. Dónde estamos
 
@@ -58,7 +58,7 @@ Plan:
 6. Decidir el precio final.
 7. Avisos de errores y estadísticas de visitas sin cookies (para saber si algo falla).
 
-### Fase B · Generalizar y elevar el diseño
+### Fase B · Generalizar y elevar el diseño — ✅ hecha (23 oct)
 
 1. Tipo de negocio en el alta y en la base de datos, con presets por sector.
 2. Sello con icono configurable y logotipo del local en la tarjeta del cliente.
@@ -84,7 +84,7 @@ Varios locales por cuenta, Apple/Google Wallet, niveles de cliente y referidos, 
 
 ## 5. Decisiones que necesito de ti
 
-1. **Sectores prioritarios** para el lanzamiento (propuesta: cafeterías, peluquerías/barberías y restaurantes/bares).
+1. ~~Sectores prioritarios~~: decididos — **cafeterías, restaurantes y heladerías** (peluquerías, panaderías, tiendas… entran como «otro»).
 2. **Precio final** y qué incluye el plan de pago (ahora: clientes sin límite + oportunidades y mensajes).
 3. **Datos de tu empresa** para los textos legales y las facturas.
 4. **Cuenta de empresa de Meta** para WhatsApp (empezar cuanto antes por los plazos).

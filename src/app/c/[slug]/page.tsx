@@ -47,6 +47,7 @@ export default async function CustomerHome({
     <LiveCard
       slug={slug}
       customerName={firstName(customer.name)}
+      sector={location.businessType}
       qrSvg={svg}
       initial={state}
       welcome={bienvenida === "1"}

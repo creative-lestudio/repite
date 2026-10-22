@@ -16,7 +16,15 @@ interface Program {
   bonus_review_enabled: boolean;
 }
 
-export function ProgramForm({ program, locationName }: { program: Program; locationName: string }) {
+export function ProgramForm({
+  program,
+  locationName,
+  sector,
+}: {
+  program: Program;
+  locationName: string;
+  sector: string;
+}) {
   const t = useTranslations("owner.program");
   const te = useTranslations("errors");
   const toast = useToast();
@@ -104,6 +112,7 @@ export function ProgramForm({ program, locationName }: { program: Program; locat
           filled={Math.min(3, safeStamps - 1)}
           rewardName={reward || "…"}
           locationName={locationName}
+          sector={sector}
         />
         <p className="text-muted text-sm">{t("previewFilled", { count: Math.min(3, safeStamps - 1) })}</p>
       </aside>

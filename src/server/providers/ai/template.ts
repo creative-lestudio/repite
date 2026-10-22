@@ -1,3 +1,4 @@
+import { BUSINESS_PRESETS } from "@/domain/business-types";
 import { renderTemplate } from "@/domain/templates";
 import type { AIProvider, DraftRequest, DraftResult } from "./types";
 
@@ -10,7 +11,7 @@ export class TemplateAIProvider implements AIProvider {
       body: renderTemplate(req.fallbackTemplate, {
         nombre: req.customer.firstName,
         local: req.locationName,
-        pedido: req.customer.usualOrder || (req.locale === "es-VE" ? "cafecito" : "café"),
+        pedido: req.customer.usualOrder || BUSINESS_PRESETS[req.businessType ?? "otro"].fallbackWord[req.locale],
         premio: req.rewardName ?? "",
       }),
     };

@@ -24,6 +24,7 @@ export default async function SettingsPage() {
           brandColor: ctx.location.brandColor ?? "",
           country: ctx.organization.country,
           currency: ctx.organization.currency,
+          businessType: ctx.location.businessType,
         }}
       />
     </div>

@@ -3,6 +3,8 @@
 import { useActionState, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Alert, Button, Field, Input } from "@/components/ui";
+import { BusinessTypePicker } from "@/components/owner/business-type-picker";
+import { BUSINESS_PRESETS, type BusinessType } from "@/domain/business-types";
 import { slugify } from "@/domain/slug";
 import { createBusinessAction, type FormState } from "@/server/actions/owner";
 
@@ -12,9 +14,13 @@ const selectClass =
 export function BusinessForm() {
   const t = useTranslations("owner.start");
   const te = useTranslations("errors");
+  const ts = useTranslations("sectors");
   const [state, action, pending] = useActionState<FormState, FormData>(createBusinessAction, null);
   const [slug, setSlug] = useState("");
   const [slugTouched, setSlugTouched] = useState(false);
+  const [type, setType] = useState<BusinessType>("cafeteria");
+  const [stamps, setStamps] = useState(BUSINESS_PRESETS.cafeteria.stamps);
+  const [stampsTouched, setStampsTouched] = useState(false);
 
   const fields = state && !state.ok ? (state.fields ?? {}) : {};
   const err = (n: string) => (fields[n] ? te(fields[n] as never) : undefined);
@@ -24,10 +30,22 @@ export function BusinessForm() {
     <form action={action} className="flex flex-col gap-8" noValidate>
       {formError && <Alert tone="danger">{formError}</Alert>}
 
+      <fieldset className="flex flex-col gap-3">
+        <legend className="font-display text-lg font-bold">{t("type")}</legend>
+        <p className="text-muted text-sm">{t("typeHint")}</p>
+        <BusinessTypePicker
+          value={type}
+          onChange={(next) => {
+            setType(next);
+            if (!stampsTouched) setStamps(BUSINESS_PRESETS[next].stamps);
+          }}
+        />
+      </fieldset>
+
       <fieldset className="flex flex-col gap-4">
         <legend className="font-display mb-1 text-lg font-bold">{t("business")}</legend>
         <Field id="businessName" label={t("businessName")} error={err("businessName")}>
-          <Input name="businessName" placeholder={t("businessNamePlaceholder")} maxLength={120} required />
+          <Input name="businessName" placeholder={ts(`${type}.namePlaceholder`)} maxLength={120} required />
         </Field>
         <Field id="country" label={t("country")} hint={t("countryHint")}>
           <select name="country" defaultValue="ES" className={selectClass}>
@@ -68,10 +86,22 @@ export function BusinessForm() {
       <fieldset className="flex flex-col gap-4">
         <legend className="font-display mb-1 text-lg font-bold">{t("program")}</legend>
         <Field id="stamps" label={t("stamps")} hint={t("stampsHint")} error={err("stamps")}>
-          <Input name="stamps" type="number" inputMode="numeric" min={3} max={30} defaultValue={8} required />
+          <Input
+            name="stamps"
+            type="number"
+            inputMode="numeric"
+            min={3}
+            max={30}
+            value={Number.isNaN(stamps) ? "" : stamps}
+            onChange={(e) => {
+              setStampsTouched(true);
+              setStamps(e.target.valueAsNumber);
+            }}
+            required
+          />
         </Field>
         <Field id="rewardName" label={t("reward")} error={err("rewardName")}>
-          <Input name="rewardName" placeholder={t("rewardPlaceholder")} maxLength={80} required />
+          <Input name="rewardName" placeholder={ts(`${type}.rewardPlaceholder`)} maxLength={80} required />
         </Field>
       </fieldset>
 

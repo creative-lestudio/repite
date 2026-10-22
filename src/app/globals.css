@@ -139,3 +139,15 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Fondos de la web pública */
+.hero-mesh {
+  background:
+    radial-gradient(60% 55% at 88% 0%, color-mix(in srgb, var(--blue-600) 16%, transparent), transparent),
+    radial-gradient(45% 45% at 0% 35%, color-mix(in srgb, var(--blue-200) 75%, transparent), transparent),
+    var(--background);
+}
+.dot-grid {
+  background-image: radial-gradient(color-mix(in srgb, var(--blue-200) 80%, transparent) 1.2px, transparent 1.2px);
+  background-size: 22px 22px;
+}

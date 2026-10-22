@@ -14,6 +14,7 @@ const POLL_MS = 5000;
 interface Props {
   slug: string;
   customerName: string;
+  sector: string;
   qrSvg: string;
   initial: CardState;
   welcome: boolean;
@@ -39,7 +40,7 @@ function writeSnapshot(key: string, s: Snapshot) {
 }
 
 /** Tarjeta que se refresca sola: cuando el equipo suma un sello, aparece estampado al momento. */
-export function LiveCard({ slug, customerName, qrSvg, initial, welcome }: Props) {
+export function LiveCard({ slug, customerName, sector, qrSvg, initial, welcome }: Props) {
   const t = useTranslations("customer.card");
   const [state, setState] = useState(initial);
   const [newStamp, setNewStamp] = useState<number | null>(null);
@@ -107,6 +108,7 @@ export function LiveCard({ slug, customerName, qrSvg, initial, welcome }: Props)
         total={state.program.stamps_required}
         filled={state.balance}
         newStamp={newStamp}
+        sector={sector}
         rewardName={state.program.reward_name}
       />
 

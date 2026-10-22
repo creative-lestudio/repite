@@ -23,7 +23,7 @@ export default function OpengraphImage() {
         <div style={{ fontSize: 68, fontWeight: 800, color: "#0A1840", lineHeight: 1.05 }}>
           Que tus clientes vuelvan.
         </div>
-        <div style={{ fontSize: 30, color: "#5B6B8C" }}>Tarjeta de sellos con QR para tu cafetería. Sin apps.</div>
+        <div style={{ fontSize: 30, color: "#5B6B8C" }}>Tarjeta de sellos con QR para tu local. Sin apps.</div>
       </div>
       <div
         style={{

@@ -73,6 +73,7 @@ export default async function StaffCustomerPage({ params }: { params: Promise<{ 
               total={card.program.stamps_required}
               filled={card.balance}
               rewardName={card.program.reward_name}
+              sector={location.businessType}
             />
           )}
           <RegisterVisit customerId={customer.id} customerName={firstName(customer.name)} />

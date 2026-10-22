@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Logo } from "@/components/brand/logo";
 
 /** Marco común de entrar / registro: logotipo, título y contenido centrado. */
 export function AuthShell({
@@ -12,8 +13,8 @@ export function AuthShell({
 }) {
   return (
     <main className="mx-auto flex min-h-dvh max-w-md flex-col px-4 py-8">
-      <Link href="/" className="font-display text-primary mb-8 inline-block text-xl font-extrabold">
-        Repite
+      <Link href="/" className="mb-8 inline-block" aria-label="Repite, inicio">
+        <Logo />
       </Link>
       <h1 className="text-3xl font-extrabold">{title}</h1>
       <p className="text-muted mt-2 mb-6">{subtitle}</p>

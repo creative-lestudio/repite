@@ -19,7 +19,7 @@ export async function GET() {
       "Idioma",
       "Acepta mensajes",
       "Fecha del permiso",
-      "Pedido habitual",
+      "Lo de siempre",
       "Cliente desde",
       "Última visita",
       "Visitas",

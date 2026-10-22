@@ -44,6 +44,7 @@ export default async function OwnerCustomerPage({ params }: { params: Promise<{ 
               filled={detail.balance}
               rewardName={program.reward_name}
               locationName={ctx.location.name}
+              sector={ctx.location.businessType}
             />
           )}
           <Card>

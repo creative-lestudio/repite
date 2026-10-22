@@ -30,12 +30,12 @@ insert into public.organizations (id, name, country, currency, onboarding) value
   ('b0000000-0000-4000-8000-000000000001', 'Panadería Sol', 'VE', 'USD',
    '{"account":true,"location":true,"program":true}');
 
-insert into public.locations (id, organization_id, name, slug, address, timezone, locale, settings) values
+insert into public.locations (id, organization_id, name, slug, address, timezone, locale, business_type, settings) values
   ('a0000000-0000-4000-8000-0000000000a1', 'a0000000-0000-4000-8000-000000000001', 'Café Aurora', 'cafe-aurora',
-   'Calle de la Luna 12, Madrid', 'Europe/Madrid', 'es-ES',
+   'Calle de la Luna 12, Madrid', 'Europe/Madrid', 'es-ES', 'cafeteria',
    '{"stamp_cooldown_hours":4,"message_min_days":7,"opportunity_hour":9,"tone":"cercano y alegre","contact_whatsapp":"+34600000000"}'),
   ('b0000000-0000-4000-8000-0000000000b1', 'b0000000-0000-4000-8000-000000000001', 'Panadería Sol', 'panaderia-sol',
-   'Av. Francisco de Miranda, Caracas', 'America/Caracas', 'es-VE',
+   'Av. Francisco de Miranda, Caracas', 'America/Caracas', 'es-VE', 'otro',
    '{"stamp_cooldown_hours":4,"message_min_days":7,"opportunity_hour":9,"tone":"cálido"}');
 
 insert into public.memberships (user_id, organization_id, role) values

@@ -18,7 +18,7 @@
     "db:stop": "supabase stop",
     "db:reset": "supabase db reset",
     "db:types": "supabase gen types typescript --local > src/lib/supabase/database.types.ts",
-    "icons": "python3 scripts/make-icons.py public/icons",
+    "icons": "node scripts/make-icons.mjs",
     "i18n:types": "node scripts/i18n-types.mjs"
   },
   "dependencies": {

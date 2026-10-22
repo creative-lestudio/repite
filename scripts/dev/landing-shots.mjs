@@ -17,7 +17,7 @@ const browser = await chromium.launch();
 
 const desktop = await browser.newPage({
   viewport: { width: 1280, height: 800 },
-  deviceScaleFactor: 1,
+  deviceScaleFactor: 2,
   locale: "es-ES",
 });
 await desktop.goto(`${base}/entrar`);
@@ -27,7 +27,7 @@ await desktop.getByRole("button", { name: "Entrar", exact: true }).click();
 await desktop.waitForURL("**/app");
 await desktop.goto(`${base}/app/clientes`);
 await desktop.getByText("María López").waitFor();
-await desktop.screenshot({ path: `${out}/panel.png` });
+await desktop.locator("main").screenshot({ path: `${out}/panel.png` });
 await desktop.goto(`${base}/app`);
 await desktop.getByText("Tu local de un vistazo").waitFor();
 await desktop.screenshot({ path: `${out}/panel-inicio.png` });

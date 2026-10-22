@@ -181,14 +181,14 @@ isOneToOne: false
                   ]
                 },"locations": {
                   Row: {
-                    "address": string | null,"brand_color": string | null,"created_at": string,"deleted_at": string | null,"id": string,"locale": string,"logo_path": string | null,"name": string,"organization_id": string,"settings": NonNullable<Json>,"slug": string,"timezone": string,"updated_at": string
+                    "address": string | null,"brand_color": string | null,"business_type": string,"created_at": string,"deleted_at": string | null,"id": string,"locale": string,"logo_path": string | null,"name": string,"organization_id": string,"settings": NonNullable<Json>,"slug": string,"timezone": string,"updated_at": string
                   }
                   ComputedFields: never
                   Insert: {
-                    "address"?: string | null,"brand_color"?: string | null,"created_at"?: string,"deleted_at"?: string | null,"id"?: string,"locale"?: string,"logo_path"?: string | null,"name": string,"organization_id": string,"settings"?: NonNullable<Json>,"slug": string,"timezone"?: string,"updated_at"?: string
+                    "address"?: string | null,"brand_color"?: string | null,"business_type"?: string,"created_at"?: string,"deleted_at"?: string | null,"id"?: string,"locale"?: string,"logo_path"?: string | null,"name": string,"organization_id": string,"settings"?: NonNullable<Json>,"slug": string,"timezone"?: string,"updated_at"?: string
                   }
                   Update: {
-                    "address"?: string | null,"brand_color"?: string | null,"created_at"?: string,"deleted_at"?: string | null,"id"?: string,"locale"?: string,"logo_path"?: string | null,"name"?: string,"organization_id"?: string,"settings"?: NonNullable<Json>,"slug"?: string,"timezone"?: string,"updated_at"?: string
+                    "address"?: string | null,"brand_color"?: string | null,"business_type"?: string,"created_at"?: string,"deleted_at"?: string | null,"id"?: string,"locale"?: string,"logo_path"?: string | null,"name"?: string,"organization_id"?: string,"settings"?: NonNullable<Json>,"slug"?: string,"timezone"?: string,"updated_at"?: string
                   }
                   Relationships: [
                     {
@@ -682,7 +682,7 @@ isOneToOne: false
           }
           Functions: {
             "create_organization_with_owner":
-{ Args: { "p_country": string,"p_currency": string,"p_locale": string,"p_location_name": string,"p_name": string,"p_slug": string,"p_timezone": string }; Returns: Json
+{ Args: { "p_business_type"?: string,"p_country": string,"p_currency": string,"p_locale": string,"p_location_name": string,"p_name": string,"p_slug": string,"p_timezone": string }; Returns: Json
                            },
 "customer_card":
 { Args: { "p_customer": string,"p_location": string }; Returns: Json

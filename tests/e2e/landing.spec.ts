@@ -3,8 +3,9 @@ import { expect, test } from "@playwright/test";
 test.describe("web pública", () => {
   test("presenta el producto y lleva a crear cuenta", async ({ page }) => {
     await page.goto("/");
-    await expect(page.getByRole("heading", { level: 1 })).toContainText("Que tus clientes vuelvan");
-    for (const id of ["como-funciona", "ventajas", "precio", "preguntas"]) {
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("Que tus clientes");
+    await expect(page.getByRole("heading", { level: 1 })).toContainText("vuelvan");
+    for (const id of ["como-funciona", "negocios", "ventajas", "precio", "preguntas"]) {
       await expect(page.locator(`#${id}`)).toBeAttached();
     }
     await expect(page.getByRole("heading", { name: "Gratis", exact: true })).toBeVisible();
@@ -24,7 +25,7 @@ test.describe("web pública", () => {
 
   test("la demostración enseña la tarjeta y las páginas legales avisan de que son borrador", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("link", { name: "Ver la tarjeta de demostración" }).click();
+    await page.getByRole("link", { name: "Ver una tarjeta de ejemplo" }).click();
     await expect(page.getByRole("heading", { name: "Tu tarjeta de Café Aurora" })).toBeVisible();
     await page.goto("/legal/privacidad");
     await expect(page.getByText(/borrador pendiente de revisión legal/i)).toBeVisible();
@@ -41,10 +42,56 @@ test.describe("web pública", () => {
   });
 
   test("no hay scroll horizontal a 360 px en ninguna página pública", async ({ page }) => {
-    for (const path of ["/", "/registro", "/entrar", "/legal/terminos"]) {
+    for (const path of [
+      "/",
+      "/registro",
+      "/entrar",
+      "/legal/terminos",
+      "/para/cafeterias",
+      "/para/restaurantes",
+      "/para/heladerias",
+    ]) {
       await page.goto(path);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
       expect(overflow, path).toBeLessThanOrEqual(0);
     }
+  });
+
+  test("el selector de sector cambia la tarjeta de ejemplo", async ({ page }) => {
+    await page.goto("/");
+    await page.getByRole("tab", { name: "Heladerías" }).click();
+    await expect(page.getByRole("tab", { name: "Heladerías" })).toHaveAttribute("aria-selected", "true");
+    await expect(page.getByText("Polo Norte").first()).toBeVisible();
+    await expect(page.getByText("Un helado gratis").first()).toBeVisible();
+    await page.getByRole("tab", { name: "Restaurantes" }).click();
+    await expect(page.getByText("La Cocina de Marta").first()).toBeVisible();
+  });
+
+  test("hay una página para cada sector y las desconocidas dan 404", async ({ page }) => {
+    const casos: [string, RegExp][] = [
+      ["/para/cafeterias", /tarjeta de sellos para tu cafetería/i],
+      ["/para/restaurantes", /fideliza a los clientes de tu restaurante/i],
+      ["/para/heladerias", /vuelvan a tu heladería/i],
+    ];
+    for (const [ruta, titulo] of casos) {
+      await page.goto(ruta);
+      await expect(page.getByRole("heading", { level: 1 })).toHaveText(titulo);
+      await expect(page.getByRole("heading", { name: "Ideas de premio" })).toBeVisible();
+    }
+    const res = await page.goto("/para/peluquerias-de-marte");
+    expect(res?.status()).toBe(404);
+  });
+
+  test("las secciones aparecen al hacer scroll y el botón fijo sale tras la portada", async ({ page }) => {
+    await page.goto("/");
+    const sticky = page.getByTestId("sticky-cta");
+    await expect(sticky).toHaveClass(/translate-y-full/); // en la portada no estorba
+    await page.locator("#como-funciona").scrollIntoViewIfNeeded();
+    await page.getByRole("heading", { name: "El cliente escanea tu QR" }).scrollIntoViewIfNeeded();
+    await expect(page.getByRole("heading", { name: "El cliente escanea tu QR" })).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: "El cliente escanea tu QR" }).locator("xpath=ancestor::li[1]"),
+    ).toHaveCSS("opacity", "1");
+    await expect(sticky).toHaveClass(/translate-y-0/);
   });
 });

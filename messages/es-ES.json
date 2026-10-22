@@ -58,7 +58,7 @@
     "locationNameRequired": "Escribe el nombre de tu local.",
     "slugInvalid": "Usa solo letras, números y guiones (entre 3 y 50 caracteres).",
     "stampsRange": "Elige entre 3 y 30 sellos.",
-    "rewardRequired": "Escribe qué se llevará el cliente (por ejemplo, un café gratis).",
+    "rewardRequired": "Escribe qué se llevará el cliente (por ejemplo, un detalle de la casa).",
     "expiryRange": "Los días de caducidad deben estar entre 1 y 730, o déjalo vacío.",
     "staffNameRequired": "Escribe el nombre del empleado.",
     "pinInvalid": "El PIN debe tener entre 4 y 6 números.",
@@ -276,8 +276,8 @@
     "customer": {
       "lastVisit": "Última visita: {date}",
       "neverVisited": "Todavía no ha venido",
-      "usualOrder": "Pedido habitual",
-      "usualOrderEmpty": "Sin pedido habitual",
+      "usualOrder": "Lo de siempre",
+      "usualOrderEmpty": "Aún no sabemos lo de siempre",
       "usualOrderEdit": "Cambiar",
       "usualOrderSave": "Guardar pedido",
       "usualOrderPlaceholder": "Ej.: cortado con avena",
@@ -384,7 +384,9 @@
       "reward": "Premio",
       "rewardPlaceholder": "Un café gratis",
       "submit": "Crear mi tarjeta",
-      "signedAs": "Has entrado como {email}"
+      "signedAs": "Has entrado como {email}",
+      "type": "¿Qué tipo de negocio tienes?",
+      "typeHint": "Adaptamos el icono y los ejemplos de tu tarjeta. Puedes cambiarlo cuando quieras."
     },
     "home": {
       "greeting": "Hola, {name}",
@@ -420,7 +422,7 @@
       "emptyBody": "Descarga tu QR y colócalo en el local. Cada persona que lo escanee aparecerá aquí.",
       "emptyAction": "Descargar el QR",
       "completeTitle": "¡Todo listo!",
-      "planFull": "Has llegado a {limit, number} clientes. Pasa a Repite para que tus nuevos clientes puedan crear su tarjeta.",
+      "planFull": "Has llegado a {limit, number} clientes. Pasa a Pro para que tus nuevos clientes puedan crear su tarjeta.",
       "planNear": "Llevas {count, number} de {limit, number} clientes del plan Gratis.",
       "planAction": "Ver planes",
       "trial": "{count, plural, =0 {Hoy termina tu prueba} one {Te queda # día de prueba} other {Te quedan # días de prueba}}",
@@ -461,7 +463,7 @@
       "consent": "Permiso para mensajes",
       "consentYes": "Sí, desde el {date}",
       "consentNo": "No quiere recibir mensajes",
-      "usualOrder": "Pedido habitual",
+      "usualOrder": "Lo de siempre",
       "history": "Historial",
       "notes": "Notas",
       "addNote": "Añadir nota",
@@ -599,7 +601,9 @@
       "reviewHint": "Lo verán tus clientes en «Sellos extra».",
       "brandTitle": "Marca",
       "brandColor": "Color de tu tarjeta",
-      "brandHint": "Por defecto usamos el azul de Repite."
+      "brandHint": "Por defecto usamos el azul de Repite.",
+      "businessType": "Tipo de negocio",
+      "businessTypeHint": "Cambia el icono del sello y los ejemplos."
     },
     "plan": {
       "title": "Plan y facturación",
@@ -611,13 +615,13 @@
       "names": {
         "trial": "Prueba gratuita",
         "free": "Gratis",
-        "pro": "Repite"
+        "pro": "Pro"
       },
       "trialBody": "{count, plural, =0 {Hoy termina tu prueba.} one {Te queda # día de prueba con todo incluido.} other {Te quedan # días de prueba con todo incluido.}} Después sigues gratis, hasta {limit, number} clientes, sin pagar nada.",
       "freeBody": "Estás en el plan Gratis: hasta {limit, number} clientes, para siempre y sin tarjeta.",
-      "proBody": "Tienes el plan Repite: clientes sin límite.",
+      "proBody": "Tienes el plan Pro: clientes sin límite.",
       "fullTitle": "Has llegado al límite de clientes",
-      "fullBody": "Tus clientes actuales siguen funcionando con normalidad, pero nadie nuevo podrá crear su tarjeta hasta que pases a Repite.",
+      "fullBody": "Tus clientes actuales siguen funcionando con normalidad, pero nadie nuevo podrá crear su tarjeta hasta que pases a Pro.",
       "nearTitle": "Te estás acercando al límite",
       "nearBody": "Quedan {left, plural, one {# tarjeta} other {# tarjetas}} en el plan Gratis.",
       "freeName": "Gratis",
@@ -627,7 +631,7 @@
         "i3": "Panel del equipo con PIN",
         "i4": "Cartel y tarjetas de mesa para imprimir"
       },
-      "proName": "Repite",
+      "proName": "Pro",
       "proFeatures": {
         "i1": "Clientes sin límite",
         "i2": "Todo lo del plan Gratis",
@@ -636,7 +640,7 @@
       },
       "price": "{price} al mes",
       "free": "0 €",
-      "upgrade": "Pasar a Repite",
+      "upgrade": "Pasar a Pro",
       "soon": "El pago online estará disponible muy pronto. Te avisaremos antes de que lo necesites.",
       "endedTitle": "Tu prueba ha terminado"
     }
@@ -650,15 +654,18 @@
       "login": "Entrar",
       "cta": "Empezar gratis",
       "label": "Navegación principal",
-      "home": "Repite, inicio"
+      "home": "Repite, inicio",
+      "sectors": "Para quién"
     },
     "hero": {
-      "eyebrow": "Fidelización para cafeterías y pequeños locales",
-      "title": "Que tus clientes vuelvan. Sin apps y sin complicaciones.",
-      "subtitle": "Tarjeta de sellos con un QR, la memoria de cada cliente y mensajes listos para que regresen. Tú solo tienes que aprobarlos.",
+      "eyebrow": "Fidelización para negocios de barrio",
+      "titleA": "Que tus clientes",
+      "titleB": "vuelvan",
+      "subtitle": "Tarjeta de sellos con QR para cafeterías, restaurantes, heladerías y cualquier local con clientes de siempre. Sin apps y sin contraseñas.",
       "cta": "Empezar gratis",
-      "demo": "Ver la tarjeta de demostración",
+      "demo": "Ver una tarjeta de ejemplo",
       "note": "Sin tarjeta de crédito · Listo en menos de 5 minutos",
+      "tabsLabel": "Elige tu tipo de negocio",
       "chipStamp": "¡Sello nuevo!",
       "chipStampBody": "María ya tiene 4 de 8",
       "chipMessage": "Mensaje listo para aprobar",
@@ -687,10 +694,17 @@
           "title": "Repite te dice cuándo escribirle",
           "body": "Cumpleaños, clientes que llevan días sin venir, un sello que falta… Te preparamos el mensaje y tú decides si se envía."
         }
+      },
+      "visual": {
+        "qr": "Escanea y listo",
+        "pin": "PIN personal",
+        "message": "Mensaje listo",
+        "approve": "Aprobar y enviar",
+        "hello": "Hola, María. Hace tiempo que no te vemos…"
       }
     },
     "features": {
-      "title": "Todo lo que necesita un local pequeño",
+      "title": "Todo lo que necesita un local, sin complicaciones",
       "subtitle": "Sin módulos raros ni manuales. Cada cosa hace una cosa y la hace bien.",
       "items": {
         "i1": {
@@ -717,7 +731,8 @@
           "title": "QR y carteles listos para imprimir",
           "body": "Descarga el cartel de mostrador y la tarjeta de mesa con el nombre y el color de tu local."
         }
-      }
+      },
+      "lead": "La tarjeta que da gusto abrir"
     },
     "who": {
       "title": "Pensado para las tres personas que lo usan",
@@ -737,16 +752,18 @@
       }
     },
     "preview": {
-      "title": "Un panel claro, desde el móvil o el ordenador",
-      "subtitle": "Clientes, premios, equipo y mensajes, cada cosa en su sitio.",
-      "alt": "Panel de Repite en un ordenador",
+      "title": "Lo ves todo desde un panel claro",
+      "subtitle": "Tus clientes, tus premios y tu equipo, cada cosa en su sitio.",
+      "panelCaption": "Tu panel: clientes, premios y equipo",
+      "phoneCaption": "Lo que ve tu cliente",
+      "alt": "Panel de Repite con la lista de clientes",
       "altPhone": "Tarjeta de sellos de Repite en el móvil"
     },
     "pricing": {
       "title": "Empieza gratis, crece cuando quieras",
       "subtitle": "Sin tarjeta de crédito y sin letra pequeña.",
       "badge": "30 días con todo incluido",
-      "trialNote": "Todas las cuentas empiezan con 30 días de Repite completo. Después sigues gratis o pasas a Repite.",
+      "trialNote": "Todas las cuentas empiezan con 30 días de Pro completo. Después sigues gratis o pasas a Pro.",
       "perMonth": "al mes",
       "forever": "para siempre",
       "free": {
@@ -762,9 +779,9 @@
         }
       },
       "pro": {
-        "name": "Repite",
+        "name": "Pro",
         "tagline": "Para locales que crecen.",
-        "cta": "Probar Repite 30 días",
+        "cta": "Probar Pro 30 días",
         "popular": "El más completo",
         "priceNote": "{eur} en España · {usd} en Venezuela",
         "features": {
@@ -800,7 +817,7 @@
         },
         "i6": {
           "q": "¿Qué pasa cuando llegue a 50 clientes?",
-          "a": "Tus clientes siguen funcionando con normalidad y no se borra nada. Para que se apunten más personas, pasas al plan Repite, que no tiene límite."
+          "a": "Tus clientes siguen funcionando con normalidad y no se borra nada. Para que se apunten más personas, pasas al plan Pro, que no tiene límite."
         },
         "i7": {
           "q": "¿Puedo usarlo con varios empleados?",
@@ -817,7 +834,7 @@
       }
     },
     "final": {
-      "title": "Tu próximo cliente fiel ya está tomando café",
+      "title": "Tu próximo cliente fiel ya está entrando por la puerta",
       "subtitle": "Empieza gratis y mira cuántos vuelven.",
       "cta": "Crear mi cuenta gratis"
     },
@@ -834,6 +851,162 @@
     "legal": {
       "draft": "Borrador pendiente de revisión legal antes del lanzamiento.",
       "back": "Volver al inicio"
+    },
+    "sectors": {
+      "title": "Hecho para negocios con clientes de siempre",
+      "subtitle": "Elige el tuyo y mira cómo se vería.",
+      "also": "Y también para panaderías, barberías, tiendas, gimnasios y cualquier local con clientes habituales.",
+      "learn": "Ver cómo funciona",
+      "example": "Premio de ejemplo"
+    },
+    "sticky": {
+      "cta": "Empezar gratis"
+    },
+    "sectorPage": {
+      "back": "Todos los negocios",
+      "rewards": "Ideas de premio",
+      "rewardsSubtitle": "Algunas formas de premiar a quien vuelve:",
+      "benefits": "Por qué te va a gustar",
+      "cta": "Empezar gratis",
+      "metaTitle": "{title} · Repite"
+    }
+  },
+  "sectors": {
+    "cafeteria": {
+      "name": "Cafetería",
+      "plural": "Cafeterías",
+      "namePlaceholder": "Café Aurora",
+      "rewardExample": "Un café gratis",
+      "rewardPlaceholder": "Un café gratis",
+      "hook": "Que el café de la mañana se convierta en el café de todos los días.",
+      "clientName": "Café Aurora",
+      "page": {
+        "title": "La tarjeta de sellos para tu cafetería",
+        "description": "Tarjeta de fidelización por QR para cafeterías: tus clientes suman un sello con cada café, sin descargar ninguna app.",
+        "slug": "cafeterias"
+      },
+      "benefits": {
+        "i1": {
+          "title": "El café de cada mañana cuenta",
+          "body": "Tus habituales suman un sello con cada visita, aunque solo pasen a por el café de siempre."
+        },
+        "i2": {
+          "title": "Recuerda lo de siempre",
+          "body": "Anota «cortado con avena» una vez y todo el equipo lo sabrá la próxima vez."
+        },
+        "i3": {
+          "title": "Un mensaje cuando llevan días sin venir",
+          "body": "Te preparamos el aviso y tú decides si se envía. Ni una palabra sin tu permiso."
+        }
+      },
+      "rewards": {
+        "i1": "Un café gratis",
+        "i2": "Un desayuno completo cada 12 visitas",
+        "i3": "Un dulce con tu café",
+        "i4": "Un café para llevar a un amigo"
+      }
+    },
+    "restaurante": {
+      "name": "Restaurante",
+      "plural": "Restaurantes",
+      "namePlaceholder": "La Cocina de Marta",
+      "rewardExample": "Un postre de la casa",
+      "rewardPlaceholder": "Un postre de la casa",
+      "hook": "Que quien vino a cenar una vez tenga motivos para volver a tu mesa.",
+      "clientName": "La Cocina de Marta",
+      "page": {
+        "title": "Fideliza a los clientes de tu restaurante",
+        "description": "Tarjeta de fidelización por QR para restaurantes y bares: premia a quien vuelve a tu mesa, sin apps ni contraseñas.",
+        "slug": "restaurantes"
+      },
+      "benefits": {
+        "i1": {
+          "title": "Cada visita suma",
+          "body": "Comidas, cenas y celebraciones: tu cliente ve cuánto le falta para su postre o su copa de la casa."
+        },
+        "i2": {
+          "title": "Conoce a tus mejores mesas",
+          "body": "Quién viene cada semana, quién lleva meses sin aparecer y a quién le toca un detalle."
+        },
+        "i3": {
+          "title": "Cumpleaños que llenan mesas",
+          "body": "Un mensaje el día de su cumpleaños (que tú apruebas) es un motivo para reservar contigo."
+        }
+      },
+      "rewards": {
+        "i1": "Un postre de la casa",
+        "i2": "Un café o una copa gratis",
+        "i3": "Un entrante para compartir",
+        "i4": "Una cena para dos"
+      }
+    },
+    "heladeria": {
+      "name": "Heladería",
+      "plural": "Heladerías",
+      "namePlaceholder": "Heladería Polo Norte",
+      "rewardExample": "Un helado gratis",
+      "rewardPlaceholder": "Un helado gratis",
+      "hook": "Que cada helado de verano sea el primero de muchos.",
+      "clientName": "Polo Norte",
+      "page": {
+        "title": "Que tus clientes vuelvan a tu heladería",
+        "description": "Tarjeta de sellos por QR para heladerías: un sello con cada helado y un premio que apetece conseguir.",
+        "slug": "heladerias"
+      },
+      "benefits": {
+        "i1": {
+          "title": "Un sello con cada helado",
+          "body": "Fácil para quien viene en familia y rápido para tu equipo en hora punta: un toque y listo."
+        },
+        "i2": {
+          "title": "Premios que apetecen",
+          "body": "Una bola extra, un cucurucho con toppings… tú eliges el premio y cuántos sellos hacen falta."
+        },
+        "i3": {
+          "title": "También cuando no es temporada",
+          "body": "Un aviso cuando llevan semanas sin venir mantiene viva tu clientela en los meses tranquilos."
+        }
+      },
+      "rewards": {
+        "i1": "Un helado gratis",
+        "i2": "Una bola extra",
+        "i3": "Un cucurucho con toppings",
+        "i4": "Un helado para llevar a casa"
+      }
+    },
+    "otro": {
+      "name": "Otro tipo de local",
+      "plural": "Otros locales",
+      "namePlaceholder": "Mi negocio",
+      "rewardExample": "Un detalle de la casa",
+      "rewardPlaceholder": "Un detalle de la casa",
+      "hook": "Que tus clientes de siempre sigan siendo de siempre.",
+      "clientName": "Mi negocio",
+      "page": {
+        "title": "La tarjeta de sellos para tu negocio",
+        "description": "Tarjeta de fidelización por QR para cualquier local con clientes habituales.",
+        "slug": "negocios"
+      },
+      "benefits": {
+        "i1": {
+          "title": "Sin apps ni contraseñas",
+          "body": "Tu cliente escanea un QR y ya tiene su tarjeta."
+        },
+        "i2": {
+          "title": "Un equipo que sabe lo de siempre",
+          "body": "Notas y preferencias de cada cliente, a mano en la tablet."
+        },
+        "i3": {
+          "title": "Mensajes que tú apruebas",
+          "body": "Repite los prepara; tú decides."
+        }
+      },
+      "rewards": {
+        "i1": "Un detalle de la casa",
+        "i2": "Un descuento en tu próxima visita",
+        "i3": "Un producto de regalo",
+        "i4": "Un servicio gratis"
+      }
     }
   }
 }

@@ -10,6 +10,15 @@ const page = await browser.newPage({
 });
 await page.goto(url);
 await page.waitForTimeout(900);
+// Recorre la página como una persona para que se activen las animaciones de entrada
+await page.evaluate(async () => {
+  for (let y = 0; y < document.body.scrollHeight; y += 400) {
+    window.scrollTo(0, y);
+    await new Promise((r) => setTimeout(r, 120));
+  }
+  window.scrollTo(0, 0);
+});
+await page.waitForTimeout(900);
 const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
 console.log("desbordamiento horizontal:", overflow);
 await page.screenshot({ path: out, fullPage: true });

@@ -69,10 +69,16 @@ test.describe("dueño: cuenta nueva", () => {
 
     // Asistente: negocio, local y premio en una pantalla
     await expect(page.getByRole("heading", { name: "Vamos a crear tu tarjeta de sellos" })).toBeVisible();
+    // El tipo de negocio adapta ejemplos y valores por defecto
+    await page.locator("label").filter({ hasText: "Heladería" }).click();
+    await expect(page.getByLabel("Heladería")).toBeChecked();
+    await expect(page.getByLabel("Nombre del negocio")).toHaveAttribute("placeholder", "Heladería Polo Norte");
+    await expect(page.getByLabel("Sellos para ganar el premio")).toHaveValue("10");
+    await expect(page.getByLabel("Premio", { exact: true })).toHaveAttribute("placeholder", "Un helado gratis");
     await page.getByLabel("Nombre del negocio").fill(`Tostadores ${id}`);
     await page.getByLabel("Nombre del local").fill(`Tostadores ${id}`);
     await expect(page.getByLabel("Enlace de tu tarjeta")).toHaveValue(`tostadores-${id}`);
-    await page.getByLabel("Premio", { exact: true }).fill("Un cappuccino gratis");
+    await page.getByLabel("Premio", { exact: true }).fill("Un helado de regalo");
     await page.getByRole("button", { name: "Crear mi tarjeta" }).click();
 
     await expect(page.getByRole("heading", { name: `Hola, Tostadores ${id}` })).toBeVisible();
@@ -126,7 +132,7 @@ test.describe("dueño: cuenta nueva", () => {
     await page.getByRole("button", { name: "Guardar ajustes" }).click();
     await expect(page.getByText("Ajustes guardados")).toBeVisible();
     await page.goto("/app/programa");
-    await page.getByLabel("Sellos para ganar el premio").fill("10");
+    await page.getByLabel("Sellos para ganar el premio").fill("12");
     await page.getByRole("button", { name: "Guardar programa" }).click();
     await expect(page.getByText("Programa guardado")).toBeVisible();
 
@@ -134,7 +140,9 @@ test.describe("dueño: cuenta nueva", () => {
     await page.context().clearCookies();
     await page.goto(`/c/tostadores-${id}`);
     await expect(page.getByRole("heading", { name: new RegExp(`Tu tarjeta de Tostadores ${id}`) })).toBeVisible();
-    await expect(page.getByText(/un cappuccino gratis/i)).toBeVisible();
+    await expect(page.getByText(/un helado de regalo/i)).toBeVisible();
+    const { data: loc } = await admin.from("locations").select("business_type").eq("slug", `tostadores-${id}`).single();
+    expect(loc?.business_type).toBe("heladeria");
 
     // Limpieza del usuario de prueba
     const { data } = await admin.auth.admin.listUsers({ perPage: 200 });

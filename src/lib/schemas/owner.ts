@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const businessSchema = z.object({
+  businessType: z.enum(["cafeteria", "restaurante", "heladeria", "otro"]).default("otro"),
   businessName: z.string().trim().min(2, "businessNameRequired").max(120),
   country: z.enum(["ES", "VE"]),
   locationName: z.string().trim().min(2, "locationNameRequired").max(120),
@@ -37,6 +38,7 @@ const optionalUrl = z
   .refine((v) => v === null || /^https:\/\/.+\..+/i.test(v), "urlInvalid");
 
 export const settingsSchema = z.object({
+  businessType: z.enum(["cafeteria", "restaurante", "heladeria", "otro"]).default("otro"),
   name: z.string().trim().min(2, "locationNameRequired").max(120),
   address: z
     .string()

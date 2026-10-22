@@ -1,6 +1,7 @@
 import "server-only";
 import { redirect } from "next/navigation";
 import { cache } from "react";
+import { asBusinessType, type BusinessType } from "@/domain/business-types";
 import { createUserClient } from "@/lib/supabase/server";
 
 export interface OwnerContext {
@@ -24,6 +25,7 @@ export interface OwnerContext {
     locale: "es-ES" | "es-VE";
     address: string | null;
     brandColor: string | null;
+    businessType: BusinessType;
     settings: Record<string, unknown>;
   };
 }
@@ -49,7 +51,7 @@ export const getOwnerContext = cache(async (): Promise<OwnerContext | null> => {
 
   let q = supabase
     .from("locations")
-    .select("id, name, slug, timezone, locale, address, brand_color, settings")
+    .select("id, name, slug, timezone, locale, address, brand_color, business_type, settings")
     .eq("organization_id", membership.organization_id)
     .is("deleted_at", null)
     .order("created_at")
@@ -80,6 +82,7 @@ export const getOwnerContext = cache(async (): Promise<OwnerContext | null> => {
       locale: location.locale as "es-ES" | "es-VE",
       address: location.address,
       brandColor: location.brand_color,
+      businessType: asBusinessType(location.business_type),
       settings: (location.settings ?? {}) as Record<string, unknown>,
     },
   };

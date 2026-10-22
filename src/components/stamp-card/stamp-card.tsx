@@ -1,7 +1,8 @@
 "use client";
 
-import { Coffee, Gift } from "lucide-react";
+import { Gift } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { SectorIcon } from "@/components/sector-icon";
 import { cn } from "@/lib/utils";
 
 export interface StampCardProps {
@@ -11,6 +12,8 @@ export interface StampCardProps {
   newStamp?: number | null;
   rewardName?: string;
   locationName?: string;
+  /** Tipo de negocio: decide el icono del sello. */
+  sector?: string | null;
   className?: string;
 }
 
@@ -21,7 +24,7 @@ function columnsFor(total: number) {
 }
 
 /** Elemento memorable de Repite: cada sello se "estampa" con una animación breve. */
-export function StampCard({ total, filled, newStamp, rewardName, locationName, className }: StampCardProps) {
+export function StampCard({ total, filled, newStamp, rewardName, locationName, sector, className }: StampCardProps) {
   const t = useTranslations();
   const safeFilled = Math.max(0, Math.min(filled, total));
   const left = total - safeFilled;
@@ -68,7 +71,7 @@ export function StampCard({ total, filled, newStamp, rewardName, locationName, c
                 )}
               >
                 {isFilled ? (
-                  <Coffee className="size-1/2" aria-hidden strokeWidth={2.25} />
+                  <SectorIcon sector={sector} className="size-1/2" aria-hidden strokeWidth={2.25} />
                 ) : isLast ? (
                   <Gift className="size-1/2" aria-hidden />
                 ) : (

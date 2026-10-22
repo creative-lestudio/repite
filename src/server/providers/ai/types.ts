@@ -4,6 +4,7 @@ export interface DraftRequest {
   type: OpportunityType;
   locale: "es-ES" | "es-VE";
   locationName: string;
+  businessType?: import("@/domain/business-types").BusinessType;
   tone?: string;
   customer: { firstName: string; usualOrder?: string | null; notes?: string[] };
   rewardName?: string;

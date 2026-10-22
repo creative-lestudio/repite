@@ -14,6 +14,7 @@ export default async function ProgramPage() {
       </div>
       <ProgramForm
         locationName={ctx.location.name}
+        sector={ctx.location.businessType}
         program={
           program ?? {
             stamps_required: 8,
