@@ -50,6 +50,6 @@ Guía paso a paso para no programadores: [`docs/PUBLICAR.md`](./docs/PUBLICAR.md
 
 1. Crea un proyecto en Supabase y aplica las migraciones: `pnpm exec supabase link --project-ref <ref>` y después `pnpm exec supabase db push`.
 2. Importa el repositorio en Vercel y define las variables de `.env.example` con los valores del proyecto.
-3. Vercel Cron llama a `/api/cron/tick` cada hora (definido en `vercel.json`).
+3. Las tareas programadas (corte 4) se añadirán a `vercel.json`; en el plan Hobby de Vercel solo se permiten tareas diarias.
 
 Más detalles de arquitectura y convenciones en [`CLAUDE.md`](./CLAUDE.md).
