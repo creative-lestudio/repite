@@ -33,7 +33,7 @@
     "coupon_not_found": "No encontramos ese cupón.",
     "coupon_already_redeemed": "Ese cupón ya se ha canjeado.",
     "coupon_expired": "Ese cupón ha caducado.",
-    "notificationsLimit": "Has usado todos los envíos de este mes con tu plan. Con Plus son ilimitados.",
+    "notificationsLimit": "Has usado todos los envíos de este mes con tu plan. Se renuevan cada mes.",
     "notifTitleRequired": "Escribe un título.",
     "notifBodyRequired": "Escribe el mensaje.",
     "templateNameRequired": "Ponle un nombre a la plantilla.",
@@ -397,21 +397,31 @@
     "signOut": "Cerrar sesión"
   },
   "plans": {
-    "names": { "starter": "Starter", "basic": "Basic", "plus": "Plus", "trial": "Prueba gratuita" },
+    "names": {
+      "starter": "Starter",
+      "esencial": "Esencial",
+      "growth": "Growth",
+      "red": "Red",
+      "trial": "Prueba gratuita"
+    },
     "taglines": {
       "starter": "Para probar con tu primer local",
-      "basic": "Para locales con clientela fija",
-      "plus": "Para marcas que quieren destacar"
+      "esencial": "Para locales con clientela fija",
+      "growth": "Para activar a tus clientes con campañas",
+      "red": "Para cadenas y franquicias"
     },
     "pitch": {
       "starter": "Tu tarjeta de sellos funcionando hoy, sin pagar nada.",
-      "basic": "Tu logotipo y tu icono en la tarjeta, tu tarjeta en el Wallet del móvil de tus clientes y notificaciones para que vuelvan.",
-      "plus": "Tarjeta con tu propio diseño, notificaciones ilimitadas con segmentos y plantillas propias, sin límite de clientes."
+      "esencial": "Clientes sin límite y tu tarjeta con tu propia marca: logotipo, icono, tipografía y diseño.",
+      "growth": "Todo lo de Esencial y herramientas para activar a tus clientes: cupones, niveles, avisos al móvil y métricas completas.",
+      "red": "Varios locales, permisos por sede y condiciones a medida. Cuéntanos tu caso y te preparamos una propuesta."
     },
+    "priceNote": "IVA no incluido. Sin permanencia: puedes cancelar cuando quieras.",
+    "requestInfo": "Solicitar información",
+    "redPrice": "A medida",
     "free": "Gratis",
     "forever": "para siempre",
     "perMonth": "al mes",
-    "popular": "El más elegido",
     "includes": "Todo lo de {plan}, más:",
     "current": "Tu plan",
     "groups": {
@@ -435,7 +445,7 @@
       "cardStyles": "Tarjeta clara, oscura o de tu color",
       "customCard": "Sube tu propio diseño de tarjeta",
       "wallet": "Tarjeta en Apple Wallet y Google Wallet",
-      "bonuses": "Sellos extra por reseña o historia",
+      "bonuses": "Sellos extra por publicar una historia",
       "coupons": "Cupones activos",
       "levels": "Niveles VIP",
       "proximity": "Aviso en el móvil al pasar cerca del local",
@@ -451,8 +461,7 @@
       "repite": "De Repite",
       "custom": "De Repite y propias",
       "full": "Completas, con ingresos estimados",
-      "basic": "Básicos (todos, nuevos, sin venir, cumpleaños)",
-      "all": "Todos: premio a punto, nivel VIP, frecuentes…",
+      "all": "Todos: premio a punto, nivel, frecuentes…",
       "guides": "Guías",
       "email": "Por correo",
       "priority": "Prioritario por WhatsApp",
@@ -463,15 +472,15 @@
     "whyTitle": "Por qué cuesta lo que cuesta",
     "why": {
       "starter": "Gratis de verdad: es nuestra forma de que pruebes con clientes reales antes de decidir.",
-      "basic": "Con {visits, plural, one {# visita extra} other {# visitas extra}} al mes de clientes que habrían dejado de venir, el plan ya se ha pagado (ticket de {ticket}).",
-      "plus": "Con {visits, plural, one {# visita extra} other {# visitas extra}} al mes ya se ha pagado (ticket de {ticket}). Y tu tarjeta es tuya: tu diseño, sin límite de clientes."
+      "esencial": "Como ejemplo: con un ticket de {ticket}, el precio equivale a {visits, plural, one {# visita} other {# visitas}} al mes. Depende de tu negocio; no es una promesa de resultados.",
+      "growth": "Como ejemplo: con un ticket de {ticket}, el precio equivale a {visits, plural, one {# visita} other {# visitas}} al mes. Depende de tu negocio; no es una promesa de resultados."
     }
   },
   "owner": {
     "notifications": {
       "pageTitle": "Notificaciones",
       "intro": "Envía un aviso al móvil de tus clientes: les llega a la tarjeta, a su Wallet y, si lo han activado, a su móvil. Solo a quien ha dado permiso para recibir comunicaciones.",
-      "lockedTitle": "Las notificaciones están incluidas desde Basic",
+      "lockedTitle": "Las notificaciones están incluidas en Growth",
       "lockedBody": "Avisa a tus clientes de una promoción, de que les falta poco para el premio o de que es su cumpleaños, directamente en su móvil.",
       "seePlans": "Ver planes",
       "templatesTitle": "Empieza con una plantilla",
@@ -483,7 +492,7 @@
         "welcome": "Bienvenida",
         "promo": "Promoción del día"
       },
-      "customTemplatesPlus": "Con Plus puedes guardar tus propias plantillas.",
+      "customTemplatesPlus": "Puedes guardar tus propias plantillas.",
       "deleteTemplate": "Borrar la plantilla {name}",
       "messageTitle": "Mensaje",
       "titleLabel": "Título",
@@ -493,7 +502,7 @@
       "variables": "Datos del cliente:",
       "audienceTitle": "¿A quién se lo envías?",
       "segmentLabel": "Segmento",
-      "plusOnly": "Plus",
+      "plusOnly": "Growth",
       "segments": {
         "all": "Todos mis clientes",
         "new": "Clientes nuevos",
@@ -520,7 +529,7 @@
       "audienceHint": "Todos los del segmento verán el aviso al abrir su tarjeta. Solo se escribe a quien dio permiso y no se repite a la misma persona antes del intervalo de tus Ajustes.",
       "channelCard": "Aviso en la tarjeta",
       "channelPush": "Avisos web",
-      "limitReached": "Has usado todos los envíos de este mes con tu plan. Con Plus son ilimitados.",
+      "limitReached": "Has usado todos los envíos de este mes con tu plan. Se renuevan cada mes.",
       "send": "Enviar",
       "confirmTitle": "¿Enviar a {count, plural, one {# cliente} other {# clientes}}?",
       "confirmSend": "Sí, enviar",
@@ -564,9 +573,9 @@
       "pause": "Pausar",
       "resume": "Activar",
       "delete": "Borrar",
-      "locked": "Los cupones están incluidos desde Basic.",
+      "locked": "Los cupones están incluidos en Growth.",
       "seePlans": "Ver planes",
-      "limitBasic": "Con Basic puedes tener un cupón activo a la vez. Con Plus, todos los que quieras."
+      "limitBasic": "Tu plan no incluye cupones."
     },
     "results": {
       "title": "Resultados",
@@ -589,8 +598,8 @@
       "returning": "Clientes que han repetido",
       "rewardsIssued": "Premios ganados",
       "rewardsRedeemed": "Premios canjeados",
-      "lockedTitle": "Más resultados con Plus",
-      "lockedBody": "Con Plus ves la evolución día a día, tus horas punta, la comparación con el periodo anterior y los ingresos estimados de los clientes que vuelven.",
+      "lockedTitle": "Más resultados con Growth",
+      "lockedBody": "Con Growth ves la evolución día a día, tus horas punta, la comparación con el periodo anterior y los ingresos estimados de los clientes que vuelven.",
       "lockedCta": "Ver planes"
     },
     "brand": {
@@ -932,22 +941,22 @@
       "usageHint": "Los clientes que ya tienes nunca se borran, aunque llegues al límite.",
       "current": "Tu plan ahora",
       "trialBody": "{count, plural, =0 {Hoy termina tu prueba.} one {Te queda # día de prueba con todo incluido.} other {Te quedan # días de prueba con todo incluido.}} Después sigues gratis con Starter (hasta {limit, number} clientes) o eliges el plan que te encaje.",
-      "starterBody": "Estás en Starter: hasta {limit, number} clientes, para siempre y sin tarjeta. Pasa a Basic o Plus cuando quieras más clientes o más personalización.",
-      "basicBody": "Tienes Basic: hasta {limit, number} clientes, tu logotipo y tu tarjeta en el Wallet.",
-      "plusBody": "Tienes Plus: clientes ilimitados y toda la personalización.",
+      "starterBody": "Estás en Starter: hasta {limit, number} clientes, para siempre y sin tarjeta. Pasa a Esencial o Growth cuando quieras más clientes o más herramientas.",
+      "basicBody": "Tienes Esencial: clientes sin límite y toda la personalización de tu tarjeta.",
+      "plusBody": "Tienes Growth: cupones, niveles, avisos al móvil y métricas completas.",
       "fullTitle": "Has llegado al límite de clientes",
       "fullBody": "Tus clientes actuales siguen funcionando con normalidad, pero nadie nuevo podrá crear su tarjeta hasta que cambies de plan.",
       "nearTitle": "Te estás acercando al límite",
       "nearBody": "Quedan {left, plural, one {# tarjeta} other {# tarjetas}} en tu plan.",
-      "request": "Pedir {plan, select, basic {Basic} plus {Plus} other {el plan}}",
+      "request": "Pedir {plan, select, esencial {Esencial} growth {Growth} other {el plan}}",
       "currentPlan": "Es tu plan",
       "freeAlways": "Siempre gratis",
       "compare": "Ver la comparativa completa",
-      "mailSubject": "Quiero el plan {plan, select, basic {Basic} plus {Plus} other {nuevo}} de Repite",
-      "mailBody": "Hola, quiero cambiar mi local «{location}» al plan {plan, select, basic {Basic} plus {Plus} other {nuevo}}.",
+      "mailSubject": "Quiero el plan {plan, select, esencial {Esencial} growth {Growth} red {Red} other {nuevo}} de Repite",
+      "mailBody": "Hola, quiero cambiar mi local «{location}» al plan {plan, select, esencial {Esencial} growth {Growth} red {Red} other {nuevo}}.",
       "soon": "El pago online estará disponible muy pronto. Mientras tanto, escríbenos y lo activamos en el día.",
       "endedTitle": "Tu prueba ha terminado",
-      "locked": "Incluido desde {plan, select, basic {Basic} plus {Plus} other {un plan superior}}",
+      "locked": "Incluido desde {plan, select, esencial {Esencial} growth {Growth} other {un plan superior}}",
       "upgradeLink": "Ver planes",
       "limitStaff": "Tu plan permite {limit, number} personas en el equipo. Pasa a un plan superior para añadir más.",
       "limitDevices": "Tu plan permite {limit, number} {limit, plural, one {tablet} other {tablets}}. Pasa a un plan superior para añadir más."
@@ -1086,7 +1095,7 @@
         },
         "i3": {
           "title": "Te recuerda cuando está cerca",
-          "body": "Con Plus, la tarjeta aparece en la pantalla de bloqueo al pasar cerca de tu local."
+          "body": "Función en validación: avisar en la pantalla de bloqueo al pasar cerca del local. Disponible cuando esté probada."
         },
         "i4": {
           "title": "Avisos cuando tú quieras",
@@ -1120,7 +1129,7 @@
       "style": "Estilo de tarjeta",
       "font": "Tipografía",
       "reward": "Tu premio",
-      "note": "Con Plus también subes tu propio diseño de tarjeta."
+      "note": "Con Esencial también subes tu propio diseño de tarjeta."
     },
     "pricing": {
       "title": "Un plan para cada momento de tu local",
@@ -1130,7 +1139,7 @@
       "venezuela": "Venezuela · $",
       "ctaFree": "Empezar gratis",
       "ctaTrial": "Probar 30 días gratis",
-      "badge": "30 días de Plus gratis",
+      "badge": "30 días de Growth gratis, sin tarjeta",
       "trialNote": "Pruebas todo, sin tarjeta de crédito. Al terminar eliges un plan o te quedas en Starter, gratis para siempre.",
       "compare": "Ver todas las diferencias entre planes",
       "guarantees": {
@@ -1157,15 +1166,15 @@
         },
         "i2": {
           "q": "¿De verdad hay un plan gratis?",
-          "a": "Sí. Starter incluye hasta 50 clientes, la tarjeta de sellos con tu nombre y tu color, el panel del equipo y el material para imprimir, sin límite de tiempo y sin pedirte la tarjeta de crédito. Cuando necesites más clientes o más personalización, pasas a Basic o a Plus."
+          "a": "Sí. Starter incluye hasta 50 clientes, la tarjeta de sellos con tu nombre y tu color, el panel del equipo y el material para imprimir, sin límite de tiempo y sin pedirte la tarjeta de crédito. Cuando necesites más clientes o más personalización, pasas a Esencial o a Growth."
         },
         "i3": {
           "q": "¿Cuánto tardo en ponerlo en marcha?",
-          "a": "Menos de 5 minutos: creas la cuenta, eliges tu premio, descargas el QR y vinculas la tablet. Te acompañamos paso a paso."
+          "a": "Normalmente en pocos minutos: creas la cuenta, eliges tu premio, descargas el QR y vinculas la tablet. Te acompañamos paso a paso."
         },
         "i4": {
           "q": "¿Cómo se guarda la tarjeta en el Wallet?",
-          "a": "El cliente escanea tu QR, crea su tarjeta y toca «Añadir a Apple Wallet» o «Añadir a Google Wallet». Desde ese momento la tarjeta vive en su móvil y se actualiza sola cada vez que suma un sello. Wallet está incluido desde el plan Basic."
+          "a": "El cliente escanea tu QR, crea su tarjeta y toca «Añadir a Apple Wallet» o «Añadir a Google Wallet». Desde ese momento la tarjeta vive en su móvil y se actualiza sola cada vez que suma un sello. Wallet está incluido desde el plan Esencial (función en validación)."
         },
         "i5": {
           "q": "¿Cómo sé si Repite me está dando resultados?",
@@ -1173,7 +1182,7 @@
         },
         "i6": {
           "q": "¿Qué pasa cuando llegue al límite de clientes?",
-          "a": "Tus clientes siguen funcionando con normalidad y no se borra nada. Para que se apunten más personas cambias de plan: Basic admite 100 clientes y Plus no tiene límite. Si algún día bajas de plan, tampoco pierdes ningún cliente."
+          "a": "Tus clientes siguen funcionando con normalidad y no se borra nada. Para que se apunten más personas cambias de plan: Esencial y Growth no tienen límite de clientes. Si algún día bajas de plan, tampoco pierdes ningún cliente."
         },
         "i7": {
           "q": "¿Puedo usarlo con varios empleados?",

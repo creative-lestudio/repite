@@ -50,7 +50,7 @@ test("Starter muestra «Creado con Repite», sin sellos extra, y limita la marca
     .insert({ name: `Starter ${id}`, country: "ES", currency: "EUR", plan: "starter" })
     .select("id")
     .single();
-  // Guarda un diseño de Plus: con Starter solo debe aplicarse el color
+  // Guarda un diseño de Esencial: con Starter solo debe aplicarse el color
   await admin.from("locations").insert({
     organization_id: org!.id,
     name: `Starter ${id}`,
@@ -68,7 +68,7 @@ test("Starter muestra «Creado con Repite», sin sellos extra, y limita la marca
   await expect(themed).toHaveAttribute("style", /#2E8B57/i);
   await expect(themed).not.toHaveAttribute("style", /playfair/);
 
-  // Un local Plus (Café Aurora) no muestra la etiqueta
+  // Un local Growth (Café Aurora) no muestra la etiqueta
   await page.goto("/c/cafe-aurora");
   await expect(page.getByText("Tarjeta creada con Repite")).toHaveCount(0);
 });

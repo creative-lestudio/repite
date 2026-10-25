@@ -29,7 +29,7 @@ test("cupón: el dueño lo crea, el cliente lo ve y el equipo lo canjea", async 
   const staff = await (await browser.newContext()).newPage();
 
   try {
-    // El dueño (Plus) crea el cupón
+    // El dueño (Growth) crea el cupón
     await ownerLogin(owner);
     await owner.goto("/app/cupones");
     await expect(owner.getByRole("heading", { name: "Cupones", level: 1 })).toBeVisible();
@@ -69,7 +69,7 @@ test("cupón: el dueño lo crea, el cliente lo ve y el equipo lo canjea", async 
   }
 });
 
-test("niveles VIP: el dueño Plus los guarda", async ({ page }) => {
+test("niveles VIP: el dueño Growth los guarda", async ({ page }) => {
   try {
     await ownerLogin(page);
     await page.goto("/app/programa");
@@ -87,7 +87,7 @@ test("niveles VIP: el dueño Plus los guarda", async ({ page }) => {
   }
 });
 
-test("aviso por cercanía: el dueño Plus guarda las coordenadas de su local", async ({ page }) => {
+test("aviso por cercanía: el dueño Growth guarda las coordenadas de su local", async ({ page }) => {
   try {
     await ownerLogin(page);
     await page.goto("/app/ajustes");

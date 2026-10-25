@@ -4,7 +4,7 @@ export type EffectivePlan = "trial" | PlanId;
 
 /** Plan que aplica ahora mismo. Igual que app.effective_plan en la base de datos. */
 export function effectivePlan(org: { plan: string; trialEndsAt: string | null }, now = new Date()): EffectivePlan {
-  if (org.plan === "basic" || org.plan === "plus") return org.plan;
+  if (org.plan === "esencial" || org.plan === "growth") return org.plan;
   if (org.plan === "trial" && (!org.trialEndsAt || new Date(org.trialEndsAt) > now)) return "trial";
   return "starter";
 }
@@ -23,7 +23,7 @@ export function allowsCustomization(plan: EffectivePlan, level: Customization): 
 
 /** Primer plan de pago que incluye un nivel de personalización (para sugerir la mejora). */
 export function planFor(level: Customization): PlanId {
-  return level === "full" ? "plus" : level === "logo" ? "basic" : "starter";
+  return level === "color" ? "starter" : "esencial";
 }
 
 export function trialDaysLeft(trialEndsAt: string | null, now = new Date()): number {

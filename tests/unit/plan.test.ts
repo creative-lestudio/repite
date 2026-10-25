@@ -13,9 +13,13 @@ import {
 const now = new Date("2026-10-22T10:00:00Z");
 
 describe("effectivePlan", () => {
-  it("basic y plus son ellos mismos", () => {
-    expect(effectivePlan({ plan: "basic", trialEndsAt: null }, now)).toBe("basic");
-    expect(effectivePlan({ plan: "plus", trialEndsAt: null }, now)).toBe("plus");
+  it("esencial y growth son ellos mismos", () => {
+    expect(effectivePlan({ plan: "esencial", trialEndsAt: null }, now)).toBe("esencial");
+    expect(effectivePlan({ plan: "growth", trialEndsAt: null }, now)).toBe("growth");
+  });
+  it("los nombres antiguos ya no existen: caen en starter", () => {
+    expect(effectivePlan({ plan: "basic", trialEndsAt: null }, now)).toBe("starter");
+    expect(effectivePlan({ plan: "plus", trialEndsAt: null }, now)).toBe("starter");
   });
   it("prueba en curso", () =>
     expect(effectivePlan({ plan: "trial", trialEndsAt: "2026-11-01T00:00:00Z" }, now)).toBe("trial"));
@@ -28,37 +32,52 @@ describe("effectivePlan", () => {
 });
 
 describe("funciones por plan", () => {
-  it("los límites crecen con el plan", () => {
+  it("los límites y precios (en euros, IVA no incluido)", () => {
     expect(PLANS.starter.customers).toBe(50);
-    expect(PLANS.basic.customers).toBe(100);
-    expect(PLANS.plus.customers).toBeNull();
-    expect(PLANS.basic.price).toEqual({ EUR: 25, USD: 20 });
-    expect(PLANS.plus.price).toEqual({ EUR: 50, USD: 40 });
+    expect(PLANS.esencial.customers).toBeNull();
+    expect(PLANS.growth.customers).toBeNull();
+    expect(PLANS.starter.price).toBe(0);
+    expect(PLANS.esencial.price).toBe(25);
+    expect(PLANS.growth.price).toBe(49);
+    expect(PLANS.growth.staff).toBe(20);
   });
 
-  it("la prueba da todo lo de plus", () => {
-    expect(planSpec("trial")).toEqual(PLANS.plus);
+  it("la prueba da todo lo de growth", () => {
+    expect(planSpec("trial")).toEqual(PLANS.growth);
+  });
+
+  it("cupones, niveles, notificaciones y métricas completas son de growth", () => {
+    for (const p of ["starter", "esencial"] as const) {
+      expect(PLANS[p].coupons).toBe(0);
+      expect(PLANS[p].levels).toBe(false);
+      expect(PLANS[p].notifications).toBe(0);
+      expect(PLANS[p].fullMetrics).toBe(false);
+    }
+    expect(PLANS.growth.coupons).toBeNull();
+    expect(PLANS.growth.levels).toBe(true);
+    expect(PLANS.growth.notifications).toBe(20);
+    expect(PLANS.growth.fullMetrics).toBe(true);
   });
 
   it("la personalización se desbloquea por niveles", () => {
     expect(allowsCustomization("starter", "color")).toBe(true);
     expect(allowsCustomization("starter", "logo")).toBe(false);
-    expect(allowsCustomization("basic", "logo")).toBe(true);
-    expect(allowsCustomization("basic", "full")).toBe(false);
-    expect(allowsCustomization("plus", "full")).toBe(true);
+    expect(allowsCustomization("esencial", "logo")).toBe(true);
+    expect(allowsCustomization("esencial", "full")).toBe(true);
+    expect(allowsCustomization("growth", "full")).toBe(true);
     expect(allowsCustomization("trial", "full")).toBe(true);
   });
 
   it("indica qué plan desbloquea cada nivel", () => {
-    expect(planFor("logo")).toBe("basic");
-    expect(planFor("full")).toBe("plus");
+    expect(planFor("logo")).toBe("esencial");
+    expect(planFor("full")).toBe("esencial");
   });
 
   it("solo starter muestra «Creado con Repite» y sin Wallet", () => {
     expect(PLANS.starter.poweredBy).toBe(true);
-    expect(PLANS.basic.poweredBy).toBe(false);
+    expect(PLANS.esencial.poweredBy).toBe(false);
     expect(PLANS.starter.wallet).toBe(false);
-    expect(PLANS.basic.wallet).toBe(true);
+    expect(PLANS.esencial.wallet).toBe(true);
   });
 });
 

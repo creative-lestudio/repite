@@ -24,19 +24,19 @@ Principios vigentes: multi-tenant por `organization_id`; el libro de sellos es a
 
 ## B.2 Arquitectura objetivo (sin microservicios)
 
-| Área | Hoy | Objetivo | Cuándo |
-| --- | --- | --- | --- |
-| Entornos | Un proyecto Supabase = producción | `staging` (proyecto y despliegue de vista previa) + `production`; migraciones con el mismo script | P0 |
-| Planes y derechos | Tabla `organizations.plan` + funciones SQL + `src/config/plan.ts` | Igual, más tabla `subscriptions` sincronizada por webhook de Stripe; **la BD sigue siendo la fuente de verdad** | P1 |
-| Facturación | Manual por correo | Stripe Billing + portal de cliente; IVA gestionado por Stripe Tax o por el titular | P1 |
-| Tareas programadas | No hay | Un endpoint `/api/cron/tick` (Vercel Cron diario en Hobby; GitHub Actions/`pg_cron` si se necesita horario) con `job_runs` idempotente | P1 |
-| Eventos de dominio | No | Tabla `domain_events` (outbox) escrita por las funciones del libro; la usarán TPV/analítica/webhooks | P1 (solo el esquema) |
-| Mensajería | Interfaz `MessagingProvider` con `mock` | Un adaptador por canal (correo, WhatsApp oficial, Wallet) con cuotas y costes por canal | P2 |
-| Consentimientos | Marca en `customers` | `consent_events` append-only (finalidad, origen, versión, retirada) + marca derivada | **P0** |
-| Observabilidad | Logs de Vercel | Sentry (errores), registro de latencias, alertas de disponibilidad | P1 |
-| Seguridad HTTP | Cabeceras básicas | + CSP, `Permissions-Policy` ajustada, HSTS (Vercel) | P1 |
-| Multilocal («Red») | Modelo preparado; UI limitada a 1 local | Roles por local, panel consolidado, facturación consolidada | P2 |
-| API pública / partners | No | Solo si hay demanda; basada en los mismos casos de uso | P3 |
+| Área                   | Hoy                                                               | Objetivo                                                                                                                               | Cuándo               |
+| ---------------------- | ----------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------------------- |
+| Entornos               | Un proyecto Supabase = producción                                 | `staging` (proyecto y despliegue de vista previa) + `production`; migraciones con el mismo script                                      | P0                   |
+| Planes y derechos      | Tabla `organizations.plan` + funciones SQL + `src/config/plan.ts` | Igual, más tabla `subscriptions` sincronizada por webhook de Stripe; **la BD sigue siendo la fuente de verdad**                        | P1                   |
+| Facturación            | Manual por correo                                                 | Stripe Billing + portal de cliente; IVA gestionado por Stripe Tax o por el titular                                                     | P1                   |
+| Tareas programadas     | No hay                                                            | Un endpoint `/api/cron/tick` (Vercel Cron diario en Hobby; GitHub Actions/`pg_cron` si se necesita horario) con `job_runs` idempotente | P1                   |
+| Eventos de dominio     | No                                                                | Tabla `domain_events` (outbox) escrita por las funciones del libro; la usarán TPV/analítica/webhooks                                   | P1 (solo el esquema) |
+| Mensajería             | Interfaz `MessagingProvider` con `mock`                           | Un adaptador por canal (correo, WhatsApp oficial, Wallet) con cuotas y costes por canal                                                | P2                   |
+| Consentimientos        | Marca en `customers`                                              | `consent_events` append-only (finalidad, origen, versión, retirada) + marca derivada                                                   | **P0**               |
+| Observabilidad         | Logs de Vercel                                                    | Sentry (errores), registro de latencias, alertas de disponibilidad                                                                     | P1                   |
+| Seguridad HTTP         | Cabeceras básicas                                                 | + CSP, `Permissions-Policy` ajustada, HSTS (Vercel)                                                                                    | P1                   |
+| Multilocal («Red»)     | Modelo preparado; UI limitada a 1 local                           | Roles por local, panel consolidado, facturación consolidada                                                                            | P2                   |
+| API pública / partners | No                                                                | Solo si hay demanda; basada en los mismos casos de uso                                                                                 | P3                   |
 
 ## B.3 Decisiones técnicas justificadas
 

@@ -87,7 +87,7 @@ export async function saveProgramAction(_prev: FormState, formData: FormData): P
     reward_expiry_days: v.expiryDays,
     bonus_story_enabled: bonuses && v.bonusStory,
     bonus_review_enabled: bonuses && v.bonusReview,
-    // Los niveles VIP son de Plus: con otro plan se conservan los guardados
+    // Los niveles VIP son de Growth: con otro plan se conservan los guardados
     ...(planSpec(ctx.organization.effectivePlan).levels
       ? {
           levels: asJson(

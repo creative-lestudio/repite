@@ -25,7 +25,7 @@ values
 
 -- Organizaciones y locales
 insert into public.organizations (id, name, country, currency, plan, onboarding) values
-  ('a0000000-0000-4000-8000-000000000001', 'Café Aurora', 'ES', 'EUR', 'plus',
+  ('a0000000-0000-4000-8000-000000000001', 'Café Aurora', 'ES', 'EUR', 'growth',
    '{"account":true,"location":true,"program":true,"qr":true}'),
   ('b0000000-0000-4000-8000-000000000001', 'Panadería Sol', 'VE', 'USD', 'starter',
    '{"account":true,"location":true,"program":true}');

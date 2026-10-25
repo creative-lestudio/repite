@@ -9,55 +9,51 @@ import { CellValue } from "./cell";
 // Funciones que se destacan en cada tarjeta (el resto está en la comparativa completa)
 const HIGHLIGHTS: Record<PlanId, string[]> = {
   starter: ["customers", "staff", "devices", "nameColor", "qr", "csv"],
-  basic: ["customers", "staff", "devices", "logo", "icon", "noBadge", "wallet", "notifications", "coupons", "bonuses"],
-  plus: ["customers", "staff", "devices", "notifications", "segments", "coupons", "levels", "proximity", "customCard"],
+  esencial: ["customers", "staff", "devices", "logo", "icon", "font", "customCard", "noBadge", "wallet", "bonuses"],
+  growth: ["staff", "devices", "coupons", "levels", "notifications", "segments", "templates", "metrics", "proximity"],
 };
-const INHERITS: Partial<Record<PlanId, PlanId>> = { basic: "starter", plus: "basic" };
+const INHERITS: Partial<Record<PlanId, PlanId>> = { esencial: "starter", growth: "esencial" };
 const ROWS = Object.fromEntries(MATRIX.flatMap((g) => g.rows.map((r) => [r.key, r])));
 
-function money(currency: "EUR" | "USD", amount: number) {
-  return new Intl.NumberFormat("es-ES", { style: "currency", currency, maximumFractionDigits: 0 }).format(amount);
+function money(amount: number) {
+  return new Intl.NumberFormat("es-ES", { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(
+    amount,
+  );
 }
 
 export function PlanCards({
-  currency,
   ticket,
   current,
   renderCta,
+  renderRedCta,
 }: {
-  currency: "EUR" | "USD";
   /** Ticket medio para explicar cuántas visitas extra pagan el plan. */
   ticket: number;
   current?: string;
   renderCta: (plan: PlanId) => React.ReactNode;
+  /** Botón de la tarjeta «Red» (solicitar información). */
+  renderRedCta: () => React.ReactNode;
 }) {
   const t = useTranslations("plans");
   return (
-    <div className="grid gap-4 lg:grid-cols-3">
+    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {PLAN_ORDER.map((p) => {
-        const price = PLANS[p].price[currency];
-        const popular = p === "basic";
+        const price = PLANS[p].price;
         const parent = INHERITS[p];
         return (
           <div
             key={p}
             className={cn(
               "bg-surface shadow-card ring-cream-200 relative flex flex-col gap-4 rounded-xl p-6 ring-1",
-              popular && "ring-primary ring-2",
               current === p && "bg-primary-soft/40",
             )}
           >
-            {popular && (
-              <span className="bg-primary absolute -top-3 left-6 rounded-full px-3 py-1 text-xs font-bold text-white">
-                {t("popular")}
-              </span>
-            )}
             <div>
               <h3 className="font-display text-2xl font-extrabold">{t(`names.${p}`)}</h3>
               <p className="text-muted text-sm">{t(`taglines.${p}`)}</p>
             </div>
             <p className="font-display text-4xl font-extrabold">
-              {price === 0 ? t("free") : money(currency, price)}{" "}
+              {price === 0 ? t("free") : money(price)}{" "}
               <span className="text-muted text-base font-semibold">{price === 0 ? t("forever") : t("perMonth")}</span>
             </p>
             <p className="text-sm">{t(`pitch.${p}`)}</p>
@@ -93,8 +89,8 @@ export function PlanCards({
                 : t(
                     `why.${p}` as never,
                     {
-                      visits: breakEvenVisits(p, currency, ticket),
-                      ticket: money(currency, ticket),
+                      visits: breakEvenVisits(p, ticket),
+                      ticket: money(ticket),
                     } as never,
                   )}
             </p>
@@ -102,6 +98,15 @@ export function PlanCards({
           </div>
         );
       })}
+      <div className="bg-surface shadow-card ring-cream-200 flex flex-col gap-4 rounded-xl p-6 ring-1">
+        <div>
+          <h3 className="font-display text-2xl font-extrabold">{t("names.red")}</h3>
+          <p className="text-muted text-sm">{t("taglines.red")}</p>
+        </div>
+        <p className="font-display text-4xl font-extrabold">{t("redPrice")}</p>
+        <p className="flex-1 text-sm">{t("pitch.red")}</p>
+        {renderRedCta()}
+      </div>
     </div>
   );
 }

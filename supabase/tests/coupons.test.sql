@@ -1,9 +1,9 @@
 -- Cupones: emisión idempotente por audiencia, límites por plan, canje y aislamiento.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(14);
+select plan(15);
 
--- Aurora (plus): un cupón para todos, uno de bienvenida y uno de cumpleaños
+-- Aurora (growth): un cupón para todos, uno de bienvenida y uno de cumpleaños
 insert into public.coupons (id, organization_id, title, audience) values
   ('c0000000-0000-4000-8000-000000000001', 'a0000000-0000-4000-8000-000000000001', '15 % en tu próxima compra', 'all'),
   ('c0000000-0000-4000-8000-000000000002', 'a0000000-0000-4000-8000-000000000001', 'Bienvenida', 'welcome'),
@@ -42,14 +42,16 @@ select throws_ok(
     'a0000000-0000-4000-8000-0000000000a1', 'a0000000-0000-4000-8000-0000000000d1')$$,
   'P0001', 'coupon_expired', 'un cupón caducado no se canjea');
 
--- Starter no emite cupones; Basic solo el primero
+-- Starter y Esencial no emiten cupones; Growth sí
 insert into public.customers (id, organization_id, name, phone_e164)
   values ('d0000000-0000-4000-8000-000000000002', 'b0000000-0000-4000-8000-000000000001', 'Cliente Sol 2', '+584141111111');
 insert into public.coupons (organization_id, title, audience) values ('b0000000-0000-4000-8000-000000000001', 'Cupón Sol', 'all');
 select is(public.issue_coupons('d0000000-0000-4000-8000-000000000002'), 0, 'Starter no emite cupones');
-update public.organizations set plan = 'basic' where id = 'b0000000-0000-4000-8000-000000000001';
+update public.organizations set plan = 'esencial' where id = 'b0000000-0000-4000-8000-000000000001';
+select is(public.issue_coupons('d0000000-0000-4000-8000-000000000002'), 0, 'Esencial no emite cupones');
+update public.organizations set plan = 'growth' where id = 'b0000000-0000-4000-8000-000000000001';
 insert into public.coupons (organization_id, title, audience) values ('b0000000-0000-4000-8000-000000000001', 'Segundo cupón', 'all');
-select is(public.issue_coupons('d0000000-0000-4000-8000-000000000002'), 1, 'Basic emite solo uno');
+select is(public.issue_coupons('d0000000-0000-4000-8000-000000000002'), 2, 'Growth emite todos');
 
 -- Aislamiento del dueño de Sol
 create or replace function pg_temp.login(uid uuid) returns void language sql as $$

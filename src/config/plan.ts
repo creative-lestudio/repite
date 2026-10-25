@@ -1,14 +1,14 @@
 // Planes de Repite. Única fuente de verdad: la web pública, el panel y los límites leen de aquí.
 // El límite de clientes también vive en la base de datos (app.customer_limit): si lo cambias aquí, cambia allí.
-export type PlanId = "starter" | "basic" | "plus";
+export type PlanId = "starter" | "esencial" | "growth";
 
 /** Nivel de personalización de la marca que incluye el plan. */
 export type Customization = "color" | "logo" | "full";
 
 export interface PlanSpec {
   id: PlanId;
-  /** Precio mensual por moneda (0 = gratis). */
-  price: { EUR: number; USD: number };
+  /** Precio mensual en euros, IVA no incluido (0 = gratis). */
+  price: number;
   /** null = sin límite */
   customers: number | null;
   staff: number | null;
@@ -28,6 +28,8 @@ export interface PlanSpec {
   advancedSegments: boolean;
   /** Guardar plantillas propias. */
   customTemplates: boolean;
+  /** Resultados con detalle y comparación con el periodo anterior. */
+  fullMetrics: boolean;
   /** Muestra «Creado con Repite» en la tarjeta del cliente. */
   poweredBy: boolean;
 }
@@ -35,7 +37,7 @@ export interface PlanSpec {
 export const PLANS: Record<PlanId, PlanSpec> = {
   starter: {
     id: "starter",
-    price: { EUR: 0, USD: 0 },
+    price: 0,
     customers: 50,
     staff: 2,
     devices: 1,
@@ -48,55 +50,58 @@ export const PLANS: Record<PlanId, PlanSpec> = {
     notifications: 0,
     advancedSegments: false,
     customTemplates: false,
+    fullMetrics: false,
     poweredBy: true,
   },
-  basic: {
-    id: "basic",
-    price: { EUR: 25, USD: 20 },
-    customers: 100,
+  esencial: {
+    id: "esencial",
+    price: 25,
+    customers: null,
     staff: 5,
     devices: 2,
-    customization: "logo",
+    customization: "full",
     wallet: true,
     bonuses: true,
-    coupons: 1,
+    coupons: 0,
     levels: false,
     proximity: false,
-    notifications: 4,
+    notifications: 0,
     advancedSegments: false,
     customTemplates: false,
+    fullMetrics: false,
     poweredBy: false,
   },
-  plus: {
-    id: "plus",
-    price: { EUR: 50, USD: 40 },
+  growth: {
+    id: "growth",
+    price: 49,
     customers: null,
-    staff: null,
-    devices: null,
+    staff: 20,
+    devices: 5,
     customization: "full",
     wallet: true,
     bonuses: true,
     coupons: null,
     levels: true,
     proximity: true,
-    notifications: null,
+    notifications: 20,
     advancedSegments: true,
     customTemplates: true,
+    fullMetrics: true,
     poweredBy: false,
   },
 };
 
-export const PLAN_ORDER: PlanId[] = ["starter", "basic", "plus"];
+export const PLAN_ORDER: PlanId[] = ["starter", "esencial", "growth"];
 
 export const PLAN = {
   trialDays: 30,
-  /** Durante la prueba se disfruta todo lo de este plan. */
-  trialPlan: "plus" as PlanId,
+  /** Durante la prueba (sin tarjeta) se disfruta todo lo de este plan; al acabar vuelve a Starter. */
+  trialPlan: "growth" as PlanId,
 } as const;
 
-export function formatPrice(currency: "EUR" | "USD", plan: PlanId, locale = "es-ES") {
-  return new Intl.NumberFormat(locale, { style: "currency", currency, maximumFractionDigits: 0 }).format(
-    PLANS[plan].price[currency],
+export function formatPrice(plan: PlanId, locale = "es-ES") {
+  return new Intl.NumberFormat(locale, { style: "currency", currency: "EUR", maximumFractionDigits: 0 }).format(
+    PLANS[plan].price,
   );
 }
 
@@ -106,8 +111,8 @@ export type Cell = boolean | number | "unlimited" | string;
 export interface MatrixRow {
   key: string;
   starter: Cell;
-  basic: Cell;
-  plus: Cell;
+  esencial: Cell;
+  growth: Cell;
   /** Aún no está disponible: se muestra con la etiqueta «Próximamente». */
   soon?: boolean;
 }
@@ -122,47 +127,47 @@ export const MATRIX: MatrixGroup[] = [
   {
     key: "base",
     rows: [
-      { key: "customers", starter: 50, basic: 100, plus: "unlimited" },
-      { key: "staff", starter: 2, basic: 5, plus: "unlimited" },
-      { key: "devices", starter: 1, basic: 2, plus: "unlimited" },
-      { key: "qr", starter: true, basic: true, plus: true },
-      { key: "csv", starter: true, basic: true, plus: true },
+      { key: "customers", starter: 50, esencial: "unlimited", growth: "unlimited" },
+      { key: "staff", starter: 2, esencial: 5, growth: 20 },
+      { key: "devices", starter: 1, esencial: 2, growth: 5 },
+      { key: "qr", starter: true, esencial: true, growth: true },
+      { key: "csv", starter: true, esencial: true, growth: true },
     ],
   },
   {
     key: "brand",
     rows: [
-      { key: "nameColor", starter: true, basic: true, plus: true },
-      { key: "logo", starter: false, basic: true, plus: true },
-      { key: "icon", starter: false, basic: true, plus: true },
-      { key: "noBadge", starter: false, basic: true, plus: true },
-      { key: "font", starter: false, basic: false, plus: true },
-      { key: "shapes", starter: false, basic: false, plus: true },
-      { key: "cardStyles", starter: false, basic: false, plus: true },
-      { key: "customCard", starter: false, basic: false, plus: true },
+      { key: "nameColor", starter: true, esencial: true, growth: true },
+      { key: "logo", starter: false, esencial: true, growth: true },
+      { key: "icon", starter: false, esencial: true, growth: true },
+      { key: "noBadge", starter: false, esencial: true, growth: true },
+      { key: "font", starter: false, esencial: true, growth: true },
+      { key: "shapes", starter: false, esencial: true, growth: true },
+      { key: "cardStyles", starter: false, esencial: true, growth: true },
+      { key: "customCard", starter: false, esencial: true, growth: true },
     ],
   },
   {
     key: "loyalty",
     rows: [
-      { key: "wallet", starter: false, basic: true, plus: true },
-      { key: "bonuses", starter: false, basic: true, plus: true },
-      { key: "coupons", starter: false, basic: 1, plus: "unlimited" },
-      { key: "levels", starter: false, basic: false, plus: true },
-      { key: "proximity", starter: false, basic: false, plus: true },
-      { key: "notifications", starter: false, basic: 4, plus: "unlimited" },
-      { key: "segments", starter: false, basic: "basic", plus: "all" },
-      { key: "templates", starter: false, basic: "repite", plus: "custom" },
-      { key: "metrics", starter: "summary", basic: "summary", plus: "full" },
+      { key: "wallet", starter: false, esencial: true, growth: true, soon: true },
+      { key: "bonuses", starter: false, esencial: true, growth: true },
+      { key: "coupons", starter: false, esencial: false, growth: "unlimited" },
+      { key: "levels", starter: false, esencial: false, growth: true },
+      { key: "proximity", starter: false, esencial: false, growth: true, soon: true },
+      { key: "notifications", starter: false, esencial: false, growth: 20 },
+      { key: "segments", starter: false, esencial: false, growth: "all" },
+      { key: "templates", starter: false, esencial: false, growth: "custom" },
+      { key: "metrics", starter: "summary", esencial: "summary", growth: "full" },
     ],
   },
   {
     key: "support",
-    rows: [{ key: "support", starter: "guides", basic: "email", plus: "priority" }],
+    rows: [{ key: "support", starter: "guides", esencial: "email", growth: "priority" }],
   },
 ];
 
 /** Cuántas visitas extra al mes pagan el plan, con un ticket medio (para explicar el precio). */
-export function breakEvenVisits(plan: PlanId, currency: "EUR" | "USD", ticket: number): number {
-  return ticket > 0 ? Math.ceil(PLANS[plan].price[currency] / ticket) : 0;
+export function breakEvenVisits(plan: PlanId, ticket: number): number {
+  return ticket > 0 ? Math.ceil(PLANS[plan].price / ticket) : 0;
 }

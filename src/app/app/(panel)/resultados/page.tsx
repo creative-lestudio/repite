@@ -3,7 +3,7 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { BarChart } from "@/components/owner/bar-chart";
 import { Card } from "@/components/ui";
-import { allowsCustomization } from "@/domain/plan";
+import { planSpec } from "@/domain/plan";
 import { estimatedRevenue, pctChange, peakHour, returnRate, visitsPerCustomer } from "@/domain/metrics";
 import { requireOwner } from "@/server/auth/owner";
 import { getMetrics } from "@/server/repositories/owner";
@@ -31,8 +31,7 @@ export default async function ResultsPage({ searchParams }: { searchParams: Prom
   const sp = await searchParams;
   const days = (PERIODS as readonly number[]).includes(Number(sp.dias)) ? Number(sp.dias) : 30;
   const [t, m] = await Promise.all([getTranslations("owner.results"), getMetrics(ctx, days)]);
-  // allowsCustomization("full") equivale a tener las funciones de Plus (o la prueba)
-  const full = allowsCustomization(ctx.organization.effectivePlan, "full");
+  const full = planSpec(ctx.organization.effectivePlan).fullMetrics;
   const ticket = Number(ctx.location.settings.average_ticket ?? 0) || null;
   const revenue = estimatedRevenue(m.repeatVisits, ticket);
   const currency = ctx.organization.currency;

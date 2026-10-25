@@ -98,7 +98,7 @@ export function ProgramForm({
           <p className="text-muted mb-1 text-sm">{t("bonusHint")}</p>
           {!bonusesAllowed && (
             <p className="bg-cream-100 mb-2 flex flex-wrap items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-semibold">
-              {tp("locked", { plan: "basic" })}
+              {tp("locked", { plan: "growth" })}
               <Link href="/app/plan" className="text-primary underline underline-offset-4">
                 {tp("upgradeLink")}
               </Link>
@@ -124,7 +124,7 @@ export function ProgramForm({
           <p className="text-muted text-sm">{t("levelsHint")}</p>
           {!levelsAllowed && (
             <p className="bg-cream-100 flex flex-wrap items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-semibold">
-              {tp("locked", { plan: "plus" })}
+              {tp("locked", { plan: "growth" })}
               <Link href="/app/plan" className="text-primary underline underline-offset-4">
                 {tp("upgradeLink")}
               </Link>

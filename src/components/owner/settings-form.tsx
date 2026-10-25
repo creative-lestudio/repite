@@ -120,7 +120,7 @@ export function SettingsForm({ v }: { v: SettingsValues }) {
         <p className="text-muted text-sm">{t("proximityHint")}</p>
         {!v.proximityAllowed && (
           <p className="bg-cream-100 flex flex-wrap items-center gap-x-3 rounded-lg px-3 py-2 text-sm font-semibold">
-            {tp("locked", { plan: "plus" })}
+            {tp("locked", { plan: "growth" })}
             <Link href="/app/plan" className="text-primary underline underline-offset-4">
               {tp("upgradeLink")}
             </Link>

@@ -39,7 +39,15 @@ interface Props {
 }
 
 /** Sección que el plan no incluye: se ve, se explica y no se puede tocar. */
-function Locked({ locked, need, children }: { locked: boolean; need: "basic" | "plus"; children: React.ReactNode }) {
+function Locked({
+  locked,
+  need,
+  children,
+}: {
+  locked: boolean;
+  need: "esencial" | "growth";
+  children: React.ReactNode;
+}) {
   const t = useTranslations("owner.plan");
   if (!locked) return <>{children}</>;
   return (
@@ -202,7 +210,7 @@ export function BrandForm({ initial, locationName, sector, logoUrl, stampImageUr
       <div className="flex flex-col gap-5">
         <Card className="flex flex-col gap-3">
           <h2 className="text-lg font-bold">{t("logoTitle")}</h2>
-          <Locked locked={!canLogo} need="basic">
+          <Locked locked={!canLogo} need="esencial">
             <ImageField kind="logo" url={logoUrl} label={t("logoTitle")} hint={t("logoHint")} onDone={refresh} />
           </Locked>
         </Card>
@@ -252,7 +260,7 @@ export function BrandForm({ initial, locationName, sector, logoUrl, stampImageUr
 
         <Card className="flex flex-col gap-3">
           <h2 className="text-lg font-bold">{t("iconTitle")}</h2>
-          <Locked locked={!canLogo} need="basic">
+          <Locked locked={!canLogo} need="esencial">
             <div className="grid grid-cols-4 gap-2 sm:grid-cols-6" role="group" aria-label={t("iconTitle")}>
               <Choice
                 active={b.stampIcon === null}
@@ -281,7 +289,7 @@ export function BrandForm({ initial, locationName, sector, logoUrl, stampImageUr
 
         <Card className="flex flex-col gap-3">
           <h2 className="text-lg font-bold">{t("fontTitle")}</h2>
-          <Locked locked={!canFull} need="plus">
+          <Locked locked={!canFull} need="esencial">
             <div className="grid gap-2 sm:grid-cols-2">
               {FONT_KEYS.map((k) => (
                 <Choice
@@ -300,7 +308,7 @@ export function BrandForm({ initial, locationName, sector, logoUrl, stampImageUr
 
         <Card className="flex flex-col gap-4">
           <h2 className="text-lg font-bold">{t("stampsTitle")}</h2>
-          <Locked locked={!canFull} need="plus">
+          <Locked locked={!canFull} need="esencial">
             <div>
               <p className="mb-2 text-sm font-semibold">{t("shape")}</p>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
@@ -335,7 +343,7 @@ export function BrandForm({ initial, locationName, sector, logoUrl, stampImageUr
 
         <Card className="flex flex-col gap-4">
           <h2 className="text-lg font-bold">{t("cardTitle")}</h2>
-          <Locked locked={!canFull} need="plus">
+          <Locked locked={!canFull} need="esencial">
             <div className="grid grid-cols-3 gap-2">
               {CARD_STYLES.map((s) => (
                 <Choice key={s} active={b.cardStyle === s} onClick={() => set("cardStyle", s)}>

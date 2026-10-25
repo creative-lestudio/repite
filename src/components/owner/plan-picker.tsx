@@ -8,19 +8,18 @@ import type { PlanId } from "@/config/plan";
 
 /** Planes del panel: el cambio se pide por correo mientras no haya pago online. */
 export function PlanPicker({
-  currency,
   current,
   locationName,
   contactEmail,
 }: {
-  currency: "EUR" | "USD";
   current: string;
   locationName: string;
   contactEmail: string;
 }) {
   const t = useTranslations("owner.plan");
-  const ticket = currency === "EUR" ? 7 : 5;
-  const href = (plan: PlanId) =>
+  const tp = useTranslations("plans");
+  const ticket = 7;
+  const href = (plan: PlanId | "red") =>
     `mailto:${contactEmail}?subject=${encodeURIComponent(t("mailSubject", { plan: plan }))}&body=${encodeURIComponent(
       t("mailBody", { plan, location: locationName }),
     )}`;
@@ -28,7 +27,6 @@ export function PlanPicker({
   return (
     <div className="flex flex-col gap-6">
       <PlanCards
-        currency={currency}
         ticket={ticket}
         current={current}
         renderCta={(plan) =>
@@ -42,13 +40,19 @@ export function PlanPicker({
             </Button>
           )
         }
+        renderRedCta={() => (
+          <Button asChild variant="secondary">
+            <a href={href("red")}>{tp("requestInfo")}</a>
+          </Button>
+        )}
       />
+      <p className="text-muted text-xs">{tp("priceNote")}</p>
       <details className="group">
         <summary className="text-primary min-h-11 cursor-pointer py-3 font-semibold underline-offset-4 hover:underline">
           {t("compare")}
         </summary>
         <div className="mt-2">
-          <PlanTable highlight={current === "trial" ? "plus" : current} />
+          <PlanTable highlight={current === "trial" ? "growth" : current} />
         </div>
       </details>
     </div>

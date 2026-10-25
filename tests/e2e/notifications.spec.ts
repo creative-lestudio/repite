@@ -12,7 +12,7 @@ async function ownerLogin(page: Page, email = "demo@repite.app") {
   await expect(page).toHaveURL(/\/app/);
 }
 
-test("notificaciones: el dueño Plus envía un aviso y el cliente lo ve en su tarjeta", async ({ browser }) => {
+test("notificaciones: el dueño Growth envía un aviso y el cliente lo ve en su tarjeta", async ({ browser }) => {
   test.setTimeout(120_000);
   const title = `Aviso E2E ${Date.now().toString(36)}`;
   const owner = await (await browser.newContext()).newPage();
@@ -50,10 +50,10 @@ test("notificaciones: el dueño Plus envía un aviso y el cliente lo ve en su ta
   }
 });
 
-test("notificaciones: Starter ve la invitación a mejorar y Plus los segmentos avanzados", async ({ page }) => {
+test("notificaciones: Starter ve la invitación a mejorar y Growth los segmentos avanzados", async ({ page }) => {
   await ownerLogin(page, "sol@repite.app");
   await page.goto("/app/notificaciones");
-  await expect(page.getByText("Las notificaciones están incluidas desde Basic")).toBeVisible();
+  await expect(page.getByText("Las notificaciones están incluidas en Growth")).toBeVisible();
 
   await page.context().clearCookies();
   await ownerLogin(page);

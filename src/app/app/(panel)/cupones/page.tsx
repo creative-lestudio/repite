@@ -19,7 +19,6 @@ export default async function CouponsPage() {
         <p className="text-muted mt-1">{t("intro")}</p>
       </div>
       {limit === 0 && <LockedNote />}
-      {limit === 1 && <p className="text-muted text-sm">{t("limitBasic")}</p>}
       <Card className="flex flex-col gap-4">
         <h2 className="text-lg font-bold">{t("newTitle")}</h2>
         <CouponForm locked={limit === 0} />

@@ -88,7 +88,7 @@ test.describe("dueño: cuenta demo", () => {
     }
   });
 
-  test("resultados: Plus ve el detalle con ingresos estimados y Starter ve la invitación a mejorar", async ({
+  test("resultados: Growth ve el detalle con ingresos estimados y Starter ve la invitación a mejorar", async ({
     page,
   }) => {
     const { data: loc } = await admin.from("locations").select("settings").eq("slug", "cafe-aurora").single();
@@ -115,7 +115,7 @@ test.describe("dueño: cuenta demo", () => {
     await page.context().clearCookies();
     await login(page, "sol@repite.app", "repite-demo");
     await go(page, "Resultados");
-    await expect(page.getByText("Más resultados con Plus")).toBeVisible();
+    await expect(page.getByText("Más resultados con Growth")).toBeVisible();
     await expect(page.getByRole("heading", { name: "Visitas por día" })).toHaveCount(0);
   });
 

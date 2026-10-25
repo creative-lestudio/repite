@@ -59,8 +59,8 @@ export default async function PlanPage() {
       ? t("trialBody", { count: trialDaysLeft(ctx.organization.trialEndsAt), limit: PLANS.starter.customers ?? 0 })
       : usage.plan === "starter"
         ? t("starterBody", { limit: PLANS.starter.customers ?? 0 })
-        : usage.plan === "basic"
-          ? t("basicBody", { limit: PLANS.basic.customers ?? 0 })
+        : usage.plan === "esencial"
+          ? t("basicBody")
           : t("plusBody");
 
   return (
@@ -102,12 +102,7 @@ export default async function PlanPage() {
         </Alert>
       )}
 
-      <PlanPicker
-        currency={ctx.organization.currency}
-        current={usage.plan}
-        locationName={ctx.location.name}
-        contactEmail={contactEmail}
-      />
+      <PlanPicker current={usage.plan} locationName={ctx.location.name} contactEmail={contactEmail} />
       <p className="text-muted text-sm">{t("soon")}</p>
     </div>
   );
