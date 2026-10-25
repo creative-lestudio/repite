@@ -111,13 +111,6 @@ export function ProgramForm({
             defaultChecked={bonusesAllowed && program.bonus_story_enabled}
             label={t("bonusStory")}
           />
-          <Checkbox
-            id="bonusReview"
-            name="bonusReview"
-            disabled={!bonusesAllowed}
-            defaultChecked={bonusesAllowed && program.bonus_review_enabled}
-            label={t("bonusReview")}
-          />
         </fieldset>
         <fieldset className="flex flex-col gap-3">
           <legend className="font-display text-lg font-bold">{t("levelsTitle")}</legend>

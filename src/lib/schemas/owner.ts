@@ -1,7 +1,8 @@
+import { BUSINESS_TYPES } from "@/domain/business-types";
 import { z } from "zod";
 
 export const businessSchema = z.object({
-  businessType: z.enum(["cafeteria", "restaurante", "heladeria", "otro"]).default("otro"),
+  businessType: z.enum(BUSINESS_TYPES).default("otro"),
   businessName: z.string().trim().min(2, "businessNameRequired").max(120),
   country: z.enum(["ES", "VE"]),
   locationName: z.string().trim().min(2, "locationNameRequired").max(120),
@@ -27,7 +28,6 @@ export const programSchema = z.object({
     .union([z.literal(""), z.coerce.number().int().min(1, "expiryRange").max(730, "expiryRange")])
     .transform((v) => (v === "" ? null : v)),
   bonusStory: z.preprocess((v) => v === "on", z.boolean()),
-  bonusReview: z.preprocess((v) => v === "on", z.boolean()),
   level1Name: z.string().trim().max(24).default(""),
   level1Visits: z.string().trim().max(5).default(""),
   level1Perk: z.string().trim().max(80).default(""),
@@ -47,7 +47,7 @@ const optionalUrl = z
   .refine((v) => v === null || /^https:\/\/.+\..+/i.test(v), "urlInvalid");
 
 export const settingsSchema = z.object({
-  businessType: z.enum(["cafeteria", "restaurante", "heladeria", "otro"]).default("otro"),
+  businessType: z.enum(BUSINESS_TYPES).default("otro"),
   name: z.string().trim().min(2, "locationNameRequired").max(120),
   address: z
     .string()

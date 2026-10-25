@@ -133,7 +133,7 @@ export async function SectorsSection() {
     <section id="negocios" aria-labelledby="sectors-title" className="scroll-mt-16 bg-white px-4 py-20 md:py-28">
       <div className="mx-auto max-w-6xl">
         <SectionTitle id="sectors-title" title={t("title")} subtitle={t("subtitle")} />
-        <ul className="mt-14 grid gap-6 md:grid-cols-3">
+        <ul className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {LANDING_SECTORS.map((s, i) => (
             <li key={s}>
               <Reveal delay={i * 120} className="h-full">

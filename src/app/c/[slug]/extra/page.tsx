@@ -15,7 +15,8 @@ export default async function ExtraPage({ params }: { params: Promise<{ slug: st
   const handle = location.settings.instagram_handle;
   const reviewUrl = location.settings.google_review_url;
 
-  if (!planSpec(location.plan).bonuses || !program || (!program.bonus_story_enabled && !program.bonus_review_enabled)) {
+  const storyOn = !!program?.bonus_story_enabled;
+  if (!planSpec(location.plan).bonuses || !program || (!storyOn && !reviewUrl)) {
     return (
       <div className="flex flex-col gap-4">
         <h1 className="text-2xl font-extrabold">{t("title")}</h1>
@@ -29,7 +30,7 @@ export default async function ExtraPage({ params }: { params: Promise<{ slug: st
       <h1 className="text-2xl font-extrabold">{t("title")}</h1>
       <p className="text-muted">{t("intro", { location: location.name })}</p>
 
-      {program.bonus_story_enabled && (
+      {storyOn && (
         <section
           aria-labelledby="story"
           className="bg-surface shadow-card ring-cream-100 flex flex-col gap-3 rounded-xl p-5 ring-1"
@@ -63,7 +64,7 @@ export default async function ExtraPage({ params }: { params: Promise<{ slug: st
         </section>
       )}
 
-      {program.bonus_review_enabled && (
+      {reviewUrl && (
         <section
           aria-labelledby="review"
           className="bg-surface shadow-card ring-cream-100 flex flex-col gap-3 rounded-xl p-5 ring-1"
@@ -73,39 +74,18 @@ export default async function ExtraPage({ params }: { params: Promise<{ slug: st
               <Star className="size-6" aria-hidden />
             </span>
             <div className="flex-1">
-              <div className="flex items-center justify-between gap-2">
-                <h2 id="review" className="text-lg font-bold">
-                  {t("reviewTitle")}
-                </h2>
-                <Badge>{t("plusOne")}</Badge>
-              </div>
+              <h2 id="review" className="text-lg font-bold">
+                {t("reviewTitle")}
+              </h2>
               <p className="text-muted text-sm">{t("reviewBody", { location: location.name })}</p>
             </div>
           </header>
-          {state.review_bonus_given ? (
-            <Alert tone="success">{t("reviewGiven")}</Alert>
-          ) : pending("bonus_review") ? (
-            <Badge tone="warning" className="self-start">
-              {t("pending")}
-            </Badge>
-          ) : (
-            <>
-              {reviewUrl && (
-                <Button asChild variant="soft" block>
-                  <a href={reviewUrl} target="_blank" rel="noopener noreferrer">
-                    {t("reviewOpen")}
-                    <ExternalLink aria-hidden />
-                  </a>
-                </Button>
-              )}
-              <BonusForm
-                slug={slug}
-                type="bonus_review"
-                fieldLabel={t("reviewField")}
-                placeholder={t("reviewPlaceholder")}
-              />
-            </>
-          )}
+          <Button asChild variant="soft" block>
+            <a href={reviewUrl} target="_blank" rel="noopener noreferrer">
+              {t("reviewOpen")}
+              <ExternalLink aria-hidden />
+            </a>
+          </Button>
         </section>
       )}
     </div>

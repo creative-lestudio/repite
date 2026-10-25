@@ -11,6 +11,7 @@ import {
   IceCreamCone,
   Pizza,
   Salad,
+  ShoppingBag,
   Sandwich,
   Soup,
   Star,
@@ -24,6 +25,8 @@ import type { StampIconKey } from "@/domain/brand";
 
 const ICONS = {
   cafeteria: Coffee,
+  panaderia: Croissant,
+  takeaway: ShoppingBag,
   restaurante: Utensils,
   heladeria: IceCreamCone,
   otro: Check,

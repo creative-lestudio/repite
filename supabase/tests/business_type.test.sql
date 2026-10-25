@@ -1,7 +1,7 @@
 -- Tipo de negocio: valores válidos, valor por defecto y alta con tipo desconocido.
 begin;
 create extension if not exists pgtap with schema extensions;
-select plan(6);
+select plan(8);
 
 select is((select business_type from public.locations where slug = 'cafe-aurora'), 'cafeteria', 'la demo es una cafetería');
 select is((select business_type from public.locations where slug = 'panaderia-sol'), 'otro', 'otro por defecto');
@@ -26,6 +26,12 @@ set local role authenticated;
 select public.create_organization_with_owner('Raro', 'ES', 'EUR', 'Raro', 'raro-test', 'Europe/Madrid', 'es-ES', 'nave-espacial');
 reset role;
 select is((select business_type from public.locations where slug = 'raro-test'), 'otro', 'un tipo desconocido se guarda como otro');
+
+select lives_ok(
+  $$update public.locations set business_type = 'panaderia' where slug = 'panaderia-sol'$$, 'panadería es un tipo válido');
+select throws_ok(
+  $$update public.loyalty_programs set bonus_review_enabled = true where organization_id = 'a0000000-0000-4000-8000-000000000001'$$,
+  '23514', null, 'no se puede activar el sello por reseña (sin incentivos)');
 
 select is((select count(*)::int from public.opportunity_rules where organization_id = (select organization_id from public.locations where slug = 'polo-norte-test')), 4, 'el alta crea las 4 reglas de oportunidad');
 

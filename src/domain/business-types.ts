@@ -1,5 +1,5 @@
 /** Tipos de negocio con los que Repite adapta iconos, ejemplos y vocabulario. «otro» sirve para cualquier local. */
-export const BUSINESS_TYPES = ["cafeteria", "restaurante", "heladeria", "otro"] as const;
+export const BUSINESS_TYPES = ["cafeteria", "panaderia", "takeaway", "restaurante", "heladeria", "otro"] as const;
 export type BusinessType = (typeof BUSINESS_TYPES)[number];
 
 export const DEFAULT_BUSINESS_TYPE: BusinessType = "otro";
@@ -24,19 +24,27 @@ export const BUSINESS_PRESETS: Record<
   }
 > = {
   cafeteria: { stamps: 8, fallbackWord: { "es-ES": "café", "es-VE": "cafecito" } },
+  panaderia: { stamps: 8, fallbackWord: { "es-ES": "pan", "es-VE": "pancito" } },
+  takeaway: { stamps: 8, fallbackWord: { "es-ES": "plato", "es-VE": "plato" } },
   restaurante: { stamps: 8, fallbackWord: { "es-ES": "buen plato", "es-VE": "buen plato" } },
   heladeria: { stamps: 10, fallbackWord: { "es-ES": "helado", "es-VE": "helado" } },
   otro: { stamps: 8, fallbackWord: { "es-ES": "detalle", "es-VE": "detalle" } },
 };
 
 /** Sectores con página propia en la web pública (el resto cae en «otro»). */
-export const LANDING_SECTORS = ["cafeteria", "restaurante", "heladeria"] as const satisfies readonly BusinessType[];
+export const LANDING_SECTORS = [
+  "cafeteria",
+  "panaderia",
+  "takeaway",
+  "heladeria",
+] as const satisfies readonly BusinessType[];
 export type LandingSector = (typeof LANDING_SECTORS)[number];
 
 /** Dirección pública de cada sector: /para/<slug> */
 export const SECTOR_SLUGS: Record<LandingSector, string> = {
   cafeteria: "cafeterias",
-  restaurante: "restaurantes",
+  panaderia: "panaderias",
+  takeaway: "takeaway",
   heladeria: "heladerias",
 };
 

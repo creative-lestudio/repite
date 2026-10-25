@@ -54,7 +54,8 @@ test.describe("web pública", () => {
       "/entrar",
       "/legal/terminos",
       "/para/cafeterias",
-      "/para/restaurantes",
+      "/para/panaderias",
+      "/para/takeaway",
       "/para/heladerias",
     ]) {
       await page.goto(path);
@@ -69,14 +70,15 @@ test.describe("web pública", () => {
     await expect(page.getByRole("tab", { name: "Heladerías" })).toHaveAttribute("aria-selected", "true");
     await expect(page.getByText("Polo Norte").first()).toBeVisible();
     await expect(page.getByText("Un helado gratis").first()).toBeVisible();
-    await page.getByRole("tab", { name: "Restaurantes" }).click();
-    await expect(page.getByText("La Cocina de Marta").first()).toBeVisible();
+    await page.getByRole("tab", { name: "Panaderías" }).click();
+    await expect(page.getByText("Un café con tu bollo gratis").first()).toBeVisible();
   });
 
   test("hay una página para cada sector y las desconocidas dan 404", async ({ page }) => {
     const casos: [string, RegExp][] = [
       ["/para/cafeterias", /tarjeta de sellos para tu cafetería/i],
-      ["/para/restaurantes", /fideliza a los clientes de tu restaurante/i],
+      ["/para/panaderias", /vuelvan a tu panadería/i],
+      ["/para/takeaway", /repitan pedido para llevar/i],
       ["/para/heladerias", /vuelvan a tu heladería/i],
     ];
     for (const [ruta, titulo] of casos) {

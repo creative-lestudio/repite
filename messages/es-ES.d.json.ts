@@ -196,21 +196,18 @@ declare const messages: {
     },
     "extra": {
       "title": "Sellos extra",
-      "intro": "Gana sellos de más ayudando a {location} a darse a conocer. El equipo los revisará y aparecerán en tu tarjeta.",
+      "intro": "{location} te propone esto. Los sellos extra los revisa el equipo y aparecen en tu tarjeta.",
       "storyTitle": "Subir una historia",
       "storyBody": "Comparte una historia en Instagram mencionando a {handle}.",
       "storyBodyNoHandle": "Comparte una historia en Instagram mencionando al local.",
       "storyField": "Tu usuario de Instagram",
       "storyPlaceholder": "@tuusuario",
-      "reviewTitle": "Dejar una reseña",
-      "reviewBody": "Cuéntale al mundo qué te parece {location} en Google Maps.",
+      "reviewTitle": "Cuéntanos qué tal",
+      "reviewBody": "Si quieres, deja tu opinión sobre {location}. Es voluntaria y no da sellos ni ventajas: escribe lo que de verdad pienses.",
       "reviewOpen": "Abrir Google Maps",
-      "reviewField": "Nombre con el que publicaste la reseña",
-      "reviewPlaceholder": "María L.",
       "send": "Ya lo hice, pedir mi sello",
       "sent": "¡Recibido! El equipo lo revisará pronto y verás el sello en tu tarjeta.",
       "pending": "Pendiente de revisar",
-      "reviewGiven": "Ya recibiste el sello por tu reseña. ¡Gracias!",
       "plusOne": "+1 sello",
       "disabled": "Este local no ofrece sellos extra por ahora."
     },
@@ -830,8 +827,7 @@ declare const messages: {
       "levelPerk": "Ventaja (opcional)",
       "bonusTitle": "Sellos extra",
       "bonusStory": "Subir una historia a Instagram",
-      "bonusReview": "Dejar una reseña en Google Maps",
-      "bonusHint": "Cada uno suma un sello cuando tu equipo lo valida.",
+      "bonusHint": "Suma un sello cuando tu equipo lo valida. Por política de las plataformas, no se ofrecen sellos ni ventajas a cambio de reseñas.",
       "save": "Guardar programa",
       "saved": "Programa guardado",
       "previewTitle": "Así lo verá tu cliente",
@@ -892,8 +888,8 @@ declare const messages: {
       "tip": "Prueba el QR con tu propio móvil antes de imprimir cientos."
     },
     "bonuses": {
-      "title": "Reseñas e historias",
-      "intro": "Los sellos extra que piden tus clientes. Tu equipo los valida desde la tablet.",
+      "title": "Sellos extra por historias",
+      "intro": "Los sellos extra que piden tus clientes. Tu equipo los valida desde la tablet. Los pendientes antiguos de reseñas siguen aquí hasta que los revises.",
       "pendingTitle": "Pendientes de validar",
       "pendingEmpty": "No hay nada pendiente.",
       "historyTitle": "Últimos sellos extra",
@@ -944,8 +940,8 @@ declare const messages: {
       "whatsapp": "WhatsApp del local",
       "instagram": "Usuario de Instagram",
       "instagramPlaceholder": "@cafeaurora",
-      "review": "Enlace para dejar una reseña en Google Maps",
-      "reviewHint": "Lo verán tus clientes en «Sellos extra».",
+      "review": "Enlace para pedir una opinión (Google Maps)",
+      "reviewHint": "Se muestra a tus clientes como una petición neutral: no da sellos ni ventajas, porque las plataformas de reseñas no permiten incentivarlas.",
       "businessType": "Tipo de negocio",
       "businessTypeHint": "Cambia el icono del sello y los ejemplos."
     },
@@ -1244,7 +1240,7 @@ declare const messages: {
     "sectors": {
       "title": "Hecho para negocios con clientes de siempre",
       "subtitle": "Elige el tuyo y mira cómo se vería.",
-      "also": "Y también para panaderías, barberías, tiendas, gimnasios y cualquier local con clientes habituales.",
+      "also": "Y también para barberías, tiendas, gimnasios y cualquier local con clientes habituales.",
       "learn": "Ver cómo funciona",
       "example": "Premio de ejemplo"
     },
@@ -1385,6 +1381,74 @@ declare const messages: {
         "i2": "Un desayuno completo cada 12 visitas",
         "i3": "Un dulce con tu café",
         "i4": "Un café para llevar a un amigo"
+      }
+    },
+    "panaderia": {
+      "name": "Panadería",
+      "plural": "Panaderías",
+      "namePlaceholder": "Panadería Sol",
+      "rewardExample": "Un café con tu bollo gratis",
+      "rewardPlaceholder": "Un café con tu bollo gratis",
+      "hook": "Que el pan de cada mañana sea el primero de muchas.",
+      "clientName": "Panadería Sol",
+      "page": {
+        "title": "Que tus clientes vuelvan a tu panadería",
+        "description": "Tarjeta de sellos por QR para panaderías: un sello con cada compra y un premio que se agradece.",
+        "slug": "panaderias"
+      },
+      "benefits": {
+        "i1": {
+          "title": "Un sello con cada compra",
+          "body": "Pensado para el ritmo de la mañana: un toque en la tablet y el cliente sigue su camino."
+        },
+        "i2": {
+          "title": "Premios sencillos",
+          "body": "Una barra gratis, un café con bollo… tú eliges el premio y cuántos sellos hacen falta."
+        },
+        "i3": {
+          "title": "Clientes del barrio, fidelizados",
+          "body": "Verás quién viene a diario y quién lleva tiempo sin pasar, para decidir si le escribes."
+        }
+      },
+      "rewards": {
+        "i1": "Una barra de pan gratis",
+        "i2": "Un café con tu bollo gratis",
+        "i3": "Un dulce de la casa",
+        "i4": "Un pan de regalo en tu cumpleaños"
+      }
+    },
+    "takeaway": {
+      "name": "Takeaway",
+      "plural": "Takeaway",
+      "namePlaceholder": "Wok Express",
+      "rewardExample": "Un plato gratis",
+      "rewardPlaceholder": "Un plato gratis",
+      "hook": "Que el pedido para llevar se repita sin pensar.",
+      "clientName": "Wok Express",
+      "page": {
+        "title": "Que tus clientes repitan pedido para llevar",
+        "description": "Tarjeta de sellos por QR para negocios de comida para llevar: un sello por pedido y un premio por repetir.",
+        "slug": "takeaway"
+      },
+      "benefits": {
+        "i1": {
+          "title": "Un sello por pedido",
+          "body": "Rápido en el mostrador: el equipo suma el sello al entregar el pedido."
+        },
+        "i2": {
+          "title": "Premios por repetir",
+          "body": "Un entrante, una bebida o un descuento: tú decides el premio y los sellos."
+        },
+        "i3": {
+          "title": "Sabes quién repite",
+          "body": "Tu panel muestra cuántos clientes vuelven, con tus propias cifras."
+        }
+      },
+      "rewards": {
+        "i1": "Un plato gratis",
+        "i2": "Una bebida de regalo",
+        "i3": "Un entrante gratis",
+        "i4": "Un descuento en tu próximo pedido"
       }
     },
     "restaurante": {
