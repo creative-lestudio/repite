@@ -347,6 +347,7 @@ export async function WalletSection() {
             noticeTitle={t("nearTitle")}
             noticeBody={t("nearBody")}
           />
+          <p className="text-cream-200 absolute inset-x-0 bottom-0 text-center text-xs">{t("note")}</p>
         </div>
       </div>
     </section>
@@ -410,6 +411,85 @@ export async function FinalCta() {
             <ArrowRight aria-hidden />
           </Link>
         </Button>
+      </div>
+    </section>
+  );
+}
+
+export async function ProblemsSection() {
+  const [t, { landing }] = await Promise.all([getTranslations("landing.problems"), getMessages()]);
+  const items: Item[] = Object.values(landing.problems.items);
+  return (
+    <section aria-labelledby="problems-title" className="bg-white px-4 py-20 md:py-28">
+      <div className="mx-auto max-w-6xl">
+        <SectionTitle id="problems-title" title={t("title")} />
+        <ul className="mt-12 grid gap-6 md:grid-cols-3">
+          {items.map((i) => (
+            <li key={i.title} className="bg-cream-50 ring-cream-100 rounded-2xl p-6 ring-1">
+              <h3 className="text-xl font-bold">{i.title}</h3>
+              <p className="text-muted mt-2">{i.body}</p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+export async function ValueSection() {
+  const [t, { landing }] = await Promise.all([getTranslations("landing.value"), getMessages()]);
+  const items: Item[] = Object.values(landing.value.items);
+  return (
+    <section aria-labelledby="value-title" className="px-4 py-20 md:py-28">
+      <div className="mx-auto max-w-6xl">
+        <SectionTitle id="value-title" title={t("title")} />
+        <ul className="mt-12 grid gap-6 md:grid-cols-3">
+          {items.map((i) => (
+            <li key={i.title} className="bg-surface shadow-card ring-cream-100 rounded-2xl p-6 ring-1">
+              <Check className="text-primary size-6" aria-hidden />
+              <h3 className="mt-3 text-xl font-bold">{i.title}</h3>
+              <p className="text-muted mt-2">{i.body}</p>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-10 flex justify-center">
+          <Button asChild size="lg" variant="secondary">
+            <Link href="/demo">{(await getTranslations("landing.hero"))("tryDemo")}</Link>
+          </Button>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export async function TrustSection() {
+  const [t, ts, { landing }] = await Promise.all([
+    getTranslations("landing.trust"),
+    getTranslations("landing.support"),
+    getMessages(),
+  ]);
+  const items: Item[] = Object.values(landing.trust.items);
+  const email = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hola@repite.app";
+  return (
+    <section id="seguridad" aria-labelledby="trust-title" className="scroll-mt-16 bg-white px-4 py-20 md:py-28">
+      <div className="mx-auto max-w-6xl">
+        <SectionTitle id="trust-title" title={t("title")} />
+        <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+          {items.map((i) => (
+            <li key={i.title} className="bg-cream-50 ring-cream-100 rounded-2xl p-6 ring-1">
+              <ShieldCheck className="text-primary size-6" aria-hidden />
+              <h3 className="mt-3 text-lg font-bold">{i.title}</h3>
+              <p className="text-muted mt-2 text-sm">{i.body}</p>
+            </li>
+          ))}
+        </ul>
+        <div id="contacto" className="bg-ink-950 text-cream-50 mt-12 scroll-mt-16 rounded-2xl p-8 text-center">
+          <h3 className="text-2xl font-extrabold">{ts("title")}</h3>
+          <p className="text-cream-200 mx-auto mt-2 max-w-xl">{ts("body")}</p>
+          <Button asChild size="lg" className="mt-5">
+            <a href={`mailto:${email}`}>{ts("cta")}</a>
+          </Button>
+        </div>
       </div>
     </section>
   );

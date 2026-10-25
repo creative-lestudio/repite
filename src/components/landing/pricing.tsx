@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { PlanCards } from "@/components/plans/plan-cards";
 import { PlanTable } from "@/components/plans/plan-table";
+import { Estimator } from "@/components/landing/estimator";
 import { Button } from "@/components/ui";
 
 export function Pricing() {
@@ -39,6 +40,8 @@ export function Pricing() {
         <p className="text-muted mx-auto mt-6 max-w-2xl text-center text-sm">
           <span className="text-primary font-semibold">{t("badge")}.</span> {t("trialNote")}
         </p>
+
+        <Estimator />
 
         <details className="group mt-10">
           <summary className="text-primary mx-auto min-h-11 w-fit cursor-pointer py-3 text-center font-semibold underline-offset-4 hover:underline">

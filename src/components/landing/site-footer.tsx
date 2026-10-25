@@ -31,7 +31,17 @@ export async function SiteFooter() {
               </Link>
             </li>
             <li>
-              <Link className={link} href="/c/cafe-aurora">
+              <Link className={link} href="/#seguridad">
+                {f("security")}
+              </Link>
+            </li>
+            <li>
+              <Link className={link} href="/#contacto">
+                {f("contact")}
+              </Link>
+            </li>
+            <li>
+              <Link className={link} href="/demo">
                 {f("demo")}
               </Link>
             </li>

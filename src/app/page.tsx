@@ -13,8 +13,10 @@ import {
   BrandSection,
   PricingSection,
   PromiseStrip,
+  ProblemsSection,
+  ValueSection,
+  TrustSection,
   SectorsSection,
-  WhoSection,
   WalletSection,
 } from "@/components/landing/sections";
 
@@ -46,13 +48,20 @@ export default async function LandingPage() {
         applicationCategory: "BusinessApplication",
         operatingSystem: "Web",
         offers: [
-          { "@type": "Offer", name: "Gratis", price: "0", priceCurrency: "EUR", description: "Hasta 50 clientes" },
+          { "@type": "Offer", name: "Starter", price: "0", priceCurrency: "EUR", description: "Hasta 50 clientes" },
           {
             "@type": "Offer",
-            name: "Pro",
-            price: "19",
+            name: "Esencial",
+            price: "25",
             priceCurrency: "EUR",
-            description: "Clientes sin límite, 30 días de prueba",
+            description: "Al mes, IVA no incluido",
+          },
+          {
+            "@type": "Offer",
+            name: "Growth",
+            price: "49",
+            priceCurrency: "EUR",
+            description: "Al mes, IVA no incluido",
           },
         ],
       },
@@ -73,14 +82,16 @@ export default async function LandingPage() {
       <main id="contenido">
         <Hero />
         <PromiseStrip />
+        <ProblemsSection />
         <HowSection />
-        <WalletSection />
-        <SectorsSection />
+        <ValueSection />
         <FeaturesSection />
-        <WhoSection />
         <PreviewSection />
+        <SectorsSection />
         <BrandSection />
         <PricingSection />
+        <WalletSection />
+        <TrustSection />
         <FaqSection />
         <FinalCta />
       </main>

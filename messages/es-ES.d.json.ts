@@ -548,7 +548,11 @@ declare const messages: {
       "historyTitle": "Enviadas",
       "historyEmpty": "Todavía no has enviado ninguna notificación.",
       "historyStats": "{recipients, plural, one {1 cliente} other {# clientes}} · {wallet, number} en Wallet · {push, number} en el móvil",
-      "status": { "sending": "Enviando", "sent": "Enviada", "failed": "Con errores" }
+      "status": {
+        "sending": "Enviando",
+        "sent": "Enviada",
+        "failed": "Con errores"
+      }
     },
     "coupons": {
       "pageTitle": "Cupones",
@@ -642,13 +646,26 @@ declare const messages: {
       "fontTitle": "Tipografía",
       "stampsTitle": "Sellos",
       "shape": "Forma",
-      "shapes": { "circle": "Círculo", "square": "Cuadrado", "hex": "Hexágono", "star": "Estrella" },
+      "shapes": {
+        "circle": "Círculo",
+        "square": "Cuadrado",
+        "hex": "Hexágono",
+        "star": "Estrella"
+      },
       "content": "Dentro del sello",
-      "modes": { "icon": "Icono", "number": "Número", "image": "Tu imagen" },
+      "modes": {
+        "icon": "Icono",
+        "number": "Número",
+        "image": "Tu imagen"
+      },
       "stampImage": "Imagen del sello",
       "stampImageHint": "Se recorta en cuadrado. Mejor una imagen sencilla.",
       "cardTitle": "Tarjeta",
-      "cardStyles": { "light": "Clara", "dark": "Oscura", "brand": "Color de marca" },
+      "cardStyles": {
+        "light": "Clara",
+        "dark": "Oscura",
+        "brand": "Color de marca"
+      },
       "cardBg": "Tu propio diseño de tarjeta",
       "cardBgHint": "Una imagen apaisada (por ejemplo 1200×750). Se oscurece un poco para que se lean los sellos.",
       "save": "Guardar mi marca",
@@ -983,23 +1000,24 @@ declare const messages: {
       "eyebrow": "Sistema de fidelización para tu negocio",
       "titleA": "Hacemos que tus clientes",
       "titleB": "vuelvan",
-      "subtitle": "Un sistema de fidelización con tu marca para cafeterías, restaurantes, heladerías y cualquier negocio con clientes que repiten. Tu tarjeta se guarda en el Apple Wallet y el Google Wallet de tus clientes. Sin apps y sin contraseñas.",
+      "subtitle": "Tarjeta de sellos digital con tu marca para cafeterías, panaderías, takeaway, heladerías y negocios con clientela habitual. Tus clientes la abren escaneando un QR: sin descargar nada y sin contraseñas.",
       "cta": "Empezar gratis",
-      "demo": "Ver una tarjeta de ejemplo",
+      "demo": "Ver cómo funciona",
       "google": "Registrarme con Google",
-      "note": "Sin tarjeta de crédito · Listo en menos de 5 minutos",
+      "note": "Sin tarjeta de crédito · Starter es gratis, sin límite de tiempo",
       "tabsLabel": "Elige tu tipo de negocio",
       "chipStamp": "¡Sello nuevo!",
       "chipStampBody": "María ya tiene 4 de 8",
-      "chipMessage": "Ya está en su Wallet",
-      "chipMessageBody": "Se actualiza sola con cada sello",
-      "phoneLabel": "Ejemplo de tarjeta de sellos en el móvil de un cliente"
+      "chipMessage": "Tarjeta en el móvil",
+      "chipMessageBody": "Se abre desde el QR, sin app",
+      "phoneLabel": "Ejemplo de tarjeta de sellos en el móvil de un cliente",
+      "tryDemo": "Probar la demo"
     },
     "strip": {
-      "i1": "En Apple Wallet y Google Wallet",
-      "i2": "Sin contraseñas",
-      "i3": "Registro en menos de 20 segundos",
-      "i4": "Starter gratis hasta 50 clientes"
+      "i1": "Tarjeta con tu marca",
+      "i2": "Sin app y sin contraseñas para tus clientes",
+      "i3": "Starter gratis hasta 50 clientes",
+      "i4": "Precios en euros, sin permanencia"
     },
     "how": {
       "title": "Así de fácil",
@@ -1007,11 +1025,11 @@ declare const messages: {
       "steps": {
         "i1": {
           "title": "El cliente escanea tu QR",
-          "body": "Pon el QR en el mostrador y en las mesas. En 20 segundos tiene su tarjeta y la guarda en su Wallet con un toque."
+          "body": "Pon el QR en el mostrador y en las mesas. Tu cliente crea su tarjeta en el navegador del móvil, sin descargar nada."
         },
         "i2": {
           "title": "Tu equipo suma el sello",
-          "body": "Con una tablet en la barra y un PIN para cada empleado, registrar una visita es un toque. Nada de sellos duplicados."
+          "body": "Con una tablet en la barra y un PIN para cada empleado, registrar una visita es un toque, y no se pueden sumar dos sellos seguidos."
         },
         "i3": {
           "title": "Vuelve a por sus premios y cupones",
@@ -1036,7 +1054,7 @@ declare const messages: {
         },
         "i2": {
           "title": "Recuerda a cada cliente",
-          "body": "Su pedido de siempre, sus gustos, notas del equipo y todo su historial. Que nadie vuelva a tener que repetir «lo de siempre»."
+          "body": "Notas del equipo y todo su historial en su ficha, para que nadie tenga que repetir «lo de siempre»."
         },
         "i3": {
           "title": "Cupones y niveles VIP",
@@ -1044,7 +1062,7 @@ declare const messages: {
         },
         "i4": {
           "title": "Resultados que se miden",
-          "body": "Visitas, clientes que vuelven e ingresos estimados que Repite te trae, con tu propio ticket medio. Sabrás si te compensa."
+          "body": "Visitas, clientes que vuelven e ingresos estimados de esas visitas de repetición, calculados con tu propio ticket medio. Es una estimación, no una garantía."
         },
         "i5": {
           "title": "Equipo con PIN, sin líos",
@@ -1066,7 +1084,7 @@ declare const messages: {
         },
         "i2": {
           "who": "Tu equipo",
-          "body": "Una pantalla grande, un botón claro y su PIN. Aprenden a usarlo en dos minutos."
+          "body": "Una pantalla grande, un botón claro y su PIN. Está pensado para aprenderse sin manual."
         },
         "i3": {
           "who": "Tú, el dueño",
@@ -1083,30 +1101,33 @@ declare const messages: {
       "altPhone": "Tarjeta de sellos de Repite en el móvil"
     },
     "wallet": {
-      "eyebrow": "Wallet",
-      "title": "Tu tarjeta, siempre en el bolsillo de tus clientes",
-      "subtitle": "Se guarda en el Apple Wallet y el Google Wallet con un toque. Sin descargar nada y sin buscar el QR cada vez.",
-      "cta": "Probar gratis",
+      "eyebrow": "Wallet · en validación",
+      "title": "Tarjeta en Apple Wallet y Google Wallet",
+      "subtitle": "Estamos validando la integración con Apple Wallet y Google Wallet. Hoy tus clientes usan la tarjeta web, que ya funciona; el Wallet se activará cuando esté probado con dispositivos reales.",
+      "cta": "Empezar gratis",
       "points": {
         "i1": {
-          "title": "Un toque y está guardada",
-          "body": "Tu cliente escanea el QR, crea su tarjeta y la añade a su Wallet."
+          "title": "Un toque y guardada",
+          "body": "Objetivo: que tu cliente añada la tarjeta a su Wallet justo después de crearla."
         },
         "i2": {
-          "title": "Se actualiza sola",
-          "body": "Cada sello, cupón o cambio de nivel aparece al instante, sin que tu cliente haga nada."
+          "title": "Se actualizaría sola",
+          "body": "Objetivo: que cada sello, cupón o cambio de nivel se refleje sin que tu cliente haga nada."
         },
         "i3": {
           "title": "Te recuerda cuando está cerca",
           "body": "Función en validación: avisar en la pantalla de bloqueo al pasar cerca del local. Disponible cuando esté probada."
         },
         "i4": {
-          "title": "Avisos cuando tú quieras",
-          "body": "Envía una promoción, un cumpleaños o un «te falta poco» al móvil de tus clientes, a quien tú elijas."
+          "title": "Avisos al móvil (Growth)",
+          "body": "Hoy puedes enviar una promoción o un «te falta poco» a quien haya aceptado recibir avisos: aparecen en su tarjeta y, si los activa, en su móvil."
         },
-        "i5": { "title": "Con tu marca", "body": "Tu color, tu nombre y tu logotipo en cada tarjeta." }
+        "i5": {
+          "title": "Con tu marca",
+          "body": "Tu color, tu nombre y tu logotipo en cada tarjeta."
+        }
       },
-      "availableOn": "Disponible en",
+      "availableOn": "Próximamente en",
       "passStamps": "Sellos 5/8",
       "passUpdated": "Última actualización",
       "passUpdatedValue": "Ahora",
@@ -1119,7 +1140,8 @@ declare const messages: {
       "passReward": "Premio",
       "passRewardValue": "Un café gratis",
       "passCoupon": "Cupón",
-      "passCouponValue": "15 % en tu próxima compra"
+      "passCouponValue": "15 % en tu próxima compra",
+      "note": "Imagen ilustrativa de lo que estamos validando."
     },
     "brandDemo": {
       "title": "Que tu tarjeta se vea como tu local",
@@ -1136,10 +1158,7 @@ declare const messages: {
     },
     "pricing": {
       "title": "Un plan para cada momento de tu local",
-      "subtitle": "Empieza gratis. Paga solo cuando tu tarjeta te dé más de lo que cuesta.",
-      "country": "Mi local está en",
-      "spain": "España · €",
-      "venezuela": "Venezuela · $",
+      "subtitle": "Empieza gratis. Cambia de plan solo si lo necesitas. Precios en euros, IVA no incluido.",
       "ctaFree": "Empezar gratis",
       "ctaTrial": "Probar 30 días gratis",
       "badge": "30 días de Growth gratis, sin tarjeta",
@@ -1149,15 +1168,6 @@ declare const messages: {
         "g1": "Sin permanencia: cambia o cancela cuando quieras",
         "g2": "Tus clientes y datos siempre son tuyos",
         "g3": "Si bajas de plan, no pierdes ningún cliente"
-      },
-      "roi": {
-        "title": "¿Cuánto te devuelve Repite?",
-        "subtitle": "Pon tus propios números. Es una cuenta sencilla, sin promesas mágicas.",
-        "ticket": "Ticket medio por visita",
-        "visits": "Visitas extra al mes de clientes que vuelven",
-        "revenue": "Ingresos extra al mes",
-        "after": "Después de pagar {plan}",
-        "note": "Estimación orientativa: los resultados dependen de tu local y de tus clientes."
       }
     },
     "faq": {
@@ -1173,15 +1183,15 @@ declare const messages: {
         },
         "i3": {
           "q": "¿Cuánto tardo en ponerlo en marcha?",
-          "a": "Normalmente en pocos minutos: creas la cuenta, eliges tu premio, descargas el QR y vinculas la tablet. Te acompañamos paso a paso."
+          "a": "Creas la cuenta, eliges tu premio, descargas el QR y vinculas la tablet. Te guiamos paso a paso dentro del panel."
         },
         "i4": {
-          "q": "¿Cómo se guarda la tarjeta en el Wallet?",
-          "a": "El cliente escanea tu QR, crea su tarjeta y toca «Añadir a Apple Wallet» o «Añadir a Google Wallet». Desde ese momento la tarjeta vive en su móvil y se actualiza sola cada vez que suma un sello. Wallet está incluido desde el plan Esencial (función en validación)."
+          "q": "¿Funciona con Apple Wallet y Google Wallet?",
+          "a": "Lo estamos validando con dispositivos reales y todavía no está activo. Hoy la tarjeta funciona en el navegador del móvil, que ya está en uso. Te avisaremos cuando el Wallet esté probado."
         },
         "i5": {
-          "q": "¿Cómo sé si Repite me está dando resultados?",
-          "a": "En tu panel ves cuántos clientes nuevos llegan, cuántos vuelven y cuántos ingresos estimados suponen, calculados con tu ticket medio. Sin letra pequeña: son tus propios datos."
+          "q": "¿Cómo sé si Repite me está sirviendo?",
+          "a": "En tu panel ves cuántos clientes nuevos llegan, cuántos vuelven y una estimación de ingresos calculada con tu ticket medio. Es una estimación con tus propios datos, no una garantía."
         },
         "i6": {
           "q": "¿Qué pasa cuando llegue al límite de clientes?",
@@ -1193,17 +1203,25 @@ declare const messages: {
         },
         "i8": {
           "q": "¿Están seguros los datos de mis clientes?",
-          "a": "Sí. Los datos de cada negocio están completamente separados de los demás y solo puede verlos quien tú autorices."
+          "a": "Los datos de cada negocio están separados con reglas de acceso en la base de datos y solo los ve quien tú autorizas. Estamos preparando los documentos legales; hasta entonces son borradores."
         },
         "i9": {
-          "q": "¿Funciona en España y en Venezuela?",
-          "a": "Sí, está pensado para los dos: textos con el tono de cada país, euros o dólares y la hora de tu local."
+          "q": "¿En qué países y monedas funciona?",
+          "a": "Cobramos solo en euros y de momento atendemos negocios en España. Si tu negocio está en otro país, escríbenos y lo estudiamos."
+        },
+        "i10": {
+          "q": "¿Hay permanencia? ¿Los precios llevan IVA?",
+          "a": "No hay permanencia. Los precios son en euros y no incluyen IVA. Mientras no haya pago en línea, el cambio de plan se pide por correo."
+        },
+        "i11": {
+          "q": "¿Qué pasa con mis datos si me voy?",
+          "a": "Puedes exportar tus clientes a Excel cuando quieras. Si bajas de plan no se borra ningún cliente."
         }
       }
     },
     "final": {
-      "title": "Tu próximo cliente fiel ya está entrando por la puerta",
-      "subtitle": "Empieza gratis y mira cuántos vuelven.",
+      "title": "Empieza por tu primera tarjeta",
+      "subtitle": "Crea la cuenta gratis y pruébala en tu local.",
       "cta": "Crear mi cuenta gratis"
     },
     "footer": {
@@ -1213,9 +1231,11 @@ declare const messages: {
       "legal": "Legal",
       "privacy": "Privacidad",
       "terms": "Términos de uso",
-      "demo": "Tarjeta de demostración",
+      "demo": "Probar la demo",
       "rights": "© {year} Repite. Todos los derechos reservados.",
-      "madeBy": "Desarrollado por"
+      "madeBy": "Desarrollado por",
+      "contact": "Contacto",
+      "security": "Seguridad y privacidad"
     },
     "legal": {
       "draft": "Borrador pendiente de revisión legal antes del lanzamiento.",
@@ -1238,6 +1258,98 @@ declare const messages: {
       "benefits": "Por qué te va a gustar",
       "cta": "Empezar gratis",
       "metaTitle": "{title} · Repite"
+    },
+    "estimator": {
+      "title": "Calcula un escenario con tus números",
+      "subtitle": "Es un ejercicio hipotético: las visitas extra son una suposición tuya. Repite no puede prometerte cuántas conseguirás.",
+      "ticket": "Ticket medio",
+      "margin": "Margen sobre cada venta",
+      "visits": "Visitas extra al mes (hipótesis)",
+      "rewards": "Premios entregados al mes",
+      "rewardCost": "Coste de cada premio",
+      "campaign": "Coste de campañas al mes",
+      "plan": "Plan",
+      "resultTitle": "Escenario mensual",
+      "extraSales": "Ventas extra",
+      "extraMargin": "Margen extra",
+      "costs": "Premios, campañas y plan",
+      "net": "Resultado",
+      "breakEven": "Con estas cifras, harían falta unas {visits, plural, one {# visita extra} other {# visitas extra}} al mes para cubrir los costes.",
+      "noBreakEven": "Sin margen por venta no hay punto de equilibrio.",
+      "disclaimer": "Cifras de ejemplo editables. No son una previsión ni una garantía de resultados."
+    },
+    "demo": {
+      "metaTitle": "Demo de la tarjeta · Repite",
+      "title": "Prueba la tarjeta de sellos",
+      "intro": "Así ve tu cliente su tarjeta. Pulsa el botón como lo haría tu equipo y mira cómo se estampa el sello.",
+      "notice": "Demo con datos ficticios. No se guarda nada y no es ningún negocio real.",
+      "business": "Café Demo",
+      "reward": "Un café gratis",
+      "progress": "{filled, number} de {total, number} sellos",
+      "complete": "¡Tarjeta completa! Aquí se canjearía el premio.",
+      "add": "Registrar visita",
+      "reset": "Empezar de nuevo",
+      "cta": "Crear mi tarjeta gratis"
+    },
+    "problems": {
+      "title": "Lo que suele pasar sin un sistema",
+      "items": {
+        "i1": {
+          "title": "Vienen una vez y no vuelven",
+          "body": "Sin un motivo claro para regresar, muchos clientes nuevos se quedan en una sola visita."
+        },
+        "i2": {
+          "title": "La tarjeta de cartón se pierde",
+          "body": "Se queda en el fondo del bolso o se olvida en casa, y el sello de hoy no cuenta."
+        },
+        "i3": {
+          "title": "No sabes quién repite",
+          "body": "Sin datos, no sabes qué clientes vuelven, cuáles dejaron de venir ni si lo que haces funciona."
+        }
+      }
+    },
+    "value": {
+      "title": "Qué cambia con Repite",
+      "items": {
+        "i1": {
+          "title": "Un motivo para volver",
+          "body": "Un premio visible y fácil de entender: cada visita acerca al siguiente."
+        },
+        "i2": {
+          "title": "Nada que perder",
+          "body": "La tarjeta vive en el móvil y se abre con un QR, sin app que descargar."
+        },
+        "i3": {
+          "title": "Datos para decidir",
+          "body": "Tu panel muestra visitas, clientes que repiten y una estimación de lo que aportan, con tus propias cifras."
+        }
+      }
+    },
+    "trust": {
+      "title": "Datos en orden, clientes tuyos",
+      "items": {
+        "i1": {
+          "title": "Datos separados por negocio",
+          "body": "Cada negocio solo accede a sus datos: la separación está aplicada en la propia base de datos."
+        },
+        "i2": {
+          "title": "Tus clientes son tuyos",
+          "body": "Puedes exportar tu lista de clientes a Excel cuando quieras."
+        },
+        "i3": {
+          "title": "Avisos solo con permiso",
+          "body": "Solo se envían avisos a quien ha aceptado recibirlos."
+        },
+        "i4": {
+          "title": "Alojado en la Unión Europea",
+          "body": "La base de datos está en Irlanda y la web se sirve desde Dublín."
+        }
+      }
+    },
+    "support": {
+      "title": "¿Dudas? Escríbenos",
+      "body": "Cuéntanos tu caso y te ayudamos a ponerlo en marcha. Respondemos por correo.",
+      "cta": "Escribir a Repite"
     }
   },
   "sectors": {

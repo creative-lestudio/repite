@@ -28,8 +28,11 @@ test.describe("web pública", () => {
 
   test("la demostración enseña la tarjeta y las páginas legales avisan de que son borrador", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("link", { name: "Ver una tarjeta de ejemplo" }).click();
-    await expect(page.getByRole("heading", { name: "Tu tarjeta de Café Aurora" })).toBeVisible();
+    await page.getByRole("link", { name: "Probar la demo" }).first().click();
+    await expect(page).toHaveURL(/\/demo$/);
+    await expect(page.getByText(/Demo con datos ficticios/)).toBeVisible();
+    await page.getByRole("button", { name: "Registrar visita" }).click();
+    await expect(page.getByText("6 de 8 sellos").last()).toBeVisible();
     await page.goto("/legal/privacidad");
     await expect(page.getByText(/borrador pendiente de revisión legal/i)).toBeVisible();
   });
@@ -37,7 +40,7 @@ test.describe("web pública", () => {
   test("tiene metadatos para buscadores y para compartir", async ({ page, request }) => {
     await page.goto("/");
     await expect(page).toHaveTitle(/Repite/);
-    await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /Wallet/);
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute("content", /tarjeta de sellos/i);
     await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(1);
     expect((await request.get("/robots.txt")).status()).toBe(200);
     expect((await request.get("/sitemap.xml")).status()).toBe(200);
@@ -96,5 +99,38 @@ test.describe("web pública", () => {
       page.getByRole("heading", { name: "El cliente escanea tu QR" }).locator("xpath=ancestor::li[1]"),
     ).toHaveCSS("opacity", "1");
     await expect(sticky).toHaveClass(/translate-y-0/);
+  });
+
+  test("ningún enlace interno de la portada, del pie ni de la demo da 404", async ({ page, request }) => {
+    const vistos = new Set<string>();
+    for (const origen of ["/", "/demo"]) {
+      await page.goto(origen);
+      const hrefs = await page.locator("a[href]").evaluateAll((as) => as.map((a) => a.getAttribute("href") ?? ""));
+      for (const h of hrefs) {
+        if (!h.startsWith("/") || h.startsWith("//")) continue;
+        vistos.add(h.split("#")[0] || "/");
+      }
+    }
+    for (const ruta of vistos) {
+      const res = await request.get(ruta, { maxRedirects: 5 });
+      expect(res.status(), ruta).toBeLessThan(400);
+    }
+  });
+
+  test("el estimador es hipotético y calcula con las cifras del dueño", async ({ page }) => {
+    await page.goto("/#precio");
+    await expect(page.getByText(/ejercicio hipotético/i)).toBeVisible();
+    await page.getByLabel("Visitas extra al mes (hipótesis)").fill("0");
+    await expect(page.getByText(/Resultado/).first()).toBeVisible();
+    await expect(page.getByText(/No son una previsión ni una garantía/)).toBeVisible();
+  });
+
+  test("la web no promete resultados ni funciones sin validar", async ({ page }) => {
+    await page.goto("/");
+    const texto = await page.locator("body").innerText();
+    for (const prohibido of [/El más elegido/i, /20 segundos/, /5 minutos/, /ROI garantizado/i, /Venezuela/]) {
+      expect(texto).not.toMatch(prohibido);
+    }
+    await expect(page.getByText("Wallet · en validación")).toBeVisible();
   });
 });

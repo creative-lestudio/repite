@@ -61,7 +61,7 @@ export async function Hero({
             </Button>
             <GoogleButton next="/app/empezar" label={t("google")} block={false} />
             <Button asChild size="lg" variant="secondary">
-              <Link href="/c/cafe-aurora">{t("demo")}</Link>
+              <Link href="/#como-funciona">{t("demo")}</Link>
             </Button>
           </div>
           <p className="text-muted text-sm">{t("note")}</p>
