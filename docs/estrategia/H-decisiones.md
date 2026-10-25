@@ -1,0 +1,15 @@
+# H · Registro de decisiones
+
+| ID | Fecha | Decisión | Motivo | Sustituye a |
+| --- | --- | --- | --- | --- |
+| D-001 | 2026-10-25 | Mantener Next.js + Supabase y evolucionar, sin reescribir | Funciona y está probado; reescribir retrasa el primer piloto | — |
+| D-002 | 2026-10-25 | Planes **Starter 0 · Esencial 25 · Growth 49 · Red a consultar** (sustituyen a Starter/Basic/Plus de 25 y 50 €) | Prompt maestro del titular: separar fidelización básica (Esencial) de recuperación de clientes (Growth) | Planes Starter/Basic/Plus |
+| D-003 | 2026-10-25 | Starter limita a 50 clientes; Esencial y Growth sin límite de clientes | Prompt maestro | Basic = 100 clientes |
+| D-004 | 2026-10-25 | Precios solo en EUR; Venezuela = piloto, sin precios en USD ni cobro real | No hay infraestructura ni validación legal | Precios en USD |
+| D-005 | 2026-10-25 | Wallet, proximidad y notificaciones nativas se describen como «en validación» hasta probarlas de extremo a extremo | No declarar terminado lo no verificado | Wallet como disponible |
+| D-006 | 2026-10-25 | Eliminar el sello por reseña de Google; solo solicitud neutral | Normas de Google y de reseñas auténticas | Sello extra por reseña |
+| D-007 | 2026-10-25 | Prueba de 30 días de **Growth** (no de todo Plus) | Coherencia con el nuevo modelo | Prueba = Plus |
+| D-008 | 2026-10-25 | Supresión de clientes por anonimización | El libro de sellos es inmutable | — |
+| D-009 | 2026-10-25 | La demo de la web usa datos ficticios en memoria | Evitar 404 en producción y mezclar con datos reales | Enlace a `/c/cafe-aurora` |
+| D-010 | 2026-10-25 | El estimador de retorno es un escenario hipotético con margen y costes | Evitar promesas económicas | Calculadora «visitas × ticket» |
+| D-011 | 2026-10-25 | Sin cuota «ilimitada» en canales con coste externo; cuotas por plan | Prompt maestro | Notificaciones ilimitadas en Plus |

@@ -1,0 +1,43 @@
+# C · Backlog priorizado
+
+Esfuerzo: S ≤ 1 día · M 2–4 días · L 1–2 semanas. Estado: ☐ pendiente · ◐ en curso · ☑ hecho.
+
+## P0 · Antes de cualquier piloto con datos reales
+
+| ID | Descripción | Impacto | Esf. | Dependencias | Riesgos | Criterios de aceptación | Pruebas | Estado |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| P0-P1 | Planes **Starter 0 € · Esencial 25 € · Growth 49 € · Red (solicitar información)**; límites en servidor y BD; prueba de 30 días de Growth con vuelta a Starter; IVA indicado; precios solo en EUR | Alto | M | — | Migración de planes existentes | Cada límite se aplica en el backend; subir/bajar de plan no borra datos; Red no se puede contratar | pgTAP límites; unitarias de derechos; E2E de límites | ☐ |
+| P0-C1 | Retirar promesas no verificadas (Wallet, proximidad, «más elegido», tiempos, retorno garantizado) | Alto | S | — | — | Ningún texto afirma lo no verificado; Wallet figura «en validación» | Revisión de textos + E2E de rutas | ☐ |
+| P0-C2 | Recuperar la tarjeta en otro móvil sin WhatsApp: texto honesto y **acceso asistido por el equipo** (enlace/QR de un solo uso) | Alto | M | — | Abuso del acceso | El cliente nunca ve un mensaje falso; el equipo genera un acceso de un solo uso, caduca en 15 min | E2E del flujo; unitaria de caducidad | ☐ |
+| P0-C3 | Web nueva según el prompt: hero, problemas, 3 pasos, valor, **demo funcional con datos ficticios**, soluciones, planes, preguntas, seguridad y privacidad, soporte, CTA final, pie legal; **estimador de escenarios** | Alto | L | P0-P1, P0-C1 | Copy sin validar con usuarios | Sin enlaces rotos; demo sin escrituras; estimador con margen, coste de recompensa y de suscripción | E2E de enlaces y demo; unitarias del estimador | ☐ |
+| P0-R1 | Quitar el sello por reseña; mostrar una solicitud neutral de reseña; sectores iniciales cafetería, panadería, takeaway, heladería | Alto | S | — | — | `bonus_review` no se puede activar ni solicitar; el enlace de reseña no da premio | pgTAP de `request_bonus`; E2E | ☐ |
+| P0-L1 | Historial de consentimientos (finalidad, origen, versión del texto, retirada) | Alto | M | — | Datos previos sin historial | Cada alta, cambio y retirada crea un evento; el estado actual se deriva de él | pgTAP; E2E | ☐ |
+| P0-L2 | Supresión (anonimización) y exportación de un cliente desde el panel | Alto | M | P0-L1 | Pérdida de agregados | Tras suprimir no queda nombre, teléfono ni notas; el libro conserva totales; queda auditado | pgTAP; E2E | ☐ |
+| P0-L3 | Documentos legales como **borrador** con huecos señalados, página de cookies, índice de tratamientos y plantilla de encargo | Alto | M | Revisión jurídica | No publicar datos inventados | Todos los huecos marcados «[PENDIENTE: …]»; aviso visible de borrador | Revisión | ☐ |
+| P0-T1 | Prueba de concurrencia del libro (misma visita, mismo canje) | Alto | S | — | — | 20 peticiones simultáneas producen 1 sello / 1 canje | Script contra BD local | ☐ |
+| P0-T2 | Entorno `staging` separado | Alto | S | **Acción del titular** (segundo proyecto Supabase) | — | Despliegues de prueba sin tocar producción | — | ☐ |
+| P0-T3 | Copias de seguridad: plan con copias diarias y **prueba de restauración** documentada | Alto | S | **Acción del titular** | Coste mensual | Restauración probada en `staging` | — | ☐ |
+| P0-T4 | Pruebas de aislamiento entre organizaciones en todos los repositorios con `service_role` | Alto | M | — | — | Dos organizaciones; ningún repositorio devuelve datos cruzados | Vitest contra BD local | ☐ |
+| P0-B1 | Correo propio (SMTP) y dominio `repite.app` | Alto | S | **Acción del titular** | Reputación del remitente | Remitente «Repite»; sin límite de 4/h | Prueba manual | ☐ |
+
+## P1 · Tras validar pilotos
+
+| ID | Descripción | Esf. | Dependencias |
+| --- | --- | --- | --- |
+| P1-W1 | Verificar Apple Wallet y Google Wallet de extremo a extremo en dispositivos reales | M | Cuenta Apple Developer, Google Wallet API |
+| P1-N1 | Verificar notificaciones por Wallet y avisos web | M | P1-W1, VAPID |
+| P1-M1 | Campañas: objetivo, programación, coste estimado, resultados, registro de envíos | L | Cron |
+| P1-S1 | Segmentos de comportamiento configurables por tipo de local + «Oportunidades para tu negocio» | L | — |
+| P1-B2 | Stripe Billing, facturas y estado de suscripción | L | Cuenta Stripe |
+| P1-K1 | Panel interno: MRR, ARR, retención por cohortes, adopción | M | P1-B2 |
+| P1-A1 | Auditoría de accesibilidad WCAG 2.2 AA | M | — |
+| P1-T4 | Sentry y alertas | S | — |
+| P1-T5 | Medir rendimiento real (Web Vitals, latencias) | S | — |
+| P1-T6 | CSP y endurecimiento de cabeceras | S | — |
+| P1-U1 | Onboarding guiado con prueba con cliente demo y medición del tiempo | M | — |
+| P1-P2 | Ajustes administrativos con motivo y auditoría | S | — |
+
+## P2 / P3
+
+- **P2:** multilocal («Red»), integración TPV, herramientas de partners, WhatsApp Business oficial, segundo factor del dueño, `slug_available` con límite de uso.
+- **P3:** Venezuela (legal, cobros, comunicaciones), API pública, marca blanca, aplicación del consumidor — solo si la demanda lo justifica.

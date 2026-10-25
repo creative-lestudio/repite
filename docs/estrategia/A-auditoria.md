@@ -1,0 +1,76 @@
+# A · Auditoría del estado actual (25-oct-2026)
+
+**Método:** lectura del repositorio (≈15 600 líneas TS/TSX, 16 migraciones), consulta directa a la base de datos local con las 16 migraciones aplicadas, rastreo de enlaces de la web, revisión de textos comerciales, y ejecución de las pruebas existentes (67 unitarias, 34 recorridos E2E, pgTAP). «Funcional» = pasa pruebas automáticas **en local**; ningún flujo ha sido probado aún con negocios ni clientes reales.
+
+**Producción hoy:** 0 organizaciones, 2 usuarios de prueba, 16 migraciones aplicadas, sin datos de negocio.
+
+## A.1 Inventario de funcionalidades
+
+| Funcionalidad | Estado | Problema / hallazgo | Gravedad | Dependencia | Recomendación |
+| --- | --- | --- | --- | --- | --- |
+| Alta del dueño (enlace por correo, contraseña) | funcional | Correo desde remitente genérico de Supabase y con límite horario bajo | Alta | SMTP propio + dominio | Resend + `repite.app` (P0-B1) |
+| Acceso con Google | bloqueado | Botón oculto hasta activar proveedor | Media | Credenciales Google | Activar y poner `NEXT_PUBLIC_GOOGLE_LOGIN=1` |
+| Onboarding (negocio, local, premio) | parcial | Una pantalla; sin prueba guiada con cliente demo; no se ha medido el tiempo real | Media | — | P1-U1: guía y prueba con cliente de demostración; medir tiempo |
+| Programa de sellos (visita elegible) | funcional | Solo «por visita»; sin regla por importe (correcto para MVP) | Baja | TPV (P2) | Mantener |
+| Libro de sellos, idempotencia, intervalo mínimo, deshacer | funcional | Concurrencia cubierta por bloqueo asesor pero **sin prueba concurrente real** | Media | — | P0-T1: prueba concurrente |
+| Ajustes administrativos con motivo | ausente | El tipo `adjust` existe en BD sin interfaz ni motivo obligatorio | Media | — | P1-P2: ajuste con motivo y auditoría |
+| Recompensas y canje | funcional | Caducidad configurable; canje idempotente | — | — | — |
+| Tarjeta web del cliente (PWA, QR opaco) | funcional | QR contiene token aleatorio, no datos personales | — | — | — |
+| Recuperar la tarjeta en otro móvil | **simulado/bloqueado** | Envía el enlace por WhatsApp con proveedor `mock`: **en producción no llega nada** y la pantalla dice que sí | **Alta** | WhatsApp Business | P0-C2: texto honesto + acceso asistido en el local |
+| Panel del equipo (PIN individual + tablet vinculada) | funcional | Sesión 8 h revalidada en BD; bloqueo tras 5 fallos; dispositivo revocable | — | — | Mantener; añadir revocación inmediata de sesiones |
+| Escáner QR | funcional | Detector nativo con alternativa jsQR | — | — | — |
+| Panel del dueño (clientes, ficha, notas, CSV) | funcional | Exportación auditada; sin supresión de clientes | Alta (RGPD) | — | P0-L2 |
+| Resultados / métricas | funcional | Visitas ≠ ventas verificadas: el panel ya habla de «estimados» | Media | TPV | Mantener definiciones visibles |
+| «Oportunidades para tu negocio» | ausente | La audiencia SQL existe; falta el módulo de recomendaciones | Media | — | P1-P3 |
+| Marca y tarjeta personalizable | funcional | Imágenes validadas con `sharp` | — | — | — |
+| Planes y límites en servidor | funcional | **Modelo antiguo** (Starter/Basic/Plus) distinto del nuevo | Alta | — | P0-P1 |
+| Prueba de 30 días | funcional | Da Plus completo; debe dar Growth | Baja | — | P0-P1 |
+| Cobro / facturas / suscripción | ausente | El cambio de plan se pide por correo a una dirección inexistente | Alta | Stripe | P1-B2 |
+| Apple Wallet / Google Wallet | **bloqueado** | Código y pruebas de firma con certificados de prueba; sin credenciales reales **no hay verificación de extremo a extremo** y la web lo vende como disponible | **Alta** | Cuenta Apple Developer (99 USD/año), Google Wallet API | P0-C1: retirar promesa; P1-W1: verificar |
+| Cupones y niveles | funcional | Emisión idempotente, límites por plan | — | — | — |
+| Notificaciones (aviso en tarjeta) | funcional | — | — | — | — |
+| Notificaciones por Wallet y web push | bloqueado | Sin claves ni pruebas en dispositivo | Media | Wallet, VAPID | P1-N1 |
+| Campañas (programación, informes, costes) | ausente | Solo envío inmediato; sin programación ni informe de resultados | Media | Cron | P1-M1 |
+| WhatsApp / correo transaccional de campañas | ausente | Proveedor `mock` | — | Meta / proveedor | P2 |
+| Reseñas: sello por reseña en Google | **funcional, no admisible** | Incentiva reseñas (contraria a las normas de Google y a la normativa de reseñas) | **Alta** | — | P0-R1: eliminar; solicitud neutral |
+| Consentimientos | parcial | Hay marca, fecha y origen, pero **sin historial** de finalidad, versión y retirada | Alta (RGPD) | — | P0-L1 |
+| Derechos del interesado | parcial | Rectificación vía equipo; **no hay supresión** | Alta | — | P0-L2 |
+| Panel interno de Repite (MRR, cohortes…) | ausente | — | Media | Facturación | P1-K1 |
+| Entorno de pruebas separado | ausente | Un único proyecto Supabase = producción | Alta | Segundo proyecto | P0-T2 (acción del titular) |
+| Copias de seguridad y restauración | desconocido | Depende del plan de Supabase; sin prueba de restauración | Alta | Plan Pro | P0-T3 |
+| Monitorización de errores | ausente | Solo logs de Vercel | Media | Sentry/equivalente | P1-T4 |
+| Multilocal | ausente | El modelo de datos lo admite; la interfaz limita a un local | Baja | — | P2 (producto «Red») |
+| i18n es-VE | parcial | Solo diferencias de texto; sin cobros ni requisitos legales locales | Media | Validación local | P3 |
+| Accesibilidad WCAG 2.2 AA | parcial | Contraste y táctil revisados; sin auditoría formal (axe/lector) | Media | — | P1-A1 |
+| Rendimiento | parcial | Región `dub1`, `loading.tsx`; sin medición en producción | Media | — | P1-T5 |
+
+## A.2 Seguridad y aislamiento (comprobado en la BD)
+
+- 29 tablas públicas: **todas con RLS activada y forzada**; 51 políticas. Seis tablas sin políticas a propósito (solo `service_role`): `customer_sessions`, `magic_links`, `job_runs`, `rate_limits`, `wallet_registrations`, `push_subscriptions`.
+- Funciones ejecutables por `anon`: solo `slug_available` (permite saber si un enlace está ocupado; riesgo bajo, P2).
+- Ninguna función `SECURITY DEFINER` sin `search_path` fijo.
+- Cookies de sesión: `httpOnly`, `secure` en producción, `sameSite=lax`, firmadas con HMAC.
+- Limitación de solicitudes en altas, accesos, geocodificación y envíos.
+- **Riesgos abiertos:** (1) los repositorios con `service_role` filtran por organización a mano (un olvido rompería el aislamiento) → pruebas de aislamiento por repositorio (P0-T4); (2) sin cabecera `Content-Security-Policy` (P1); (3) sin segundo factor para el dueño (P2); (4) sin prueba de restauración de copias.
+
+## A.3 Textos y promesas no verificadas (detectados)
+
+| Texto actual | Problema | Acción |
+| --- | --- | --- |
+| «El más elegido» (plan Basic) | Sin datos comerciales | Eliminar |
+| «El plan ya se ha pagado con N visitas» | Ignora margen y costes | Sustituir por estimador de escenarios |
+| «Listo en menos de 5 minutos», «20 segundos» | Sin medición | Eliminar o medir |
+| «Se actualiza al instante» (Wallet) | Depende del proveedor | Matizar |
+| Sección Wallet como disponible | No verificado de extremo a extremo | «En validación» |
+| Aviso por cercanía como ventaja de Plus | Depende de dispositivo, permisos y límites | Matizar o retirar de la web |
+| «Ver una tarjeta de ejemplo» → `/c/cafe-aurora` | **No existe en producción (404)** | Demo propia con datos ficticios |
+| «Sellos extra por reseña» | Incentivo a reseñas | Eliminar |
+| Precios en USD para Venezuela | Sin cobros reales ni validación legal | Solo EUR; Venezuela = piloto a consultar |
+| «Gratis para siempre» sin matices | Comprometedor | «Starter sin caducidad mientras exista el plan» |
+| Mensajes que «Repite te prepara» | WhatsApp no operativo | No prometer WhatsApp |
+
+## A.4 Calidad
+
+- Pruebas: 67 unitarias, 34 E2E (móvil 360 px), pgTAP (RLS, libro, planes, cupones, métricas, notificaciones). CI en GitHub Actions.
+- Debilidades: sin prueba de concurrencia real, sin pruebas de fallo de proveedores, sin pruebas de cancelación/bajada de plan con datos, y sin pruebas de consentimiento con historial.
+- Las E2E en modo desarrollo tienen falsos fallos por compilación en frío; en modo producción pasan.
