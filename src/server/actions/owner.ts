@@ -12,7 +12,7 @@ import { createUserClient } from "@/lib/supabase/server";
 import { requireManager, requireOwner } from "../auth/owner";
 import { zodFields } from "@/lib/schemas/zod-fields";
 import { toBusinessError } from "../errors";
-import { addOwnerNote } from "../repositories/owner";
+import { addOwnerNote, eraseCustomer } from "../repositories/owner";
 
 const asJson = (v: unknown) => v as NonNullable<Json>;
 
@@ -141,6 +141,18 @@ export async function addOwnerNoteAction(customerId: string, text: string) {
     return { ok: false as const, error: "noteInvalid" };
   await addOwnerNote(ctx.organization.id, ctx.userId, customerId, clean);
   revalidatePath(`/app/clientes/${customerId}`);
+  return { ok: true as const };
+}
+
+export async function eraseCustomerAction(customerId: string) {
+  await requireManager();
+  if (!/^[0-9a-f-]{36}$/.test(customerId)) return { ok: false as const, error: "generic" };
+  try {
+    await eraseCustomer(customerId);
+  } catch {
+    return { ok: false as const, error: "generic" };
+  }
+  revalidatePath("/app/clientes");
   return { ok: true as const };
 }
 

@@ -388,3 +388,38 @@ export async function countNotificationsSince(sinceISO: string): Promise<number>
     .in("status", ["sending", "sent"]);
   return count ?? 0;
 }
+
+export interface ConsentRow {
+  id: number;
+  granted: boolean;
+  origin: string;
+  created_at: string;
+}
+
+/** Historial de permisos de comunicaciones de un cliente (más reciente primero). RLS aísla por organización. */
+export async function getConsentHistory(customerId: string): Promise<ConsentRow[]> {
+  const supabase = await createUserClient();
+  const { data, error } = await supabase
+    .from("consent_events")
+    .select("id, granted, origin, created_at")
+    .eq("customer_id", customerId)
+    .order("created_at", { ascending: false })
+    .limit(50);
+  if (error) throw error;
+  return data ?? [];
+}
+
+/** Datos de un cliente en JSON (acceso y portabilidad). La función comprueba el rol en la base de datos. */
+export async function exportCustomerData(customerId: string) {
+  const supabase = await createUserClient();
+  const { data, error } = await supabase.rpc("export_customer_data", { p_customer: customerId });
+  if (error) throw error;
+  return data;
+}
+
+/** Supresión por anonimización. La función comprueba el rol en la base de datos. */
+export async function eraseCustomer(customerId: string) {
+  const supabase = await createUserClient();
+  const { error } = await supabase.rpc("erase_customer", { p_customer: customerId });
+  if (error) throw error;
+}

@@ -6,17 +6,19 @@ import { Badge, Card } from "@/components/ui";
 import { OwnerNoteForm } from "@/components/owner/owner-notes";
 import { StampCard } from "@/components/stamp-card/stamp-card";
 import { requireOwner } from "@/server/auth/owner";
-import { getCustomerDetail } from "@/server/repositories/owner";
+import { getConsentHistory, getCustomerDetail } from "@/server/repositories/owner";
+import { CustomerRights } from "@/components/owner/customer-rights";
 import { cn } from "@/lib/utils";
 
 export default async function OwnerCustomerPage({ params }: { params: Promise<{ id: string }> }) {
   const ctx = await requireOwner();
   const { id } = await params;
   if (!/^[0-9a-f-]{36}$/.test(id)) notFound();
-  const [t, format, detail] = await Promise.all([
+  const [t, format, detail, consents] = await Promise.all([
     getTranslations("owner.customers"),
     getFormatter(),
     getCustomerDetail(id, ctx.location.id),
+    getConsentHistory(id),
   ]);
   if (!detail) notFound();
   const { customer: c, program } = detail;
@@ -75,6 +77,30 @@ export default async function OwnerCustomerPage({ params }: { params: Promise<{ 
               </dd>
             </dl>
           </Card>
+          <Card className="flex flex-col gap-3">
+            <h2 className="text-lg font-bold">{t("consentHistory")}</h2>
+            {consents.length === 0 ? (
+              <p className="text-muted text-sm">{t("consentHistoryEmpty")}</p>
+            ) : (
+              <ul className="flex flex-col gap-2 text-sm">
+                {consents.map((e) => (
+                  <li key={e.id} className="flex flex-wrap items-center gap-2">
+                    <Badge tone={e.granted ? "success" : "neutral"}>
+                      {e.granted ? t("consentGranted") : t("consentWithdrawn")}
+                    </Badge>
+                    <time dateTime={e.created_at}>{date(e.created_at)}</time>
+                    <span className="text-muted">· {t("origin", { origin: e.origin })}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Card>
+          {ctx.role !== "staff" && (
+            <Card className="flex flex-col gap-3">
+              <h2 className="text-lg font-bold">{t("rights.title")}</h2>
+              <CustomerRights customerId={c.id} />
+            </Card>
+          )}
         </div>
 
         <div className="flex flex-col gap-6">

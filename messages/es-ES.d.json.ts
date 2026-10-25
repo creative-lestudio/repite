@@ -809,7 +809,21 @@ declare const messages: {
         "adjust": "Corrección"
       },
       "pending": "pendiente",
-      "rejected": "no aprobado"
+      "rejected": "no aprobado",
+      "consentHistory": "Historial de permisos",
+      "consentHistoryEmpty": "Este cliente nunca ha dado permiso para recibir avisos.",
+      "consentGranted": "Permiso dado",
+      "consentWithdrawn": "Permiso retirado",
+      "origin": "{origin, select, qr_signup {al registrarse} customer_preferences {desde sus ajustes} customer_opt_out {lo retiró él mismo} erasure {por borrado de datos} opt_out {retirado} other {origen: {origin}}}",
+      "rights": {
+        "title": "Derechos del cliente",
+        "intro": "Si tu cliente te pide una copia de sus datos o que los borres, puedes hacerlo aquí.",
+        "download": "Descargar sus datos",
+        "eraseBody": "Borrar sus datos elimina su nombre, teléfono, cumpleaños y notas, y deja de recibir avisos. Se conservan solo las cifras de visitas, sin identidad. No se puede deshacer.",
+        "sure": "Entiendo que no se puede deshacer",
+        "erase": "Borrar los datos de este cliente",
+        "done": "Datos borrados"
+      }
     },
     "program": {
       "title": "Programa de fidelidad",

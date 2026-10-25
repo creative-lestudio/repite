@@ -43,6 +43,38 @@ isOneToOne: false
       referencedColumns: ["id"]
     }
                   ]
+                },"consent_events": {
+                  Row: {
+                    "created_at": string,"customer_id": string,"granted": boolean,"id": number,"organization_id": string,"origin": string,"purpose": string,"text_version": string
+                  }
+                  ComputedFields: never
+                  Insert: {
+                    "created_at"?: string,"customer_id": string,"granted": boolean,"id"?: never,"organization_id": string,"origin": string,"purpose": string,"text_version"?: string
+                  }
+                  Update: {
+                    "created_at"?: string,"customer_id"?: string,"granted"?: boolean,"id"?: never,"organization_id"?: string,"origin"?: string,"purpose"?: string,"text_version"?: string
+                  }
+                  Relationships: [
+                    {
+      foreignKeyName: "consent_events_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
+      referencedRelation: "customer_stats"
+      referencedColumns: ["customer_id"]
+    },{
+      foreignKeyName: "consent_events_customer_id_fkey"
+      columns: ["customer_id"]
+isOneToOne: false
+      referencedRelation: "customers"
+      referencedColumns: ["id"]
+    },{
+      foreignKeyName: "consent_events_organization_id_fkey"
+      columns: ["organization_id"]
+isOneToOne: false
+      referencedRelation: "organizations"
+      referencedColumns: ["id"]
+    }
+                  ]
                 },"coupons": {
                   Row: {
                     "active": boolean,"audience": string,"created_at": string,"deleted_at": string | null,"description": string | null,"ends_at": string | null,"id": string,"organization_id": string,"starts_at": string,"title": string
@@ -910,6 +942,12 @@ isOneToOne: false
                            },
 "customer_card":
 { Args: { "p_customer": string,"p_location": string }; Returns: Json
+                           },
+"erase_customer":
+{ Args: { "p_customer": string }; Returns: undefined
+                           },
+"export_customer_data":
+{ Args: { "p_customer": string }; Returns: Json
                            },
 "issue_coupons":
 { Args: { "p_customer": string }; Returns: number
