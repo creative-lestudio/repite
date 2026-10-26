@@ -6,6 +6,7 @@ import { PlanCards } from "@/components/plans/plan-cards";
 import { PlanTable } from "@/components/plans/plan-table";
 import { Estimator } from "@/components/landing/estimator";
 import { Button } from "@/components/ui";
+import { CONTACT_EMAIL } from "@/config/contact";
 
 export function Pricing() {
   const t = useTranslations("landing.pricing");
@@ -32,7 +33,7 @@ export function Pricing() {
             )}
             renderRedCta={() => (
               <Button asChild size="lg" variant="secondary" block>
-                <a href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? ""}`}>{tp("requestInfo")}</a>
+                <a href={`mailto:${CONTACT_EMAIL}`}>{tp("requestInfo")}</a>
               </Button>
             )}
           />

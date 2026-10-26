@@ -12,6 +12,7 @@ import { Reveal } from "@/components/landing/reveal";
 import { Button } from "@/components/ui";
 import { LANDING_SECTORS, SECTOR_SLUGS } from "@/domain/business-types";
 import { cn } from "@/lib/utils";
+import { CONTACT_EMAIL } from "@/config/contact";
 
 type Item = { title: string; body: string };
 
@@ -469,7 +470,7 @@ export async function TrustSection() {
     getMessages(),
   ]);
   const items: Item[] = Object.values(landing.trust.items);
-  const email = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "";
+  const email = CONTACT_EMAIL;
   return (
     <section id="seguridad" aria-labelledby="trust-title" className="scroll-mt-16 bg-white px-4 py-20 md:py-28">
       <div className="mx-auto max-w-6xl">

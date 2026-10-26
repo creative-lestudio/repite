@@ -6,6 +6,7 @@ import { planSpec, trialDaysLeft, usageLevel } from "@/domain/plan";
 import { requireOwner } from "@/server/auth/owner";
 import { getPlanUsage } from "@/server/repositories/owner";
 import { cn } from "@/lib/utils";
+import { CONTACT_EMAIL } from "@/config/contact";
 
 export const metadata = { title: "Plan y facturación" };
 
@@ -49,7 +50,7 @@ export default async function PlanPage() {
   ]);
   const spec = planSpec(usage.plan);
   const level = usageLevel(usage.customers, usage.customerLimit);
-  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "";
+  const contactEmail = CONTACT_EMAIL;
 
   const text = (used: number, limit: number | null) =>
     limit === null ? t("noLimit", { count: used }) : t("of", { count: used, limit });
