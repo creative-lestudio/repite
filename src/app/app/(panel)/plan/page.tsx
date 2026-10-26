@@ -49,7 +49,7 @@ export default async function PlanPage() {
   ]);
   const spec = planSpec(usage.plan);
   const level = usageLevel(usage.customers, usage.customerLimit);
-  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hola@repite.app";
+  const contactEmail = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "";
 
   const text = (used: number, limit: number | null) =>
     limit === null ? t("noLimit", { count: used }) : t("of", { count: used, limit });

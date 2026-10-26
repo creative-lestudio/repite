@@ -706,7 +706,7 @@ declare const messages: {
       "locationName": "Nombre del local",
       "locationHint": "Así lo verán tus clientes en su tarjeta.",
       "slug": "Enlace de tu tarjeta",
-      "slugHint": "Tus clientes entrarán en repite.app/c/{slug}. Solo letras, números y guiones.",
+      "slugHint": "Tus clientes entrarán por tu enlace de Repite, que acaba en /c/{slug}. Solo letras, números y guiones.",
       "program": "Tu premio",
       "stamps": "Sellos para ganar el premio",
       "stampsHint": "Lo habitual son 8 o 10.",

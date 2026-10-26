@@ -32,7 +32,7 @@ export function Pricing() {
             )}
             renderRedCta={() => (
               <Button asChild size="lg" variant="secondary" block>
-                <a href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hola@repite.app"}`}>{tp("requestInfo")}</a>
+                <a href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? ""}`}>{tp("requestInfo")}</a>
               </Button>
             )}
           />

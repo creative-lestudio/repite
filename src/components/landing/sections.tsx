@@ -469,7 +469,7 @@ export async function TrustSection() {
     getMessages(),
   ]);
   const items: Item[] = Object.values(landing.trust.items);
-  const email = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "hola@repite.app";
+  const email = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "";
   return (
     <section id="seguridad" aria-labelledby="trust-title" className="scroll-mt-16 bg-white px-4 py-20 md:py-28">
       <div className="mx-auto max-w-6xl">

@@ -55,9 +55,9 @@ En Supabase → **Authentication → URL Configuration**:
 
 En **Authentication → Providers → Email**: deja activada la confirmación de correo (así nadie crea cuentas con correos ajenos).
 
-## Paso 5 · Tu dominio `repite.app`
+## Paso 5 · Tu dominio
 
-En Vercel → tu proyecto → **Settings → Domains** → añade `repite.app` y sigue las instrucciones para apuntarlo desde donde lo compraste. Después actualiza `NEXT_PUBLIC_APP_URL` y las URLs de Supabase del paso 4.
+En Vercel → tu proyecto → **Settings → Domains** → añade tu dominio (el que hayas comprado) y sigue las instrucciones para apuntarlo desde donde lo compraste. Después actualiza `NEXT_PUBLIC_APP_URL` y las URLs de Supabase del paso 4.
 
 ## Antes de abrirlo al público
 

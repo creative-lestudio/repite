@@ -14,6 +14,6 @@ export function pushConfig(): PushConfig | null {
   return {
     publicKey: e.NEXT_PUBLIC_VAPID_PUBLIC_KEY,
     privateKey: e.VAPID_PRIVATE_KEY,
-    subject: e.VAPID_SUBJECT || "mailto:hola@repite.app",
+    subject: e.VAPID_SUBJECT || e.NEXT_PUBLIC_APP_URL,
   };
 }
