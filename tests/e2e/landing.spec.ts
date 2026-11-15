@@ -130,7 +130,15 @@ test.describe("web pública", () => {
   test("la web no promete resultados ni funciones sin validar", async ({ page }) => {
     await page.goto("/");
     const texto = await page.locator("body").innerText();
-    for (const prohibido of [/El más elegido/i, /20 segundos/, /5 minutos/, /ROI garantizado/i, /Venezuela/]) {
+    for (const prohibido of [
+      /\bBasic\b/,
+      /\bPlus\b/,
+      /El más elegido/i,
+      /20 segundos/,
+      /5 minutos/,
+      /ROI garantizado/i,
+      /Venezuela/,
+    ]) {
       expect(texto).not.toMatch(prohibido);
     }
     await expect(page.getByText("Wallet · en validación")).toBeVisible();

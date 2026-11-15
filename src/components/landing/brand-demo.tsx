@@ -34,7 +34,7 @@ export function BrandDemo() {
       "ring-cream-200 hover:bg-cream-50 min-h-11 rounded-lg px-3 text-sm font-semibold ring-1",
       active && "bg-primary-soft ring-primary ring-2",
     );
-  const tag = (plan: "Starter" | "Basic" | "Plus") => (
+  const tag = (plan: "Starter" | "Esencial") => (
     <span className="bg-cream-100 text-wine-800 ml-2 rounded-full px-2 py-0.5 text-xs font-semibold">{plan}</span>
   );
 
@@ -83,7 +83,7 @@ export function BrandDemo() {
 
             <div>
               <p className="mb-2 text-sm font-semibold">
-                {t("icon")} {tag("Basic")}
+                {t("icon")} {tag("Esencial")}
               </p>
               <div className="flex flex-wrap gap-2" role="group" aria-label={t("icon")}>
                 {ICONS.map((k) => {
@@ -106,7 +106,7 @@ export function BrandDemo() {
 
             <div>
               <p className="mb-2 text-sm font-semibold">
-                {t("shape")} {tag("Plus")}
+                {t("shape")} {tag("Esencial")}
               </p>
               <div className="flex flex-wrap gap-2" role="group" aria-label={t("shape")}>
                 {STAMP_SHAPES.map((s) => (
@@ -125,7 +125,7 @@ export function BrandDemo() {
 
             <div>
               <p className="mb-2 text-sm font-semibold">
-                {t("style")} {tag("Plus")}
+                {t("style")} {tag("Esencial")}
               </p>
               <div className="flex flex-wrap gap-2" role="group" aria-label={t("style")}>
                 {CARD_STYLES.map((s) => (
@@ -144,7 +144,7 @@ export function BrandDemo() {
 
             <div>
               <p className="mb-2 text-sm font-semibold">
-                {t("font")} {tag("Plus")}
+                {t("font")} {tag("Esencial")}
               </p>
               <div className="flex flex-wrap gap-2" role="group" aria-label={t("font")}>
                 {FONT_DEMO.map((k) => (
