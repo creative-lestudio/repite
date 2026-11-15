@@ -57,12 +57,14 @@ test.describe("cliente", () => {
     expect(data?.marketing_consent).toBe(false);
   });
 
-  test("un teléfono ya registrado no da acceso: se envía enlace por WhatsApp", async ({ page }) => {
+  test("un teléfono ya registrado no da acceso y se indica pedirlo al equipo", async ({ page }) => {
     await page.goto(`/c/${AURORA.slug}`);
     await page.getByLabel("Tu nombre").fill("Suplantador");
     await page.getByLabel("Tu WhatsApp").fill("611 11 11 11"); // María, del seed
     await page.getByRole("button", { name: "Crear mi tarjeta" }).click();
     await expect(page.getByText("Ya tienes una tarjeta con este número")).toBeVisible();
+    await expect(page.getByText(/pide al equipo del local que te dé acceso/i)).toBeVisible();
+    await expect(page.getByText(/te hemos enviado un enlace por whatsapp/i)).toHaveCount(0);
     await expect(page.getByRole("heading", { name: /hola/i })).toHaveCount(0);
   });
 
@@ -80,6 +82,19 @@ test.describe("cliente", () => {
     await expect(page.getByRole("heading", { name: "Hola, Javier" })).toBeVisible();
 
     await page.context().clearCookies();
+    await page.goto(`/c/${AURORA.slug}/acceso?t=${token}`);
+    await expect(page.getByText(/este enlace ya se usó o ha caducado/i)).toBeVisible();
+  });
+
+  test("un enlace caducado no abre la tarjeta", async ({ page }) => {
+    const { createHash, randomBytes } = await import("node:crypto");
+    const token = randomBytes(24).toString("base64url");
+    await admin.from("magic_links").insert({
+      organization_id: AURORA.organizationId,
+      customer_id: "a0000000-0000-4000-8000-0000000000e2",
+      token_hash: createHash("sha256").update(token).digest("hex"),
+      expires_at: new Date(Date.now() - 60_000).toISOString(),
+    });
     await page.goto(`/c/${AURORA.slug}/acceso?t=${token}`);
     await expect(page.getByText(/este enlace ya se usó o ha caducado/i)).toBeVisible();
   });

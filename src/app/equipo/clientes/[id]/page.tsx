@@ -5,6 +5,7 @@ import { getFormatter, getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui";
 import { StampCard } from "@/components/stamp-card/stamp-card";
 import { CouponsList } from "@/components/staff/coupons-list";
+import { AssistedAccess } from "@/components/staff/assisted-access";
 import { BonusReview } from "@/components/staff/bonus-review";
 import { Notes } from "@/components/staff/notes";
 import { RegisterVisit } from "@/components/staff/register-visit";
@@ -104,6 +105,8 @@ export default async function StaffCustomerPage({ params }: { params: Promise<{ 
           <div className="bg-surface ring-cream-100 rounded-xl p-4 ring-1">
             <UsualOrder customerId={customer.id} value={customer.usual_order} />
           </div>
+
+          <AssistedAccess customerId={customer.id} />
 
           <Notes customerId={customer.id} notes={notes} />
         </div>

@@ -149,7 +149,8 @@
         "m10": "octubre",
         "m11": "noviembre",
         "m12": "diciembre"
-      }
+      },
+      "phoneExistsStaff": "Este número ya tiene una tarjeta. Pide al equipo del local que te dé acceso en este móvil: lo hacen al momento y no tienes que volver a registrarte."
     },
     "card": {
       "hello": "Hola, {name}",
@@ -233,7 +234,7 @@
       "messagesHint": "Ofertas, tu cumpleaños o avisos de premios. Nunca más de uno cada pocos días.",
       "saved": "Cambios guardados",
       "signOut": "Cerrar la tarjeta en este móvil",
-      "signOutHint": "Podrás recuperarla con un enlace a tu WhatsApp.",
+      "signOutHint": "Para recuperarla, pide al equipo del local un acceso nuevo.",
       "pushTitle": "Avisos en este móvil",
       "pushBody": "Recibe un aviso cuando {location} tenga algo para ti: premios, cupones o novedades.",
       "pushOn": "Activar avisos",
@@ -252,7 +253,10 @@
       "submit": "Enviarme el enlace",
       "sent": "Si ese número tiene tarjeta en {location}, en unos segundos te llegará un WhatsApp con el enlace. Caduca en 30 minutos.",
       "invalidLink": "Este enlace ya se usó o ha caducado. Pide uno nuevo.",
-      "newAccount": "Crear una tarjeta nueva"
+      "newAccount": "Crear una tarjeta nueva",
+      "bodyStaff": "Si cambiaste de móvil, el equipo del local te da acceso a tu tarjeta en un momento.",
+      "byStaffTitle": "Pide acceso al equipo",
+      "byStaffBody": "En {location}, pídele a alguien del equipo que te dé acceso a tu tarjeta en este móvil. Te enseñarán un código QR: escanéalo con la cámara. Caduca a los 15 minutos y solo se puede usar una vez."
     }
   },
   "staff": {
@@ -350,7 +354,16 @@
       "notePin": "Fijar arriba",
       "pinned": "Fijada",
       "noConsent": "No quiere recibir mensajes",
-      "back": "Volver al inicio"
+      "back": "Volver al inicio",
+      "assisted": {
+        "title": "Acceso en otro móvil",
+        "body": "Si el cliente cambió de móvil o perdió su tarjeta, genera un código para abrirla en el móvil nuevo.",
+        "create": "Dar acceso en otro móvil",
+        "qrLabel": "Código QR de acceso a la tarjeta",
+        "scan": "Que el cliente lo escanee con la cámara. Caduca en {minutes, number} minutos.",
+        "oneUse": "Solo funciona una vez. Si hace falta otro, genera uno nuevo.",
+        "close": "Cerrar"
+      }
     },
     "pending": {
       "title": "Sellos extra por validar",

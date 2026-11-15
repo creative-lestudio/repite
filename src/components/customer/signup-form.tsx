@@ -22,7 +22,7 @@ export function SignupForm({ slug, locationName }: { slug: string; locationName:
     return (
       <div className="flex flex-col gap-4">
         <Alert tone="info" title={t("phoneExistsTitle")}>
-          {t("phoneExistsBody")}
+          {"delivery" in state && state.delivery === "staff" ? t("phoneExistsStaff") : t("phoneExistsBody")}
         </Alert>
         <Button asChild variant="secondary" block>
           <Link href={`/c/${slug}/recuperar`}>{t("recover")}</Link>

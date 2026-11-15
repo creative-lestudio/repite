@@ -28,8 +28,15 @@ import { getLocationBySlug } from "../repositories/locations";
 import { getTemplate } from "../repositories/templates";
 import { planSpec, type EffectivePlan } from "@/domain/plan";
 import { appUrl } from "@/server/app-url";
+import { env } from "@/lib/env";
 
-export type SignupState = ActionResult | { ok: false; error: "phoneExists"; masked?: string } | null;
+export type SignupState =
+  ActionResult | { ok: false; error: "phoneExists"; masked?: string; delivery?: "message" | "staff" } | null;
+
+/** ¿Hay un proveedor de mensajería real? Con el simulado no se envía nada, y no se debe decir que se envió. */
+function messagingIsReal() {
+  return env().MESSAGING_PROVIDER !== "mock";
+}
 
 async function setLocaleCookieIfMissing(locale: string) {
   const store = await cookies();
@@ -74,8 +81,11 @@ export async function signUpAction(slug: string, _prev: SignupState, formData: F
   const existing = await findCustomerByPhone(location.organizationId, phone);
   if (existing) {
     // No iniciamos sesión con solo conocer un teléfono: enviamos un enlace al WhatsApp del titular.
-    if (await rateLimit("access-link", 3600, 3, phone)) await sendAccessLink(slug, existing);
-    return { ok: false, error: "phoneExists" };
+    if (messagingIsReal()) {
+      if (await rateLimit("access-link", 3600, 3, phone)) await sendAccessLink(slug, existing);
+      return { ok: false, error: "phoneExists", delivery: "message" };
+    }
+    return { ok: false, error: "phoneExists", delivery: "staff" };
   }
 
   const cookieLocale = (await cookies()).get(LOCALE_COOKIE)?.value;
@@ -111,7 +121,8 @@ export async function requestAccessLinkAction(
   if (!phone) return { ok: false, error: "phoneInvalid" };
   const customer = await findCustomerByPhone(location.organizationId, phone);
   // Misma respuesta exista o no el número, para no revelar quién es cliente.
-  if (customer && (await rateLimit("access-link", 3600, 3, phone))) await sendAccessLink(slug, customer);
+  if (customer && messagingIsReal() && (await rateLimit("access-link", 3600, 3, phone)))
+    await sendAccessLink(slug, customer);
   return { ok: true };
 }
 

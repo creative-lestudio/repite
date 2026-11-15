@@ -16,6 +16,10 @@ import { BusinessError } from "../errors";
 import { rateLimit } from "../rate-limit";
 import { refreshWalletForEvent, refreshWalletForReward, refreshWalletPass } from "../wallet/refresh";
 import { ledger, type CardSnapshot } from "../repositories/ledger";
+import { createMagicLink } from "../auth/customer-session";
+import { appUrl } from "../app-url";
+import { getCustomer } from "../repositories/customers";
+import { qrSvg } from "../qr";
 import {
   addCustomerNote,
   eventBelongsToLocation,
@@ -92,6 +96,35 @@ export async function signInStaffAction(input: { staffId: string; pin: string })
 export async function signOutStaffAction() {
   await endStaffSession();
   redirect("/equipo");
+}
+
+// ───────────── Acceso asistido ─────────────
+
+const ASSISTED_ACCESS_MINUTES = 15;
+
+/** El equipo da acceso a la tarjeta de un cliente en otro móvil: enlace de un solo uso, caduca en 15 min. */
+export async function createAssistedAccessAction(
+  customerIdRaw: string,
+): Promise<Ok<{ url: string; qr: string; minutes: number }> | Fail> {
+  return withStaff(async (s) => {
+    const customerId = uuid.safeParse(customerIdRaw);
+    if (!customerId.success) return { ok: false, error: "generic" };
+    if (!(await rateLimit("assisted-access", 3600, 20, s.staffId))) return { ok: false, error: "rateLimited" };
+    // El cliente tiene que ser de la organización de esta tablet
+    const customer = await getCustomer(s.device.organizationId, customerId.data);
+    if (!customer) return { ok: false, error: "generic" };
+    const token = await createMagicLink(s.device.organizationId, customer.id, ASSISTED_ACCESS_MINUTES);
+    const url = `${await appUrl()}/c/${s.device.location.slug}/acceso?t=${token}`;
+    await createServiceClient().from("audit_log").insert({
+      organization_id: s.device.organizationId,
+      actor_type: "staff",
+      actor_id: s.staffId,
+      action: "customer.assisted_access",
+      entity: "customer",
+      entity_id: customer.id,
+    });
+    return { ok: true, data: { url, qr: await qrSvg(url, { margin: 2 }), minutes: ASSISTED_ACCESS_MINUTES } };
+  });
 }
 
 // ───────────── Clientes ─────────────

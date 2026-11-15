@@ -65,8 +65,8 @@ export async function endCustomerSession(organizationId: string) {
   store.delete(name);
 }
 
-/** Enlace mágico de un solo uso, válido 30 minutos. Devuelve el token en claro para enviarlo. */
-export async function createMagicLink(organizationId: string, customerId: string): Promise<string> {
+/** Enlace mágico de un solo uso, válido 30 minutos (o los que se indiquen). Devuelve el token en claro para enviarlo. */
+export async function createMagicLink(organizationId: string, customerId: string, minutes = 30): Promise<string> {
   const token = randomToken(24);
   const { error } = await createServiceClient()
     .from("magic_links")
@@ -74,7 +74,7 @@ export async function createMagicLink(organizationId: string, customerId: string
       organization_id: organizationId,
       customer_id: customerId,
       token_hash: sha256(token),
-      expires_at: new Date(Date.now() + 30 * 60_000).toISOString(),
+      expires_at: new Date(Date.now() + minutes * 60_000).toISOString(),
     });
   if (error) throw error;
   return token;

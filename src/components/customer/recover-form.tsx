@@ -5,7 +5,16 @@ import { useTranslations } from "next-intl";
 import { Alert, Button, Field, Input } from "@/components/ui";
 import { requestAccessLinkAction, type AccessState } from "@/server/actions/customer";
 
-export function RecoverForm({ slug, locationName }: { slug: string; locationName: string }) {
+export function RecoverForm({
+  slug,
+  locationName,
+  viaMessage,
+}: {
+  slug: string;
+  locationName: string;
+  /** Hay mensajería real: se puede pedir el enlace por WhatsApp. Si no, se pide al equipo del local. */
+  viaMessage: boolean;
+}) {
   const t = useTranslations("customer.recover");
   const ts = useTranslations("customer.signup");
   const te = useTranslations("errors");
@@ -13,6 +22,13 @@ export function RecoverForm({ slug, locationName }: { slug: string; locationName
     requestAccessLinkAction.bind(null, slug),
     null,
   );
+
+  if (!viaMessage)
+    return (
+      <Alert tone="info" title={t("byStaffTitle")}>
+        {t("byStaffBody", { location: locationName })}
+      </Alert>
+    );
 
   if (state?.ok) return <Alert tone="success">{t("sent", { location: locationName })}</Alert>;
 
